@@ -1,3 +1,7 @@
-package com.example.restservice;
+package letterbookd.server;
 
-public record User(long id, String content) { }
+public record User(
+		String firstName,
+		String lastName,
+		String email,
+		String password) { }
