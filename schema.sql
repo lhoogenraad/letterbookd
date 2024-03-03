@@ -1,34 +1,33 @@
 CREATE TABLE authors (
-	id int NOT NULL AUTO_INCREMENT,
-	first_name varchar NOT NULL,
-	last_name varchar,
+	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	first_name varchar(255) NOT NULL,
+	last_name varchar(255),
 	date_of_birth date
 );
 
 
 CREATE TABLE users (
-	id int NOT NULL AUTO_INCREMENT,
-	first_name varchar,
-	email varchar NOT NULL,
-	password_hash varchar NOT NULL
+	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	first_name varchar(255),
+	email varchar(255) NOT NULL,
+	password_hash varchar(255) NOT NULL
 );
 
 
 CREATE TABLE books (
-	id int NOT NULL AUTO_INCREMENT,
-	name varchar NOT NULL,
+	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	name varchar(255) NOT NULL,
 	author_id int NOT NULL,
 	published_date date NOT NULL,
 	num_pages int,
-	cover_url varchar,
+	cover_url varchar(255),
 
-	PRIMARY KEY (book_id),
 	FOREIGN KEY (author_id) REFERENCES authors(id)
 );
 
 
 CREATE TABLE read_list_items (
-	id int NOT NULL AUTO_INCREMENT,
+	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	book_id int NOT NULL,
 	user_id int NOT NULL,
 
@@ -38,9 +37,9 @@ CREATE TABLE read_list_items (
 
 
 CREATE TABLE reviews (
-	id int NOT NULL AUTO_INCREMENT,
+	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 
-	description varchar NOT NULL,
+	description varchar(255) NOT NULL,
 	rating int NOT NULL,
 
 	book_id int NOT NULL,
@@ -52,14 +51,14 @@ CREATE TABLE reviews (
 );
 
 CREATE TABLE review_comments (
-	id int NOT NULL AUTO_INCREMENT,
+	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 
-	comment varchar NOT NULL,
+	comment varchar(255) NOT NULL,
 
 	user_id int NOT NULL,
 	review_id int NOT NULL,
 
-	FOREIGN KEY (user_id) REFERENCES users(id)
+	FOREIGN KEY (user_id) REFERENCES users(id),
 	FOREIGN KEY (review_id) REFERENCES reviews(id)
 	
 );
