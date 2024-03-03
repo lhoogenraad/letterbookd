@@ -1,20 +1,19 @@
 package com.example.restservice;
 
 import java.util.concurrent.atomic.AtomicLong;
-import com.example.models.User;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class UserController {
+public class GreetingController {
 
 	private static final String template = "Hello, %s!";
 	private final AtomicLong counter = new AtomicLong();
 
-	@GetMapping("/user")
-	public User user(@RequestParam(value = "name", defaultValue = "World") User body) {
-		System.out.println(body);
-		return new User("Leon", "Hoogenraad", "le.o.n@outlook.com", "password");
+	@GetMapping("/greeting")
+	public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
+		return new Greeting(counter.incrementAndGet(), String.format(template, name));
 	}
 }
