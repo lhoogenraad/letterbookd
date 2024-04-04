@@ -1,6 +1,8 @@
 package letterbookd.server;
 
 import java.sql.*;
+import letterbookd.server.errors.GeneralError;
+import org.springframework.http.HttpStatus;
 
 public class UserModel {
 
@@ -8,7 +10,7 @@ public class UserModel {
 			String firstName, 
 			String lastName, 
 			String email, 
-			String passwordHash) throws Exception {
+			String passwordHash) throws GeneralError {
 		try{
 
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -30,9 +32,19 @@ public class UserModel {
 
 			insertStmt.executeUpdate();
 		}catch (SQLException e) {
-			System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+			String errorMessage = e.getMessage();
+			System.err.format("SQL State: %s\n%s", e.getSQLState(), errorMessage, "\n");
+			if(errorMessage.contains("email_unique")){
+				throw new GeneralError(
+						"Sorry, a user with that email already exists.",
+						HttpStatus.CONFLICT
+						);
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new GeneralError(
+					"Unknown error",
+					HttpStatus.INTERNAL_SERVER_ERROR
+					);
 		}
 			}
 }

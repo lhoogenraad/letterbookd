@@ -1,19 +1,21 @@
 package letterbookd.server.errors;
+import org.springframework.http.HttpStatus;
 
 public class GeneralError extends Exception {
-	private int status;
 	private String message;
-	public GeneralError(String message, int status){
+	private HttpStatus httpStatus;
+
+	public GeneralError(String message, HttpStatus httpStatus){
 		super(message);
 		this.message = message;
-		this.status = status;
+		this.httpStatus = httpStatus;
 	}
 
 	public String getMessage(){
 		return this.message;
 	}
-
-	public int getStatus(){
-		return this.status;
+	
+	public HttpStatus getHttpStatus(){
+		return this.httpStatus;
 	}
 }

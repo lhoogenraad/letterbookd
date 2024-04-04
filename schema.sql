@@ -9,8 +9,22 @@ CREATE TABLE authors (
 CREATE TABLE users (
 	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	first_name varchar(255),
-	email varchar(255) NOT NULL,
+	email varchar(255) NOT NULL UNIQUE,
 	password_hash varchar(255) NOT NULL
+);
+
+CREATE TABLE user_relationships (
+	first_user_id int NOT NULL,
+	second_user_id int NOT NULL,
+	type ENUM('Blocked', 'Followed'),
+
+	PRIMARY KEY (
+		first_user_id,
+		second_user_id
+	),
+
+	FOREIGN KEY (first_user_id) REFERENCES users(id),
+	FOREIGN KEY (second_user_id) REFERENCES users(id)
 );
 
 
