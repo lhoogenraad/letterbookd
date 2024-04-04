@@ -13,7 +13,6 @@ import java.util.*;
 public class GlobalHandler {
 	@ExceptionHandler({GeneralError.class})
 	protected ResponseEntity<Object> handleGeneralError(GeneralError err) {
-		System.out.println("GENERAL GLOBAL ERROR HANDLER CALLED");
 		System.err.println(err.getHttpStatus() + ": " + err.getMessage());
 		
 		return ResponseEntity
