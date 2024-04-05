@@ -17,6 +17,7 @@ repositories {
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("mysql:mysql-connector-java:8.0.25")
 	implementation("io.jsonwebtoken:jjwt:0.2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")    
