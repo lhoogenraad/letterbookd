@@ -13,7 +13,7 @@ import (
 var UnauthorisedError = errors.New("Invalid username or token.")
 
 func Authorisation(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w httpResponseWriter, r *http.Request) {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var username string = r.URL.Query().Get("username")
 		var token string = r.Header.Get("Authorization")
 		var err error
@@ -24,8 +24,8 @@ func Authorisation(next http.Handler) http.Handler {
 			return
 		}
 
-		var db *tools.DatabaseInterface
-		db, err = tools.NewDatabase()
+		var database *tools.DatabaseInterface
+		database, err = tools.NewDatabase()
 		if err != nil {
 			api.InternalErrorHandler(w)
 			return

@@ -21,7 +21,7 @@ type DatabaseInterface interface {
 }
 
 
-func NewDatabase() (*DatabaseInterface, err) {
+func NewDatabase() (*DatabaseInterface, error) {
 	var db DatabaseInterface = &mockDB{}
 
 	var err error = db.SetupDatabase()

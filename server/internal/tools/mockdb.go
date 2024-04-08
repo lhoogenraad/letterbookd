@@ -9,15 +9,15 @@ type mockDB struct{}
 var mockLoginDetails = map[string]LoginDetails {
 	"leon": {
 		AuthToken: "123ABC",
-		Username: "leon"
-	}
+		Username: "leon",
+	},
 }
 
 var mockCoinDetails = map[string]CoinDetails {
 	"leon": {
 		Coins: 10000,
-		Username: "Leon"
-	}
+		Username: "Leon",
+	},
 }
 
 

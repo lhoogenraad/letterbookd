@@ -23,8 +23,8 @@ type Error struct {
 
 func writeError(w http.ResponseWriter, message string, code int) {
 	resp := Error {
-		Code: code
-		Message: message
+		Code: code,
+		Message: message,
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -39,6 +39,6 @@ var (
 	}
 	
 	InternalErrorHandler = func(w http.ResponseWriter) {
-		writeError(w, err.Error(), http.StatusInternalServerError)
+		writeError(w, "Sorry, an unexpected error has occured.", http.StatusInternalServerError)
 	}
 )
