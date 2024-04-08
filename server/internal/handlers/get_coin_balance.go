@@ -48,7 +48,7 @@ func GetCoinBalance(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	err = json.NewEncoder(w).Encode(response)
-	log.Info("Got balance for %s successfully.", params.Username)
+	log.Info("Got coin balance for User " + params.Username + ".")
 	if err != nil {
 		log.Error(err)
 		api.InternalErrorHandler(w)

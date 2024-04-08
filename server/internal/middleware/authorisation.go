@@ -5,37 +5,30 @@ import (
 	"net/http"
 
 	"server/api"
-	"server/internal/tools"
-
+	"server/internal/utils"
+	
 	log "github.com/sirupsen/logrus"
 )
+
+
+type TokenClaims struct {
+	userId		int		`json:userid`
+	username	string	`json:username`
+	email		string	`json:email`
+}
+
+var secretToken = []byte("secret!")
 
 var UnauthorisedError = errors.New("Invalid username or token.")
 
 func Authorisation(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		var username string = r.URL.Query().Get("username")
 		var token string = r.Header.Get("Authorization")
 		var err error
 
-		if username == "" || token == "" {
-			log.Error(UnauthorisedError)
-			api.RequestErrorHandler(w, UnauthorisedError)
-			return
-		}
-
-		var database *tools.DatabaseInterface
-		database, err = tools.NewDatabase()
+		_, err = utils.VerifyToken(token)
 		if err != nil {
-			api.InternalErrorHandler(w)
-			return
-		}
-		
-		var loginDetails *tools.LoginDetails
-		loginDetails = (*database).GetUserLoginDetails(username)
-
-		if (loginDetails == nil || (token != (*loginDetails).AuthToken)) {
-			log.Error(UnauthorisedError)
+			log.Error(err)
 			api.RequestErrorHandler(w, UnauthorisedError)
 			return
 		}
