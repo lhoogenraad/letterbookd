@@ -7,8 +7,9 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+var DB *sql.DB
 
-func NewDatabase() (error) {
+func NewDatabase() (*sql.DB, error) {
 	// DB connection config, if you couldn't guess
     cfg := mysql.Config{
         User:   "root",
@@ -18,21 +19,20 @@ func NewDatabase() (error) {
         DBName: "letterbookd",
     }
 	// Get a database handle.
-	var db *sql.DB
     var err error
-    db, err = sql.Open("mysql", cfg.FormatDSN())
+	newDB, err := sql.Open("mysql", cfg.FormatDSN())
     if err != nil {
         log.Fatal(err)
-		return err
+		return nil, err
     }
 
-    pingErr := db.Ping()
+    pingErr := newDB.Ping()
     if pingErr != nil {
         log.Fatal(pingErr)
-		return pingErr
+		return nil, pingErr
     }
     log.Info("Connected to database!")
 
 
-	return nil
+	return newDB, nil
 }
