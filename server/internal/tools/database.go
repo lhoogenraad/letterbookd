@@ -1,35 +1,38 @@
 package tools
 
 import (
+	"database/sql"
+	"github.com/go-sql-driver/mysql"
+
 	log "github.com/sirupsen/logrus"
 )
 
-type LoginDetails struct {
-	AuthToken string
-	Username string
-}
 
-type CoinDetails struct {
-	Coins int64
-	Username string
-}
+func NewDatabase() (error) {
+	// DB connection config, if you couldn't guess
+    cfg := mysql.Config{
+        User:   "root",
+        Passwd: "letterbookd",
+        Net:    "tcp",
+        Addr:   "127.0.0.1:3306",
+        DBName: "letterbookd",
+    }
+	// Get a database handle.
+	var db *sql.DB
+    var err error
+    db, err = sql.Open("mysql", cfg.FormatDSN())
+    if err != nil {
+        log.Fatal(err)
+		return err
+    }
 
-type DatabaseInterface interface {
-	GetUserLoginDetails(username string) *LoginDetails
-	GetUserCoins(username string) *CoinDetails
-	SetupDatabase() error
-}
+    pingErr := db.Ping()
+    if pingErr != nil {
+        log.Fatal(pingErr)
+		return pingErr
+    }
+    log.Info("Connected to database!")
 
 
-func NewDatabase() (*DatabaseInterface, error) {
-	var db DatabaseInterface = &mockDB{}
-
-	var err error = db.SetupDatabase()
-
-	if err != nil {
-		log.Error(err)
-		return nil, err
-	}
-
-	return &db, nil
+	return nil
 }

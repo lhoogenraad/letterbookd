@@ -6,15 +6,15 @@ import (
 	"server/internal/middleware"
 )
 
-func Handler(r *chi.Mux) {
-	// Global middlewhere
+func ApiHandler(r *chi.Mux) {
+	// middlewhere to strip trailing slashes
 	r.Use(chimiddle.StripSlashes)
 
-	r.Route("/account", func(router chi.Router) {
+	r.Route("/api", func(router chi.Router) {
 
-		// Middleware for /account route
+		// Middleware for auth on these sensitive routes
 		router.Use(middleware.Authorisation)
 
-		router.Get("/coins", GetCoinBalance)
+		router.Get("/books", GetBooks)
 	})
 }
