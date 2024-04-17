@@ -10,7 +10,7 @@ func ApiHandler(r *chi.Mux) {
 	// middlewhere to strip trailing slashes
 	r.Use(chimiddle.StripSlashes)
 
-	r.Route("/api", func(router chi.Router) {
+	r.Route("/api/users", func(router chi.Router) {
 		router.Post("/signup", Signup)
 	})
 

@@ -2,7 +2,8 @@ package models
 
 import (
 	"server/internal/tools"
-	"server/internal/resources"
+	
+	log "github.com/sirupsen/logrus"
 )
 
 
@@ -10,7 +11,7 @@ func AddUser(
 	email string,
 	passwordHash string,
 	firstName string,
-	lastName string
+	lastName string,
 ) (error, int) {
 	var insertQuery string = `
 	INSERT into users
@@ -18,16 +19,16 @@ func AddUser(
 	VALUES
 	(?, ?, ?, ?)`
 
-	rows, err := tools.DB.Query(
+	_, err := tools.DB.Query(
 		insertQuery,
 		email,
 		passwordHash,
 		firstName,
-		lastName
+		lastName,
 	)
 
-	
 	if err != nil {
+		log.Error(err)
 		return err, 500
 	}
 
