@@ -6,6 +6,7 @@ import (
 	"server/api"
 	"fmt"
 	"server/internal/resources"
+	"server/internal/utils"
 	
 	log "github.com/sirupsen/logrus"
 )
@@ -24,4 +25,13 @@ func Signup (w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Println(request)
+	var hash string 
+	hash, err = utils.HashPassword(request.Password)
+
+	if err != nil {
+		log.Error(err)
+		api.InternalErrorHandler(w)
+	}
+
+	fmt.Println("hashed pword: " + hash)
 }
