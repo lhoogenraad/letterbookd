@@ -11,6 +11,10 @@ func ApiHandler(r *chi.Mux) {
 	r.Use(chimiddle.StripSlashes)
 
 	r.Route("/api", func(router chi.Router) {
+		router.Post("/signup", Signup)
+	})
+
+	r.Route("/api", func(router chi.Router) {
 
 		// Middleware for auth on these sensitive routes
 		router.Use(middleware.Authorisation)
