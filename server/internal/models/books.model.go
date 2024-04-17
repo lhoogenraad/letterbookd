@@ -4,8 +4,6 @@ import (
 	"server/internal/tools"
 	"server/internal/resources"
 	"time"
-
-	"fmt"
 )
 
 
@@ -35,7 +33,6 @@ func GetBooks() ([]resources.BookData, error) {
 			&book.Title,
 			&book.Author,
 			&date,
-			// &book.Published,
 			&book.NumPages,
 			&book.CoverURL,
 		); err != nil {

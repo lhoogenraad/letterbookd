@@ -15,10 +15,6 @@ import (
 func GetBooks (w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	// title := "A Song of Ice and Fire"
-	// author := "George R.R. Martin"
-	// pub := time.Date(1995, 1, 1, 0, 0, 0, 0, time.Local)
-
 	var books []resources.BookData
 	var err error
 	books, err = models.GetBooks()
@@ -28,14 +24,6 @@ func GetBooks (w http.ResponseWriter, r *http.Request) {
 		api.InternalErrorHandler(w)
 		return
 	}
-
-	// book := resources.BookData {
-	// 	Title: title,
-	// 	Author: author,
-	// 	Published: pub,
-	// 	NumPages: 153,
-	// 	CoverURL: "http://www.google.com",
-	// }
 
 	err = json.NewEncoder(w).Encode(books)
 
