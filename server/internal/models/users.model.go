@@ -2,9 +2,11 @@ package models
 
 import (
 	"server/internal/tools"
+	"server/internal/resources"
 	"strings"
 	"errors"
 	"fmt"
+	"database/sql"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -49,3 +51,33 @@ func AddUser(
 	return nil, 0
 }
 
+
+func GetUser(email string) (resources.User, error, int) {
+	var selectQuery string = `
+	SELECT 
+	id,
+	email,
+	password_hash,
+	first_name,
+	last_name
+	FROM users
+	WHERE email=?`
+
+	row := tools.DB.QueryRow(selectQuery, email)
+
+	var user resources.User
+	switch err := row.Scan(
+		&user.Id,
+		&user.Email,
+		&user.PasswordHash,
+		&user.FirstName,
+		&user.LastName,
+	); err {
+	case sql.ErrNoRows:
+		return user, errors.New(`Invalid email or password. Please try again.`), 401
+	case nil:
+		return user, nil, 0
+	default:
+		return user, errors.New(`Something went wrong on our end. Please try again later`), 500
+	}
+}

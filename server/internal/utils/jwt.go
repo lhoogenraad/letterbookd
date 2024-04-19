@@ -9,10 +9,10 @@ import (
 var secretKey = []byte("secretpassword")
 
 // GenerateToken generates a JWT token with the user ID as part of the claims
-func GenerateToken(userId uint, username string, email string) (string, error) {
+func GenerateToken(userId uint, firstName string, email string) (string, error) {
 	claims := jwt.MapClaims{}
 	claims["userid"] = userId
-	claims["username"] = username
+	claims["firstName"] = firstName
 	claims["email"] = email
 	claims["exp"] = time.Now().Add(time.Hour * 34210).Unix() // Token valid for 1 hour
 
