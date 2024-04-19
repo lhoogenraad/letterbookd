@@ -12,6 +12,7 @@ func ApiHandler(r *chi.Mux) {
 
 	r.Route("/api/users", func(router chi.Router) {
 		router.Post("/signup", Signup)
+		router.Post("/login", Signin)
 	})
 
 	r.Route("/api", func(router chi.Router) {
