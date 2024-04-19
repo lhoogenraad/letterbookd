@@ -2,10 +2,24 @@ package models
 
 import (
 	"server/internal/tools"
-	
+	"strings"
+	"errors"
+	"fmt"
+
 	log "github.com/sirupsen/logrus"
 )
 
+
+func handleInsertUserError(err error) (error, int) {
+	log.Error(err)
+	returnErr := errors.New("Sorry, something went wrong creating your account.")
+	status := 500
+	if strings.Contains(fmt.Sprint(err), "users.email_unique") {
+		returnErr = errors.New("Sorry, an account with that email already exists.")
+		status = 400
+	}
+	return returnErr, status
+}
 
 func AddUser(
 	email string,
@@ -28,9 +42,10 @@ func AddUser(
 	)
 
 	if err != nil {
-		log.Error(err)
-		return err, 500
+		err, code := handleInsertUserError(err)
+		return err, code
 	}
 
 	return nil, 0
 }
+
