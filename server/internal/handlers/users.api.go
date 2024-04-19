@@ -4,10 +4,12 @@ import (
 	"net/http"
 	"encoding/json"
 	"server/api"
+
 	"fmt"
 	"server/internal/resources"
 	"server/internal/utils"
-	
+	"server/internal/models"
+
 	log "github.com/sirupsen/logrus"
 )
 
@@ -24,7 +26,6 @@ func Signup (w http.ResponseWriter, r *http.Request) {
 		api.CustomErrorHandler(w, 400, `Invalid signup body received`)
 	}
 
-	fmt.Println(request)
 	var hash string 
 	hash, err = utils.HashPassword(request.Password)
 
@@ -33,5 +34,19 @@ func Signup (w http.ResponseWriter, r *http.Request) {
 		api.InternalErrorHandler(w)
 	}
 
-	fmt.Println("hashed pword: " + hash)
+	err, code := models.AddUser(
+		request.Email,
+		hash,
+		request.FirstName,
+		request.LastName,
+	)
+
+	if err != nil {
+		api.CustomErrorHandler(w, code, fmt.Sprint(err))
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusAccepted) // For demo purposes
+	json.NewEncoder(w).Encode(`Created new user account for ` + request.Email)
 }

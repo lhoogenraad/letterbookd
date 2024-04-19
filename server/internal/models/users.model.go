@@ -19,7 +19,7 @@ func AddUser(
 	VALUES
 	(?, ?, ?, ?)`
 
-	_, err := tools.DB.Query(
+	_, err := tools.DB.Exec(
 		insertQuery,
 		email,
 		passwordHash,
