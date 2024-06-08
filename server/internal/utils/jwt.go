@@ -4,6 +4,7 @@ import (
 	"time"
 	"github.com/dgrijalva/jwt-go"
 	"fmt"
+	"net/http"
 )
 
 var secretKey = []byte("secretpassword")
@@ -45,4 +46,10 @@ func VerifyToken(tokenString string) (jwt.MapClaims, error) {
 	}
 
 	return nil, fmt.Errorf("Invalid token")
+}
+
+func GetClaims(req *http.Request) (jwt.MapClaims, bool) {
+	ctx := req.Context()
+    claims, ok := ctx.Value("claims").(jwt.MapClaims)
+    return claims, ok
 }
