@@ -20,7 +20,11 @@ func ApiHandler(r *chi.Mux) {
 		// Middleware for auth on these sensitive routes
 		router.Use(middleware.Authorisation)
 
+		// Books
 		router.Get("/books", GetBooks)
+
+		// Reviews
 		router.Post("/books/{bookId}/reviews", CreateReview)
+		router.Put("/reviews/{reviewId}", UpdateReview)
 	})
 }
