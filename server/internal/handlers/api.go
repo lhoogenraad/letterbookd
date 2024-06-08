@@ -21,6 +21,6 @@ func ApiHandler(r *chi.Mux) {
 		router.Use(middleware.Authorisation)
 
 		router.Get("/books", GetBooks)
-		router.Post("/books/reviews", CreateReview)
+		router.Post("/books/{bookId}/reviews", CreateReview)
 	})
 }

@@ -59,10 +59,12 @@ CREATE TABLE reviews (
 	book_id int NOT NULL,
 	user_id int NOT NULL,
 
-
+	UNIQUE KEY 
 	FOREIGN KEY (book_id) REFERENCES books(id),
 	FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+ALTER TABLE reviews ADD UNIQUE user_book_review_unique (user_id, book_id);
 
 CREATE TABLE review_comments (
 	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
