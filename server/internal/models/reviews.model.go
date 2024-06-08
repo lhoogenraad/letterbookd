@@ -48,3 +48,31 @@ func CreateReview(userId int, bookId int, req resources.CreateReviewBody) (error
 
 	return nil, -1
 }
+
+
+
+func UpdateReview(userId int, reviewId int, req resources.UpdateReviewBody) (error, int) {
+	var insertQuery string = `
+	UPDATE reviews
+	SET 
+		rating = ?,
+		description = ?
+	WHERE
+		id = ? AND
+		user_id = ?;`
+
+	_, err := tools.DB.Exec(
+		insertQuery,
+		req.Rating,
+		req.Description,
+		reviewId,
+		userId,
+	)
+
+	if err != nil {
+		err, code := handleCreateReviewErr(err)
+		return err, code
+	}
+
+	return nil, -1
+}
