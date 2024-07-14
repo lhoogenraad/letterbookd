@@ -78,3 +78,19 @@ CREATE TABLE review_comments (
 	FOREIGN KEY (review_id) REFERENCES reviews(id)
 	
 );
+
+
+-- Insert default test data
+INSERT INTO authors
+(first_name, last_name, date_of_birth)
+VALUES
+('Julius', 'Caeser', '0001-01-01'),
+('George', 'Martin', '1948-09-20'),
+('Jane', 'Austin', '1775-12-16');
+
+INSERT INTO books
+(name, author_id, published_date, num_pages)
+VALUES
+('Commentarii de Bello Gallico', 1, '0001-01-01', 730),
+('A Song of Ice and Fire', 2, '2009-12-01', 642),
+('Pride and Prejudice', 3, '1813-01-28', 518);

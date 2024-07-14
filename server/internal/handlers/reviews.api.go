@@ -94,3 +94,11 @@ func UpdateReview (w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusAccepted) // For demo purposes
 	json.NewEncoder(w).Encode(`Review updated successfully`)
 }
+
+
+func GetBookReviews (w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	reviewIdParam := utils.GetParam(r, "bookId")
+	reviewId, err := strconv.Atoi(reviewIdParam)
+}
