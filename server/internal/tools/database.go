@@ -13,7 +13,6 @@ func NewDatabase() (*sql.DB, error) {
 	// DB connection config, if you couldn't guess
     cfg := mysql.Config{
         User:   "root",
-        Passwd: "letterbookd",
         Net:    "tcp",
         Addr:   "127.0.0.1:3306",
         DBName: "letterbookd",

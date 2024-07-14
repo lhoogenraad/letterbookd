@@ -9,6 +9,7 @@ CREATE TABLE authors (
 CREATE TABLE users (
 	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	first_name varchar(255),
+	last_name varchaer(255),
 	email varchar(255) NOT NULL UNIQUE,
 	password_hash varchar(255) NOT NULL
 );
@@ -59,7 +60,6 @@ CREATE TABLE reviews (
 	book_id int NOT NULL,
 	user_id int NOT NULL,
 
-	UNIQUE KEY 
 	FOREIGN KEY (book_id) REFERENCES books(id),
 	FOREIGN KEY (user_id) REFERENCES users(id)
 );
