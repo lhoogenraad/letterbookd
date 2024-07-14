@@ -76,3 +76,21 @@ func UpdateReview(userId int, reviewId int, req resources.UpdateReviewBody) (err
 
 	return nil, -1
 }
+
+
+
+func checkBookExists (bookId int) bool {
+	var getBookQuery string = `
+		SELECT * FROM books
+		WHERE
+			id = ?;`
+	
+	_, err := tools.DB.QueryRow(getBookQuery, bookId)
+
+	if err != nil {
+		fmt.Println("no book found with that id", err)
+		return false
+	}
+
+	return true
+}
