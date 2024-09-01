@@ -2,8 +2,10 @@
 
 import { Button, Group, MantineProvider, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { useRouter } from 'next/navigation';
 
 function LoginPage() {
+	const router = useRouter();
 	const form = useForm({
 		mode: 'uncontrolled',
 		initialValues: {
@@ -18,15 +20,20 @@ function LoginPage() {
 	});
 
 	const login = async (email: string, password: string) => {
-		const data = await fetch(
+		const response = await fetch(
 			'http://localhost:8080/api/users/login', {
 			method: 'POST',
 			body: JSON.stringify({
 				email, password
 			})
 		});
-		const authToken = await data.json();
+		const authToken = await response.json();
 		localStorage.setItem("authToken", authToken);
+		console.log(response.ok)
+		if (response.ok) {
+			router.push('/')
+		}
+		
 	};
 
 	return (
