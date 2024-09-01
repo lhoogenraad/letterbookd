@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import '@mantine/core/styles/global.css';
 import '@mantine/core/styles/UnstyledButton.css';
 import '@mantine/core/styles/Button.css';
+import './style.css'
 
 
 function LoginPage() {
@@ -34,7 +35,6 @@ function LoginPage() {
 		});
 		const authToken = await response.json();
 		localStorage.setItem("authToken", authToken);
-		console.log(response.ok)
 		if (response.ok) {
 			router.push('/')
 		}
@@ -42,10 +42,9 @@ function LoginPage() {
 	};
 
 	return (
-		<div>
-			<form onSubmit={form.onSubmit(async (values) => await login(values.email, values.password )) } >
+		<div className="login-container">
+			<form className="login-form" onSubmit={form.onSubmit(async (values) => await login(values.email, values.password )) } >
 				<TextInput
-					withAsterisk
 					label="Email"
 					placeholder="your@email.com"
 					key={form.key('email')}
@@ -53,7 +52,6 @@ function LoginPage() {
 				/>
 
 				<TextInput
-					withAsterisk
 					type="password"
 					label="Password"
 					placeholder="Your password"
