@@ -1,6 +1,6 @@
 "use client"
 
-import { Button, Group, MantineProvider, TextInput } from '@mantine/core';
+import { Button, Group, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useRouter } from 'next/navigation';
 
