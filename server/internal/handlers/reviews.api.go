@@ -107,10 +107,11 @@ func GetBookReviews (w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	reviews, err, code := models.GetBookReviews(bookId)
+	reviews, err := models.GetBookReviews(bookId)
 
 	if err != nil {
-		api.CustomErrorHandler(w, code, fmt.Sprint(err))
+		log.Error(err)
+		api.InternalErrorHandler(w)
 		return
 	}
 
