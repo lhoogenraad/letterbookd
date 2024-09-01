@@ -36,8 +36,17 @@ function LoginPage() {
 	const login = async (email: string, password: string) => {
 		setLoading(true);
 		await api.users.signIn({email, password})
-		.then((res) => console.log(res))
-		.catch((err) => console.error(err))
+		.then((res) => {
+			localStorage.setItem("authToken", res.data);
+			router.push("/");
+		})
+		.catch((err) => {
+			notify.info({
+				message: err?.response?.data?.Message
+				??
+				"Something went wrong while logging you in. Please try again."
+			});
+		})
 		.finally(() => setLoading(false));
 	};
 
