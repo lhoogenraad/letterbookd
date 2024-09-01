@@ -77,7 +77,47 @@ func UpdateReview(userId int, reviewId int, req resources.UpdateReviewBody) (err
 	return nil, -1
 }
 
+func GetBookReviews(bookId int) ( []resources.ReviewData, error ) {
+	var selectQueryString string = `
+	SELECT 
+	reviews.id as review_id,
+	users.id as user_id,
+	CONCAT( users.first_name, ' ', users.last_name) as user_name,
+	reviews.description,
+	reviews.rating
+	FROM reviews
+	JOIN users
+	ON users.id = reviews.user_id
+	WHERE reviews.book_id = ?`
 
+	rows, err := tools.DB.Query(selectQueryString, bookId)
+
+	if err != nil {
+		log.Error(err)
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	var reviews []resources.ReviewData
+	for rows.Next() {
+		var review resources.ReviewData
+		err := rows.Scan(
+			&review.Id,
+			&review.UserId,
+			&review.Username,
+			&review.Description,
+			&review.Rating,
+		)
+
+		if err != nil {
+			return nil, err
+		}
+		reviews = append(reviews, review)
+	}
+
+	return reviews, nil
+}
 
 func checkBookExists (bookId int) bool {
 	var getBookQuery string = `
@@ -85,7 +125,7 @@ func checkBookExists (bookId int) bool {
 		WHERE
 			id = ?;`
 	
-	_, err := tools.DB.QueryRow(getBookQuery, bookId)
+	err := tools.DB.QueryRow(getBookQuery, bookId)
 
 	if err != nil {
 		fmt.Println("no book found with that id", err)

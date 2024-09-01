@@ -91,7 +91,7 @@ func UpdateReview (w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusAccepted) // For demo purposes
+	w.WriteHeader(http.StatusAccepted) 
 	json.NewEncoder(w).Encode(`Review updated successfully`)
 }
 
@@ -100,17 +100,18 @@ func GetBookReviews (w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	bookIdParam := utils.GetParam(r, "bookId")
-	bookId, err := strconv.Atoi(reviewIdParam)
+	bookId, err := strconv.Atoi(bookIdParam)
 
 	if err != nil {
 		api.CustomErrorHandler(w, 400, "Invalid book ID was given as a parameter.")
 		return
 	}
 
-	reviews, err, code := models.GetBookReviews(bookId)
+	reviews, err := models.GetBookReviews(bookId)
 
 	if err != nil {
-		api.CustomErrorHandler(w, code, fmt.Sprint(err))
+		log.Error(err)
+		api.InternalErrorHandler(w)
 		return
 	}
 
