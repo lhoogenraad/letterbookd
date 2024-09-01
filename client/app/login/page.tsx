@@ -42,7 +42,7 @@ function LoginPage() {
 	};
 
 	return (
-		<MantineProvider>
+		<div>
 			<form onSubmit={form.onSubmit(async (values) => await login(values.email, values.password )) } >
 				<TextInput
 					withAsterisk
@@ -65,7 +65,7 @@ function LoginPage() {
 					<Button type="submit">Submit</Button>
 				</Group>
 			</form>
-		</MantineProvider>
+		</div>
 	);
 }
 
