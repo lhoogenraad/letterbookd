@@ -51,4 +51,7 @@ func CreateReviewComment (w http.ResponseWriter, r *http.Request) {
 		api.CustomErrorHandler(w, code, fmt.Sprint(err))
 		return
 	}
+
+	w.WriteHeader(http.StatusAccepted) 
+	json.NewEncoder(w).Encode(`Comment created successfully`)
 }

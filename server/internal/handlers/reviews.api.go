@@ -91,7 +91,7 @@ func UpdateReview (w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusAccepted) // For demo purposes
+	w.WriteHeader(http.StatusAccepted) 
 	json.NewEncoder(w).Encode(`Review updated successfully`)
 }
 
