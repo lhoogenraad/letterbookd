@@ -4,6 +4,11 @@ import { Button, Group, MantineProvider, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useRouter } from 'next/navigation';
 
+import '@mantine/core/styles/global.css';
+import '@mantine/core/styles/UnstyledButton.css';
+import '@mantine/core/styles/Button.css';
+
+
 function LoginPage() {
 	const router = useRouter();
 	const form = useForm({
