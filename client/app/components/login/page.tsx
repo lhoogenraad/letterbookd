@@ -1,6 +1,6 @@
 "use client"
 
-import { Button, Group, TextInput } from '@mantine/core';
+import { Button, Group, MantineProvider, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
 function LoginPage() {
@@ -18,6 +18,7 @@ function LoginPage() {
 	});
 
 	return (
+		<MantineProvider>
 		<form onSubmit={form.onSubmit((values) => console.log(values))}>
 			<TextInput
 				withAsterisk
@@ -40,6 +41,7 @@ function LoginPage() {
 				<Button type="submit">Submit</Button>
 			</Group>
 		</form>
+		</MantineProvider>
 	);
 }
 
