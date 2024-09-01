@@ -8,7 +8,8 @@ import '@mantine/core/styles/global.css';
 import '@mantine/core/styles/UnstyledButton.css';
 import '@mantine/core/styles/Button.css';
 import './style.css'
-import notify from '../../util/notify';
+import notify from 'util/notify/notify';
+import api from 'util/api/api';
 import React from 'react';
 
 
@@ -34,28 +35,10 @@ function LoginPage() {
 
 	const login = async (email: string, password: string) => {
 		setLoading(true);
-		const response = await fetch(
-			'http://localhost:8080/api/users/login', {
-			method: 'POST',
-			body: JSON.stringify({
-				email, password
-			})
-		})
-		.finally(() => setLoading(false) );
-
-		const responseData = await response.json();
-
-		if (response.ok) {
-			router.push('/')
-			const authToken = responseData;
-			localStorage.setItem("authToken", authToken);
-		} else {
-			const errorMessage : string = responseData.Message;
-			notify.info({
-				message: errorMessage,
-			})
-		}
-		
+		await api.users.signIn({email, password})
+		.then((res) => console.log(res))
+		.catch((err) => console.error(err))
+		.finally(() => setLoading(false));
 	};
 
 	return (
