@@ -4,6 +4,7 @@ type ReviewComment struct {
 	Id int
 	Comment string
 	UserId int
+	Username string
 	ReviewId int
 }
 

@@ -15,6 +15,38 @@ import (
 )
 
 
+
+func GetReviewComments (w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+
+	//Grab review id param from url
+	reviewIdParam := utils.GetParam(r, "reviewId")
+	reviewId, err := strconv.Atoi(reviewIdParam)
+
+	if err != nil {
+		api.CustomErrorHandler(w, 400, "Invalid review ID was given as a parameter.")
+		return
+	}
+
+	comments, err := models.GetReviewComments(reviewId)
+
+	if err != nil {
+		log.Error(err)
+		api.InternalErrorHandler(w)
+		return
+	}
+
+	err = json.NewEncoder(w).Encode(comments)
+
+	if err != nil {
+		log.Error(err)
+		api.InternalErrorHandler(w)
+		return
+	}
+}
+
+
 func CreateReviewComment (w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
@@ -24,7 +56,7 @@ func CreateReviewComment (w http.ResponseWriter, r *http.Request) {
 		api.InternalErrorHandler(w)
 	}
 
-	//Grab
+	//Grab request body
 	var request resources.CreateReviewCommentBody
 	err := json.NewDecoder(r.Body).Decode(&request)
 
