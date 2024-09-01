@@ -1,2 +1,2 @@
 # letterbookd
-Letterboxd but in real life
+Letterboxd but for books
