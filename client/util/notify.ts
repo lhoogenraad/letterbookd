@@ -1,11 +1,18 @@
 import { notifications } from "@mantine/notifications";
-import { NotificationPosition } from "@mantine/notifications/lib/notifications.store";
 
 const info = ({message, title=""}) => {
 	notifications.show({
 		message,
 		position: 'top-center',
 		title,
+		style: {
+			backgroundColor: '#222',
+			color: '#eee',
+			width: "50%",
+			margin: "0 auto",
+			padding: "1rem",
+			marginTop: "1rem",
+		}
 	})
 }
 

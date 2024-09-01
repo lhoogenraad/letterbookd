@@ -1,8 +1,15 @@
 .login-container {
 	width: 70vw;
-	margin: 15vh 15vw;
+	max-width: 500px;
+	margin: 20vh auto;
 	padding: 4rem;
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.login-header {
+	font-size: 2rem;
+	color: #222;
+	margin-bottom: 1rem;
 }
 
 .login-form {
