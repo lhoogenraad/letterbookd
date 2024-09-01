@@ -8,6 +8,7 @@ import '@mantine/core/styles/global.css';
 import '@mantine/core/styles/UnstyledButton.css';
 import '@mantine/core/styles/Button.css';
 import './style.css'
+import notify from '../../util/notify';
 
 
 function LoginPage() {
@@ -33,10 +34,18 @@ function LoginPage() {
 				email, password
 			})
 		});
-		const authToken = await response.json();
-		localStorage.setItem("authToken", authToken);
+
+		const responseData = await response.json();
+
 		if (response.ok) {
 			router.push('/')
+			const authToken = responseData;
+			localStorage.setItem("authToken", authToken);
+		} else {
+			const errorMessage : string = responseData.Message;
+			notify.info({
+				message: errorMessage,
+			})
 		}
 		
 	};
