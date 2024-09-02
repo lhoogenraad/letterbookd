@@ -38,9 +38,9 @@ function Signup() {
 		},
 	});
 
-	const signUp = async (email: string, password: string) => {
+	const signUp = async (email: string, password: string, firstName: string, lastName: string) => {
 		setLoading(true);
-		await api.users.signUp({ email, password })
+		await api.users.signUp({ email, password, firstName, lastName })
 			.then((res) => {
 				localStorage.setItem("authToken", res.data);
 				router.push("/login");
@@ -57,7 +57,14 @@ function Signup() {
 
 	return (
 		<div className="container">
-			<form className="form" onSubmit={form.onSubmit(async (values) => await signUp(values.email, values.password))} >
+			<form className="form"
+				onSubmit={form.onSubmit(async (values) =>
+					await signUp(
+						values.email,
+						values.password,
+						values.firstName,
+						values.lastName
+					))} >
 				<div className='header'>Sign up to Letterbookd</div>
 				<TextInput
 					className='form-input'
@@ -93,7 +100,7 @@ function Signup() {
 				</Group>
 				{loading}
 				<Group justify="flex-end" mt="md">
-					<Button loading={loading} type="submit">Sign up</Button>
+					<Button loading={loading} loaderProps={{ type: 'bars' }} type="submit">Sign up</Button>
 				</Group>
 
 				<div className='switch-page-text'>
