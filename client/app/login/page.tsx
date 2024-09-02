@@ -11,6 +11,7 @@ import './style.css'
 import notify from 'util/notify/notify';
 import api from 'util/api/api';
 import React from 'react';
+import Link from 'next/link';
 
 
 function LoginPage() {
@@ -51,9 +52,9 @@ function LoginPage() {
 	};
 
 	return (
-		<div className="login-container">
-			<form className="login-form" onSubmit={form.onSubmit(async (values) => await login(values.email, values.password )) } >
-				<div className='login-header'>Login to Letterbookd</div>
+		<div className="container">
+			<form className="form" onSubmit={form.onSubmit(async (values) => await login(values.email, values.password )) } >
+				<div className='header'>Login to Letterbookd</div>
 				<TextInput
 					label="Email"
 					placeholder="your@email.com"
@@ -72,6 +73,10 @@ function LoginPage() {
 				<Group justify="flex-end" mt="md">
 					<Button loading={loading} type="submit">Login</Button>
 				</Group>
+
+				<div className='switch-page-text'>
+					Don't have an account? <Link href="/signup">Signup here</Link>.
+				</div>
 			</form>
 		</div>
 	);
