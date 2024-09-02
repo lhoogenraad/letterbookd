@@ -36,3 +36,8 @@
 	justify-content: space-between;
 	gap: 2vw;
 }
+
+.switch-page-text {
+	margin-top: 2rem;
+	font-size: 0.75rem;
+}

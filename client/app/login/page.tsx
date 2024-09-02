@@ -55,7 +55,9 @@ function LoginPage() {
 		<div className="container">
 			<form className="form" onSubmit={form.onSubmit(async (values) => await login(values.email, values.password )) } >
 				<div className='header'>Login to Letterbookd</div>
+
 				<TextInput
+					className='form-input'
 					label="Email"
 					placeholder="your@email.com"
 					key={form.key('email')}
@@ -63,6 +65,7 @@ function LoginPage() {
 				/>
 
 				<TextInput
+					className='form-input'
 					type="password"
 					label="Password"
 					placeholder="Your password"
