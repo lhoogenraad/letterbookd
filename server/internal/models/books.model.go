@@ -39,7 +39,7 @@ func GetBooks() ([]resources.BookData, error) {
 			return books, err
 		}
 
-		book.Published, err = time.Parse("2006-01-01", date)
+		book.Published, err = time.Parse("2006-01-02", date)
 		if err != nil {
 			return books, err
 		}

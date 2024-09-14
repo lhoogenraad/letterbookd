@@ -39,7 +39,7 @@ function LoginPage() {
 		await api.users.signIn({email, password})
 		.then((res) => {
 			localStorage.setItem("authToken", res.data);
-			router.push("/");
+			router.push("/dashboard");
 		})
 		.catch((err) => {
 			notify.info({

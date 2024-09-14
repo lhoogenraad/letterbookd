@@ -12,11 +12,16 @@
   "author": "Leon Hoogenraad",
   "license": "ISC",
   "dependencies": {
+    "@mantine/carousel": "^7.12.2",
     "@mantine/core": "^7.12.2",
     "@mantine/form": "^7.12.2",
     "@mantine/hooks": "^7.12.2",
     "@mantine/notifications": "^7.12.2",
+    "@tabler/icons-react": "^3.16.0",
     "axios": "^1.7.7",
+    "embla-carousel-autoplay": "^7.1.0",
+    "embla-carousel-react": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
     "next": "^14.2.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
