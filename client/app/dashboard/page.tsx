@@ -9,7 +9,7 @@ import { Button } from '@mantine/core';
 import api from 'util/api/api';
 import './dashboard.style.css';
 import { Carousel } from '@mantine/carousel';
-import BookList from './bookList';
+import BookList from 'components/books/bookList';
 
 async function getBooks() {
 	let books: object;
@@ -70,7 +70,7 @@ export default function Dashboard() {
 			</h1>
 		</div>
 		<div className='book-list-container'>
-		<div className="font-family">
+		<div className='carousel-title'>
 		Trending books
 		</div>
 		<BookList books={books}/>
