@@ -3,7 +3,7 @@ import { Notifications } from '@mantine/notifications';
 
 export default function RootLayout({children,}: {children: React.ReactNode}) {
 	const theme = createTheme({
-		fontFamily: 'Verdana, sans-serif',
+		fontFamily: 'Arial, Helvetica, sans-serif',
 		fontFamilyMonospace: 'Monaco, Courier, monospace',
 		headings: { fontFamily: 'Greycliff CF, sans-serif' },
 	});
