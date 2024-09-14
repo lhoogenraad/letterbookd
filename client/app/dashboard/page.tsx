@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from 'react';
-import { NextPageContext } from 'next';
 import notify from 'util/notify/notify';
 import api from 'util/api/api';
 import './dashboard.style.css';
@@ -35,6 +34,10 @@ export default function Dashboard() {
 	}
 
 	return (
+		<div className='dashboard-container'>
+		<h1 className='title'>
+		Dashboard
+		</h1>
 		<div className='book-list-container'>
 		{books.map((book: any) => (
 			<div className='book-list-item'>
@@ -49,6 +52,7 @@ export default function Dashboard() {
 			</div>
 			</div>
 		))}
+		</div>
 		</div>
 	)
 };
