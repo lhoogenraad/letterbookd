@@ -18,6 +18,10 @@ export default function Navbar() {
 				icon
 			</div>
 
+			<div className="navbar-title">
+				Letterbookd
+			</div>
+
 			<div className="navbar-btns">
 				<div>btn1</div>
 				<div>btn2</div>
