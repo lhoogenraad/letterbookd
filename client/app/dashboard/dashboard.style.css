@@ -1,16 +1,4 @@
 
-.navbar-container {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	padding: 1rem 1rem;
-}
-
-.navbar-action-buttons {
-	display: flex;
-	flex-direction: row;
-	gap: 1rem;
-}
 
 .title-container {
 	background-color: rgb(240, 240, 240);
