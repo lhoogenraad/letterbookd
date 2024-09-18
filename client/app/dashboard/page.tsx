@@ -34,7 +34,7 @@ export default function Dashboard() {
 
 		// Get username
 		const claims = jwt.decode(localStorage.getItem("authToken"))
-		setFirstName(claims.firstName);
+		setFirstName(claims?.firstName);
 	}, []);
 
 
