@@ -4,12 +4,16 @@
 	flex-direction: row;
 	justify-content: space-between;
 	padding: 1rem 1rem;
-	margin-top: 2px;
-	background-color: #ffeeff;
+	background-color: black;
+	color: white;
+
+	border-bottom-left-radius: 10%;
+	border-bottom-right-radius: 10%;
 }
 
 .navbar-title {
 	font-size: 1.2rem;
+	font-weight: bold;
 }
 
 .navbar-btns {
