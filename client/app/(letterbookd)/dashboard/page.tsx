@@ -4,11 +4,8 @@ import { useState, useEffect } from 'react';
 import jwt from 'jsonwebtoken';
 import '@mantine/core/styles.css';
 import notify from 'util/notify/notify';
-import { IconBook } from '@tabler/icons-react';
-import { Button } from '@mantine/core';
 import api from 'util/api/api';
 import './dashboard.style.css';
-import { Carousel } from '@mantine/carousel';
 import BookList from 'components/books/bookList';
 
 async function getBooks() {
