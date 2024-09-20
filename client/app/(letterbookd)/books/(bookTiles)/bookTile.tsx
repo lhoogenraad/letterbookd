@@ -7,8 +7,7 @@ export default function BookTile({book}) {
 			<Image 
 				className='book-tile-img'
 				src={null}
-				h={200}
-				w={200}
+				w='8rem'
 				radius="md"
 				fallbackSrc="https://placehold.co/600x400?text=Placeholder"
 			/>

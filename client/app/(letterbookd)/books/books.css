@@ -25,19 +25,14 @@
 	min-width: 15rem;
 	display: flex;
 	flex-direction: row;
-	gap: 1rem;
+	gap: 3rem;
 	justify-content: flex-start;
 }
 
 
 .books-list-container {
-	display: flex;
-	flex-direction: row;
-	align-content: space-around;
-	flex-wrap: wrap;
-	gap: 1rem;
-}
-
-.book-tile {
-	width: 15rem;
+	display: grid; /* 1 */
+	grid-template-columns: repeat(auto-fill, 15rem); /* 2 */
+	grid-gap: 3rem; /* 3 */
+	justify-content: space-evenly; /* 4 */
 }
