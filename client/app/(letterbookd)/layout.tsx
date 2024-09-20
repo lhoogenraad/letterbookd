@@ -1,7 +1,7 @@
 import { MantineProvider, createTheme } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import '@mantine/carousel/styles.css';
-import Navbar from '../components/nav/navbar.tsx';
+import Navbar from '../../components/nav/navbar.tsx';
 import '@mantine/notifications/styles.css';
 
 export default function RootLayout({children,}: {children: React.ReactNode}) {
@@ -14,10 +14,8 @@ export default function RootLayout({children,}: {children: React.ReactNode}) {
 	return (
 		<html lang="en">
 			<body>
-				<MantineProvider theme={theme}>
-					<Notifications position="top-center" limit={5} />
-					{children}
-				</MantineProvider>
+				<Navbar />
+				{children}
 			</body>
 		</html>
 	)

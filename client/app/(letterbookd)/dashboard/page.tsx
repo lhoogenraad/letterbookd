@@ -34,7 +34,7 @@ export default function Dashboard() {
 
 		// Get username
 		const claims = jwt.decode(localStorage.getItem("authToken"))
-		setFirstName(claims.firstName);
+		setFirstName(claims?.firstName);
 	}, []);
 
 
@@ -47,19 +47,6 @@ export default function Dashboard() {
 
 	return (
 		<div className='dashboard-container'>
-		<div className='navbar-container'>
-		<div>
-			<IconBook/>
-		</div>
-		<div className='font-family'>
-			Letterbookd
-		</div>
-		<div className='navbar-action-buttons'>
-			<Button variant="filled">My Read List</Button>
-			<Button>My Account</Button>
-			<Button>Sign Out</Button>
-		</div>
-		</div>
 		<div className='title-container'>
 			<h1 className='title'>
 				{

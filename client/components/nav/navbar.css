@@ -1,0 +1,27 @@
+.navbar-container {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 1rem 1rem;
+	background-color: black;
+	color: white;
+
+	border-bottom-left-radius: 10%;
+	border-bottom-right-radius: 10%;
+}
+
+.navbar-title {
+	font-size: 1.2rem;
+	font-weight: bold;
+}
+
+.navbar-btns {
+	display: flex;
+	flex-direction: row;
+	gap: 2rem;
+}
+
+.navbar-btn .root {
+	color: purple;
+}
