@@ -15,8 +15,22 @@
 .book-tile-img {
 	max-width: 10rem;
 	max-height: 10rem;
-	padding: 0.4rem;
 	margin: auto;
+	padding: 0.4rem;
 	border: 1px solid red;
 	border-radius: 15px;
+}
+
+.book-tile-title {
+	font-weight: bold;
+	font-size: 1.2rem;
+}
+
+.book-tile-author {
+	font-weight: light;
+	font-size: 0.9rem;
+}
+
+.book-tile-published {
+	font-size: 0.7rem;
 }
