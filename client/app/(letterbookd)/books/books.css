@@ -1,5 +1,5 @@
 .books-container {
-	padding: 1rem;
+	padding: 2rem;
 
 	display: flex;
 	flex-direction: column;
@@ -30,5 +30,5 @@
 	display: grid; /* 1 */
 	grid-template-columns: repeat(auto-fill, 15rem); /* 2 */
 	grid-gap: 3rem; /* 3 */
-	justify-content: space-evenly; /* 4 */
+	justify-content: space-between; /* 4 */
 }
