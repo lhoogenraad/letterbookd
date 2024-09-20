@@ -3,7 +3,7 @@ import Autoplay from 'embla-carousel-autoplay';
 import { useRef } from 'react';
 
 export default function BookList({books}) {
-	const autoplay = useRef(Autoplay({ delay: 10000 }));
+	const autoplay = useRef(Autoplay({ delay: 5000 }));
 
 
 	return (
