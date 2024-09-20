@@ -8,21 +8,17 @@
 
 
 .books-filters-container {
+	width: 40%;
 	padding: 1rem;
+	min-width: 15rem;
 
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
 }
 
-.books-filters-search {
-	width: 40%;
-	min-width: 10rem;
-}
 
 .books-filters-select-container {
-	width: 50%;
-	min-width: 15rem;
 	display: flex;
 	flex-direction: row;
 	gap: 3rem;

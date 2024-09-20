@@ -59,6 +59,7 @@ export default function Books() {
 
 			<div className="books-filters-container">
 				<Input
+					variant='filled'
 					className='books-filters-search'
 					placeholder='Search books...'
 					value={searchText}
