@@ -4,10 +4,12 @@ import api from 'util/api/api';
 import notify from 'util/notify/notify';
 import { useState, useEffect } from 'react';
 import BookTile from './(bookTiles)/bookTile';
+import { Input } from '@mantine/core';
 import './books.css';
 
 export default  function Books() {
 	const [books, setBookList] = useState(null);
+	const [searchText, setSearchText] = useState('');
 	const [loading, setLoading] = useState(false);
 
 	const getBooksList = async () => {
@@ -19,6 +21,24 @@ export default  function Books() {
 			.finally(() => setLoading(false));
 	};
 
+
+	const filterBookList = (books: Array<object>, searchText: string) => {
+		if (!searchText || searchText === "") return books;
+
+		return books.filter((book: object) => {
+			let bookHasMatching = false;
+			Object.values(book).every((bookAttribute) => {
+				if (bookAttribute.toString().toLowerCase().includes(searchText.toLowerCase())) {
+					bookHasMatching = true;
+					return;
+				}
+			});
+			return bookHasMatching;
+		});
+	};
+
+	const filteredBooks = filterBookList(books, searchText);
+
 	useEffect(() => {
 		getBooksList();
 	}, []);
@@ -29,9 +49,16 @@ export default  function Books() {
 
 	return (
 		<div className="books-container">
+
+			<div className="books-filters-container">
+				<Input placeholder='Search books...' value={searchText} onChange={(ev) => {
+					return setSearchText(ev.currentTarget.value);
+				}}>
+				</Input>
+			</div>
 			
 			<div className="books-list-container">
-			{books.map((book: any, index: number) => (
+			{filteredBooks.map((book: any, index: number) => (
 				<div className="book-tile" key={index}>
 					<BookTile book={book} />
 				</div>

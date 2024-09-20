@@ -1,7 +1,17 @@
 .books-container {
 	padding: 1rem;
 	border: 1px solid blue;
+
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
 }
+
+
+.books-filters-container {
+	border: 1px solid red;
+}
+
 
 .books-list-container {
 	display: flex;
