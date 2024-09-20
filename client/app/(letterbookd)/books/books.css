@@ -1,0 +1,15 @@
+.books-container {
+	padding: 1rem;
+	border: 1px solid blue;
+}
+
+.books-list-container {
+	display: flex;
+	flex-direction: row;
+	align-content: flex-start;
+	gap: 1rem;
+}
+
+.book-tile {
+	width: 15rem;
+}
