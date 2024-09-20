@@ -30,9 +30,14 @@ export default function Books() {
 		return books.filter((book: object) => {
 			let bookHasMatching = false;
 			Object.values(book).every((bookAttribute) => {
-				if (bookAttribute.toString().toLowerCase().includes(searchText.toLowerCase())) {
-					bookHasMatching = true;
-					return;
+				try {
+					if (bookAttribute.toString().toLowerCase().includes(searchText.toLowerCase())) {
+						bookHasMatching = true;
+						return;
+					}
+				} catch (error) {
+					console.error(error.message);
+					console.error("Failed to filter on book", book);
 				}
 			});
 			return bookHasMatching;
@@ -72,6 +77,7 @@ export default function Books() {
 
 				<div className='books-filters-select-container'>
 					<Select 
+						clearable
 						label='Genre'
 						data={['Fantasy', 'History', 'Drama']}
 					/>
