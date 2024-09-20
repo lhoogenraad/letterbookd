@@ -18,7 +18,9 @@ export default function LogoutButton() {
 
 	return (
 		<Button 
-			variant="filled"
+			className="logout-btn"
+			variant="subtle"
+			color="rgb(100, 200, 150)"
 			onClick={() => logout()}
 		>
 		Logout
