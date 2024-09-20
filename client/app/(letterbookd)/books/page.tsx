@@ -32,8 +32,8 @@ export default  function Books() {
 			
 			<div className="books-list-container">
 			{books.map((book: any, index: number) => (
-				<div className="book-tile">
-					<BookTile key={index} book={book} />
+				<div className="book-tile" key={index}>
+					<BookTile book={book} />
 				</div>
 			))}
 			</div>
