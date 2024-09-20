@@ -1,0 +1,22 @@
+.book-tile-container {
+	padding: 0.5rem;
+	
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+
+	text-align: center;
+
+
+	border: 1px solid green;
+	background-color: #eeffee;
+}
+
+.book-tile-img {
+	max-width: 10rem;
+	max-height: 10rem;
+	padding: 0.4rem;
+	margin: auto;
+	border: 1px solid red;
+	border-radius: 15px;
+}

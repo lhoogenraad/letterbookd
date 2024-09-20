@@ -3,8 +3,8 @@
 import api from 'util/api/api';
 import notify from 'util/notify/notify';
 import { useState, useEffect } from 'react';
-import BookTile from './bookTile';
-
+import BookTile from './(bookTiles)/bookTile';
+// import './books.css';
 
 export default  function Books() {
 	const [books, setBookList] = useState(null);
