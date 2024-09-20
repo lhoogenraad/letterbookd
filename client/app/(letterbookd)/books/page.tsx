@@ -4,7 +4,7 @@ import api from 'util/api/api';
 import notify from 'util/notify/notify';
 import { useState, useEffect } from 'react';
 import BookTile from './(bookTiles)/bookTile';
-import { Input, CloseButton } from '@mantine/core';
+import { Input, CloseButton, Select, MultiSelect } from '@mantine/core';
 import './books.css';
 
 export default function Books() {
@@ -45,17 +45,19 @@ export default function Books() {
 		getBooksList();
 	}, []);
 
+
 	if (loading || !books) {
 		return <div>Loading..</div>
 	}
-
 	return (
 		<div className="books-container">
 
 			<div className="books-filters-container">
 				<Input
+					className='books-filters-search'
 					placeholder='Search books...'
 					value={searchText}
+					rightSectionPointerEvents="all"
 					rightSection = {
 						<CloseButton 
 							aria-label='Clear input'
@@ -66,7 +68,20 @@ export default function Books() {
 					onChange={(ev) => {
 						return setSearchText(ev.currentTarget.value);
 					}}
-				/>
+				></Input>
+
+				<div className='books-filters-select-container'>
+					<Select 
+						label='Genre'
+						data={['Fantasy', 'History', 'Drama']}
+					/>
+
+					<MultiSelect 
+						clearable
+						label='Rating'
+						data={['1', '2', '3', '4', '5']}
+					/>
+				</div>
 			</div>
 
 			<div className="books-list-container">
