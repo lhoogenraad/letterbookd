@@ -1,7 +1,4 @@
-"use client"
-
 import "./navbar.css"
-import hideNavbarRoutes from './routesToHideNavbar.tsx';
 import { IconBook } from '@tabler/icons-react';
 import LogoutButton from './logoutButton.tsx';
 
