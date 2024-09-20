@@ -2,6 +2,7 @@ import { MantineProvider, createTheme } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import '@mantine/carousel/styles.css';
 import '@mantine/notifications/styles.css';
+import '@mantine/core/styles.css';
 
 export default function RootLayout({children,}: {children: React.ReactNode}) {
 	const theme = createTheme({

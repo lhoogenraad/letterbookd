@@ -4,10 +4,10 @@ import api from 'util/api/api';
 import notify from 'util/notify/notify';
 import { useState, useEffect } from 'react';
 import BookTile from './(bookTiles)/bookTile';
-import { Input } from '@mantine/core';
+import { Input, CloseButton } from '@mantine/core';
 import './books.css';
 
-export default  function Books() {
+export default function Books() {
 	const [books, setBookList] = useState(null);
 	const [searchText, setSearchText] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -16,8 +16,10 @@ export default  function Books() {
 		setLoading(true);
 		await api.books.getAllBooks()
 			.then((res) => setBookList(res.data))
-			.catch(() => notify.info({message: `Failed to load books list for ` + 
-										`some reason, please try again later!`}))
+			.catch(() => notify.info({
+				message: `Failed to load books list for ` +
+					`some reason, please try again later!`
+			}))
 			.finally(() => setLoading(false));
 	};
 
@@ -51,18 +53,28 @@ export default  function Books() {
 		<div className="books-container">
 
 			<div className="books-filters-container">
-				<Input placeholder='Search books...' value={searchText} onChange={(ev) => {
-					return setSearchText(ev.currentTarget.value);
-				}}>
-				</Input>
+				<Input
+					placeholder='Search books...'
+					value={searchText}
+					rightSection = {
+						<CloseButton 
+							aria-label='Clear input'
+							onClick = {() => setSearchText('')}
+							style={{ display: searchText ? undefined : 'none' }}
+						/>
+					}
+					onChange={(ev) => {
+						return setSearchText(ev.currentTarget.value);
+					}}
+				/>
 			</div>
-			
+
 			<div className="books-list-container">
-			{filteredBooks.map((book: any, index: number) => (
-				<div className="book-tile" key={index}>
-					<BookTile book={book} />
-				</div>
-			))}
+				{filteredBooks.map((book: any, index: number) => (
+					<div className="book-tile" key={index}>
+						<BookTile book={book} />
+					</div>
+				))}
 			</div>
 		</div>
 	)
