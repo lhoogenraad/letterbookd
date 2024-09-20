@@ -1,19 +1,23 @@
 .navbar-container {
-	width: 100%;
+	width: 95%;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	padding: 1rem 1rem;
+	margin: 0 auto;
 	background-color: black;
 	color: white;
 
-	border-bottom-left-radius: 10%;
-	border-bottom-right-radius: 10%;
+	border-bottom-left-radius: 5%;
+	border-bottom-right-radius: 5%;
 }
 
 .navbar-title {
-	font-size: 1.2rem;
-	font-weight: bold;
+	font-size: 1.4rem;
+	/* font-weight: bold; */
+
+	color: white;
+	text-decoration: none;
 }
 
 .navbar-btns {

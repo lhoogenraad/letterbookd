@@ -1,19 +1,25 @@
 .book-tile-container {
 	padding: 0.5rem;
-	
+
 	display: flex;
 	flex-direction: column;
 	gap: 5px;
 
 	text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
+	white-space: nowrap;
+	overflow: hidden;
 	text-overflow: ellipsis;
 
 
 	border: 1px solid green;
 	border-radius: 1rem;
 	background-color: #eeffee;
+
+	-webkit-user-select: none; /* Safari */        
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+/Edge */
+	user-select: none; /* Standard */
+
 }
 
 .book-tile-container:hover {
