@@ -11,9 +11,8 @@
 	text-overflow: ellipsis;
 
 
-	border: 1px solid green;
 	border-radius: 1rem;
-	background-color: #eeffee;
+	background-color: #ddd;
 
 	-webkit-user-select: none; /* Safari */        
 	-moz-user-select: none; /* Firefox */
@@ -35,11 +34,10 @@
 
 
 .book-tile-img {
-	max-width: 10rem;
-	max-height: 10rem;
+	border: 1px solid #eee;
+	max-width: 8rem;
+	max-height: 8rem;
 	margin: auto;
-	padding: 0.4rem;
-	border: 1px solid red;
 	border-radius: 15px;
 }
 
