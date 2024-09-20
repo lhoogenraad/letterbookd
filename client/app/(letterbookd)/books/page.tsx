@@ -29,7 +29,7 @@ export default function Books() {
 
 		return books.filter((book: object) => {
 			let bookHasMatching = false;
-			Object.values(book).every((bookAttribute) => {
+			Object.values(book).forEach((bookAttribute) => {
 				try {
 					if (bookAttribute.toString().toLowerCase().includes(searchText.toLowerCase())) {
 						bookHasMatching = true;
