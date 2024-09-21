@@ -16,7 +16,6 @@ func NewDatabase() (*sql.DB, error) {
         Net:    "tcp",
         Addr:   "127.0.0.1:3306",
         DBName: "letterbookd",
-        Passwd: "password",
     }
 	// Get a database handle.
     var err error

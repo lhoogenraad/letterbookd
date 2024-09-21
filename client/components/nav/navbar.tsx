@@ -3,8 +3,9 @@
 
 import "./navbar.css"
 import { IconBook } from '@tabler/icons-react';
-import LogoutButton from './logoutButton.tsx';
+import LogoutButton from './logoutButton';
 import { Button } from '@mantine/core';
+import Link from 'next/link';
 import notify from 'util/notify/notify';
 
 
@@ -19,9 +20,11 @@ export default function Navbar() {
 			<IconBook/>
 			</div>
 
+				<Link href="/dashboard">
 			<div className="navbar-title">
-				Letterbookd
+					Letterbookd
 			</div>
+				</Link>
 
 			<div className="navbar-btns">
 				<Button className="navbar-btn" variant="light" color="gray" 
