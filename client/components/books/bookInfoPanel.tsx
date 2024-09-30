@@ -2,6 +2,10 @@ import './bookInfoPanel.css';
 import { Image } from '@mantine/core';
 
 export default function BookInfoPanel({ book }) {
+	// Test data
+	const avgRating = 4.6;
+	const numReviews = 501;
+
 	if (!book) {
 		return (
 			<div className="book-container">
@@ -35,6 +39,17 @@ export default function BookInfoPanel({ book }) {
 						Synopsis
 					</span>
 					<div className="book-info-item-content">{book.Synopsis}</div>
+				</div>
+
+				<div className="book-info-item">
+					<div className="book-info-review-aggregate">
+						<div className="review-average-rating">
+							Average rating: {avgRating}
+						</div>
+						<div className="review-number-views">
+							(Out of {numReviews} reviews)
+						</div>
+					</div>
 				</div>
 			</div>
 
