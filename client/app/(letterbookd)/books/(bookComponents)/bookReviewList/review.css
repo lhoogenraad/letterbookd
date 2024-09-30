@@ -1,7 +1,7 @@
 .review-container{
-	border-radius: 15px;
-	border: 1px solid red;
 	padding: 0.5rem;
+	border: 1px solid #eee;
+	border-bottom-right-radius: 15px;
 
 	display: flex;
 	flex-direction: column;
@@ -12,12 +12,14 @@
 }
 
 .review-container{
-	border: 1px solid lightblue;
+	/* border: 1px solid lightblue; */
 }
 
 .review-header{
 	font-size: 1.15rem;
+	padding: 0 1rem;
 	background-color: lightgrey;
+	border-top-left-radius: 15px;
 }
 
 .review-metadata-container{
