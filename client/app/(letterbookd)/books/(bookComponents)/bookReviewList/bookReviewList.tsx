@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import api from 'util/api/api';
 import notify from 'util/notify/notify';
 import BookReview from './bookReview';
+import './reviewList.css';
 
 export default function BookReviewList({bookId}) {
 	const [reviews, setReviews] = useState(null);
@@ -20,6 +21,10 @@ export default function BookReviewList({bookId}) {
 	useEffect(() => {
 		getBookReviews();
 	}, []);
+
+	if (loading || !reviews) {
+		return <div>Loading/Rendering...</div>
+	}
 
 	return (
 		<div className="book-reviews-container">
