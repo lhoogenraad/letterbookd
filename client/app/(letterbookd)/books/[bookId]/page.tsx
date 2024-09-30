@@ -5,6 +5,7 @@ import api from 'util/api/api';
 import notify from 'util/notify/notify';
 import { useState, useEffect } from 'react';
 import BookInfoPanel from '../(bookComponents)/bookInfoPanel/bookInfoPanel';
+import BookReviews from '../(bookComponents)/bookReviewList/bookReviewList';
 
 export default function Book({ params }: { params: { bookId: number } }) {
 	const [book, setBook] = useState(null);
@@ -26,7 +27,7 @@ export default function Book({ params }: { params: { bookId: number } }) {
 	}, []);
 
 
-	if (loading) {
+	if (loading || !book) {
 		return (
 			<div className="book-container">
 				<div>Loading...</div>
@@ -37,6 +38,7 @@ export default function Book({ params }: { params: { bookId: number } }) {
 	return (
 		<div className="book-container">
 			<BookInfoPanel book={book}/>
+			<BookReviews bookId={book.Id}/>
 		</div>
 	)
 }

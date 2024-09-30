@@ -9,15 +9,15 @@ export default function BookInfoPanel({ book }) {
 
 	if (!book) {
 		return (
-			<div className="book-container">
+			<div className="book-info-container">
 				<div>Rendering. . .</div>
 			</div>
 		)
 	}
 
 	return (
-		<div className="book-container">
-			<div className="book-info-container">
+		<div className="book-info-container">
+			<div>
 
 				<div className="book-info-item">
 					<span className="book-info-subheader">
