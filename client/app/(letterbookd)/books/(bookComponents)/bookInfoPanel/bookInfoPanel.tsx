@@ -1,10 +1,11 @@
 import './bookInfoPanel.css';
 import { Image, Button } from '@mantine/core';
 import { IconTablePlus, IconPencilPlus } from '@tabler/icons-react';
+import { Rating, Tooltip } from '@mantine/core';
 
 export default function BookInfoPanel({ book }) {
 	// Test data
-	const avgRating = 4.6;
+	const avgRating = 8.3;
 	const numReviews = 501;
 
 	if (!book) {
@@ -55,7 +56,10 @@ export default function BookInfoPanel({ book }) {
 				<div className="book-info-item">
 					<div className="book-info-review-aggregate">
 						<div className="review-average-rating">
-							Average rating: {avgRating}
+							Average rating: 
+								<Tooltip label={avgRating/2}>
+								<Rating readOnly fractions={2} value={avgRating/2}/>
+								</Tooltip>
 						</div>
 						<div className="review-number-views">
 							(Out of {numReviews} reviews)
