@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import api from 'util/api/api';
 import notify from 'util/notify/notify';
+import BookReview from './bookReview';
 
 export default function BookReviewList({bookId}) {
 	const [reviews, setReviews] = useState(null);
@@ -11,9 +12,9 @@ export default function BookReviewList({bookId}) {
 	const getBookReviews = async () => {
 		setLoading(true);
 		await api.reviews.getBookReviews(bookId)
-			.then((res) => setReviews(res.data))
-			.catch((err) => notify.info({message: `Failed to load reviews for this book. ${err.message}`}))
-			.finally(() => setLoading(false));
+		.then((res) => setReviews(res.data))
+		.catch((err) => notify.info({message: `Failed to load reviews for this book. ${err.message}`}))
+		.finally(() => setLoading(false));
 	};
 
 	useEffect(() => {
@@ -21,11 +22,12 @@ export default function BookReviewList({bookId}) {
 	}, []);
 
 	return (
-		<div>
-		<div>
-		bookId: {bookId}
-		reviews: {JSON.stringify( reviews )}
-		</div>
+		<div className="book-reviews-container">
+			{reviews.map((review: any, index: number) => (
+				<div key={index}>
+					<BookReview review={review}/>
+				</div>
+			))}
 		</div>
 	)
 }
