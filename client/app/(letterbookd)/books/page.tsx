@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import BookTile from './(bookComponents)/bookTile/bookTile';
 import { Input, CloseButton, Select, MultiSelect } from '@mantine/core';
 import './books.css';
+import Link from 'next/link';
 
 export default function Books() {
 	const [books, setBookList] = useState(null);
@@ -93,9 +94,11 @@ export default function Books() {
 
 			<div className="books-list-container">
 				{filteredBooks.map((book: any, index: number) => (
+					<Link href={{pathname: `/books/${book.Id}`}}>
 					<div className="book-tile" key={index}>
 						<BookTile book={book} />
 					</div>
+					</Link>
 				))}
 			</div>
 		</div>

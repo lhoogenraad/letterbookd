@@ -7,13 +7,15 @@ import BookReview from './bookReview';
 import './reviewList.css';
 
 export default function BookReviewList({bookId}) {
-	const [reviews, setReviews] = useState(null);
+	const [reviews, setReviews] = useState([]);
 	const [loading, setLoading] = useState(false);
 
 	const getBookReviews = async () => {
 		setLoading(true);
 		await api.reviews.getBookReviews(bookId)
-		.then((res) => setReviews(res.data))
+		.then((res) => {
+			if (res.data) setReviews(res.data)
+		})
 		.catch((err) => notify.info({message: `Failed to load reviews for this book. ${err.message}`}))
 		.finally(() => setLoading(false));
 	};
@@ -22,8 +24,8 @@ export default function BookReviewList({bookId}) {
 		getBookReviews();
 	}, []);
 
-	if (loading || !reviews) {
-		return <div>Loading/Rendering...</div>
+	if (loading) {
+		return <div>Loading/Rendering Book reviews...</div>
 	}
 
 	return (
