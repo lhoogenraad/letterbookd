@@ -1,5 +1,6 @@
 import './bookInfoPanel.css';
-import { Image } from '@mantine/core';
+import { Image, Button } from '@mantine/core';
+import { IconTablePlus, IconPencilPlus } from '@tabler/icons-react';
 
 export default function BookInfoPanel({ book }) {
 	// Test data
@@ -61,6 +62,11 @@ export default function BookInfoPanel({ book }) {
 					radius="md"
 					fallbackSrc="https://placehold.co/600x400?text=Placeholder"
 				/>
+
+				<div className="book-info-actions-container">
+					<Button rightSection={<IconTablePlus size={20}/>} fullWidth>Add to my Readlist</Button>
+					<Button rightSection={<IconPencilPlus size={20}/>} fullWidth>Create Review</Button>
+				</div>
 			</div>
 		</div>
 	)

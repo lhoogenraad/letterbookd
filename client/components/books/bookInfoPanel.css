@@ -24,6 +24,22 @@
 .book-info-img{
 	display: flex;
 	align-items: center;
+	flex-direction: column;
+}
+
+.book-info-actions-container{
+	width: 100%;
+	margin-top: 1.5rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+
+.book-info-actions-container Button{
+	margin-bottom: 0.4rem;
+	background-color: rgb(20, 10, 10, 0.9);
+	font-size: 0.8rem;
 }
 
 .book-info-review-aggregate{
