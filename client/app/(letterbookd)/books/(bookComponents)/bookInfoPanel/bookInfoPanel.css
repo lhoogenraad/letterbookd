@@ -1,0 +1,47 @@
+.book-info-container{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	gap: 4vw;
+}
+
+.book-info-item{
+	margin: 1rem 0;
+}
+
+.book-info-subheader{
+	margin: 0;
+	font-size: 0.75rem;
+}
+
+.book-title{
+	margin: 0;
+}
+
+.book-info-img{
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+
+.book-info-actions-container{
+	width: 100%;
+	margin-top: 1.5rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+
+.book-info-actions-container Button{
+	margin-bottom: 0.4rem;
+	background-color: rgb(20, 10, 10, 0.9);
+	font-size: 0.8rem;
+}
+
+.book-info-review-aggregate{
+	margin-top: 4rem;
+	padding: 5px;
+	background-color: lightgreen;
+
+}

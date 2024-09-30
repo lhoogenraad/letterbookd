@@ -3,14 +3,15 @@
 import api from 'util/api/api';
 import notify from 'util/notify/notify';
 import { useState, useEffect } from 'react';
-import BookTile from './(bookTiles)/bookTile';
+import BookTile from './(bookComponents)/bookTile/bookTile';
 import { Input, CloseButton, Select, MultiSelect } from '@mantine/core';
 import './books.css';
+import Link from 'next/link';
 
 export default function Books() {
 	const [books, setBookList] = useState(null);
-	const [searchText, setSearchText] = useState('');
 	const [loading, setLoading] = useState(false);
+	const [searchText, setSearchText] = useState('');
 
 	const getBooksList = async () => {
 		setLoading(true);
@@ -93,9 +94,11 @@ export default function Books() {
 
 			<div className="books-list-container">
 				{filteredBooks.map((book: any, index: number) => (
+					<Link href={{pathname: `/books/${book.Id}`}}>
 					<div className="book-tile" key={index}>
 						<BookTile book={book} />
 					</div>
+					</Link>
 				))}
 			</div>
 		</div>

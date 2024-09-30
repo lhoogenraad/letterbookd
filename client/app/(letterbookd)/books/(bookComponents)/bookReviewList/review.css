@@ -1,0 +1,29 @@
+.review-container{
+	padding: 0.5rem;
+	border: 1px solid #eee;
+	border-bottom-right-radius: 15px;
+
+	display: flex;
+	flex-direction: column;
+}
+
+.review-header{
+	font-size: 1.15rem;
+	padding: 0 1rem;
+	background-color: black;
+	color: #eee;
+	border-top-left-radius: 15px;
+}
+
+.review-metadata-container{
+	display: flex;
+	flex-direction: row;
+	gap: 0.2rem;
+	align-items: center;
+	margin-bottom: 8px;
+}
+
+.vertical-seperator{
+	font-size: 2rem;
+	font-weight: bold;
+}

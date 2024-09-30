@@ -36,6 +36,7 @@ CREATE TABLE books (
 	published_date date NOT NULL,
 	num_pages int,
 	cover_url varchar(255),
+	synopsis text DEFAULT 'No synopsis available.',
 
 	FOREIGN KEY (author_id) REFERENCES authors(id)
 );
