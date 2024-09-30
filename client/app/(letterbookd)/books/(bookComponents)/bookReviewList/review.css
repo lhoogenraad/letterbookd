@@ -7,18 +7,11 @@
 	flex-direction: column;
 }
 
-.review-container * {
-	/* border: 1px solid pink; */
-}
-
-.review-container{
-	/* border: 1px solid lightblue; */
-}
-
 .review-header{
 	font-size: 1.15rem;
 	padding: 0 1rem;
-	background-color: lightgrey;
+	background-color: black;
+	color: #eee;
 	border-top-left-radius: 15px;
 }
 
