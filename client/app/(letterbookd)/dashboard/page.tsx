@@ -6,7 +6,7 @@ import '@mantine/core/styles.css';
 import notify from 'util/notify/notify';
 import api from 'util/api/api';
 import './dashboard.style.css';
-import BookList from 'components/books/bookList';
+import BookList from '../books/(bookComponents)/bookList/bookList';
 
 async function getBooks() {
 	let books: object;
