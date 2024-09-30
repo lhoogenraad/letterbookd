@@ -9,6 +9,10 @@
 .book-info-item{
 	margin: 1rem 0;
 	border: 1px solid red;
+
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .book-info-subheader{
