@@ -10,4 +10,5 @@ type BookData struct {
 	Published time.Time
 	NumPages int32
 	CoverURL string
+	Synopsis string
 }

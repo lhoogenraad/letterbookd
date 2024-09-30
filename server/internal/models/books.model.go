@@ -12,7 +12,8 @@ func GetBooks() ([]resources.BookData, error) {
 	SELECT 
 	books.name, 
 	CONCAT(authors.first_name, ' ', authors.last_name) as author_name,
-	books.published_date, books.num_pages, IFNULL(books.cover_url, '')
+	books.published_date, books.num_pages, IFNULL(books.cover_url, ''),
+	IFNULL(books.synopsis, 'No synopsis.')
 	FROM books
 	JOIN authors
 	ON books.author_id=authors.id`
@@ -35,6 +36,7 @@ func GetBooks() ([]resources.BookData, error) {
 			&date,
 			&book.NumPages,
 			&book.CoverURL,
+			&book.Synopsis,
 		); err != nil {
 			return books, err
 		}
