@@ -26,6 +26,16 @@ export default function BookInfoPanel({ book }) {
 					<h2 className="book-title">{book.Title}</h2>
 				</div>
 
+
+				<div className="book-info-item">
+					<span className="book-info-subheader">
+						Author
+					</span>
+					<div className="book-info-item-content">
+						{book.Author}
+					</div>
+				</div>
+
 				<div className="book-info-item">
 					<span className="book-info-subheader">
 						Date Published
