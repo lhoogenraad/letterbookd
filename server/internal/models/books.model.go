@@ -10,6 +10,7 @@ import (
 func GetBooks() ([]resources.BookData, error) {
 	var queryString string = `
 	SELECT 
+	books.id,
 	books.name, 
 	CONCAT(authors.first_name, ' ', authors.last_name) as author_name,
 	books.published_date, books.num_pages, IFNULL(books.cover_url, ''),
@@ -31,6 +32,7 @@ func GetBooks() ([]resources.BookData, error) {
 		var book resources.BookData
 		var date string
 		if err := rows.Scan(
+			&book.Id,
 			&book.Title,
 			&book.Author,
 			&date,

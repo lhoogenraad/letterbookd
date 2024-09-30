@@ -5,6 +5,7 @@ import (
 )
 
 type BookData struct {
+	Id int
 	Title string
 	Author string
 	Published time.Time
