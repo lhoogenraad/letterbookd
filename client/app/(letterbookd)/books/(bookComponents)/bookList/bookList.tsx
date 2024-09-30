@@ -20,7 +20,7 @@ export default function BookList({ books }) {
 					<Carousel.Slide
 						className='book-list-item'
 						key={book.Title}>
-						<Link href={{
+						<Link style={{textDecoration: "inherit", color: "inherit"}}  href={{
 							pathname: `/books/${book.Id}`
 						}}>
 							<div className='book-title'>
