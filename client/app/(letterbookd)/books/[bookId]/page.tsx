@@ -4,6 +4,7 @@ import './books.style.css';
 import api from 'util/api/api';
 import notify from 'util/notify/notify';
 import { useState, useEffect } from 'react';
+import BookInfoPanel from 'components/books/bookInfoPanel';
 
 export default function Book({ params }: { params: { bookId: number } }) {
 	const [book, setBook] = useState(null);
@@ -35,9 +36,7 @@ export default function Book({ params }: { params: { bookId: number } }) {
 
 	return (
 		<div className="book-container">
-			Param: {params.bookId}
-			Book: {JSON.stringify(book)}
+			<BookInfoPanel book={book}/>
 		</div>
 	)
-
 }
