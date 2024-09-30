@@ -3,7 +3,7 @@
 import api from 'util/api/api';
 import notify from 'util/notify/notify';
 import { useState, useEffect } from 'react';
-import BookTile from './(bookTiles)/bookTile';
+import BookTile from './(bookComponents)/bookTile/bookTile';
 import { Input, CloseButton, Select, MultiSelect } from '@mantine/core';
 import './books.css';
 
