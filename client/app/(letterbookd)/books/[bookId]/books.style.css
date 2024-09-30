@@ -1,0 +1,9 @@
+.book-container {
+	border: 1px solid red;
+	width: 95%;
+	margin: 0 auto;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}

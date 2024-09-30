@@ -40,6 +40,7 @@ func ApiHandler(r *chi.Mux) {
 
 		// Books
 		router.Get("/books", GetBooks)
+		router.Get("/books/{bookId}", GetSingleBook)
 
 		// Reviews
 		router.Post("/books/{bookId}/reviews", CreateReview)
