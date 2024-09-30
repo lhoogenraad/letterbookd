@@ -9,8 +9,8 @@ import './books.css';
 
 export default function Books() {
 	const [books, setBookList] = useState(null);
-	const [searchText, setSearchText] = useState('');
 	const [loading, setLoading] = useState(false);
+	const [searchText, setSearchText] = useState('');
 
 	const getBooksList = async () => {
 		setLoading(true);
