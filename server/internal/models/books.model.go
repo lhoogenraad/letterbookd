@@ -100,7 +100,7 @@ func GetSingleBook(bookId int) (resources.BookData, error, int) {
 
 
 
-func GetBookAverageRating(bookId int) (float64, error) {
+func GetBookAverageRating(bookId int, output chan <- float64) (float64, error) {
 	var selectQuery string = `
 	SELECT IFNULL(AVG(rating), 0)
 	FROM reviews
@@ -114,12 +114,13 @@ func GetBookAverageRating(bookId int) (float64, error) {
 		return -1, errors.New(`Something went wrong on our end. Please try again later`)
 	}
 
+	output <- float64(avgReview)
 	return avgReview, nil
 }
 
 
 
-func GetBookNumberReviews(bookId int) (float64, error) {
+func GetBookNumberReviews(bookId int, output chan <- int) (int, error) {
 	var selectQuery string = `
 	SELECT IFNULL(COUNT(id), 0)
 	FROM reviews
@@ -133,5 +134,6 @@ func GetBookNumberReviews(bookId int) (float64, error) {
 		return -1, errors.New(`Something went wrong on our end. Please try again later`)
 	}
 
-	return float64(numReviews), nil
+	output <- numReviews
+	return numReviews, nil
 }

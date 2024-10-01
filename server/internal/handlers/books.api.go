@@ -79,15 +79,18 @@ func GetBookReviewSummary (w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	avgRating, err := models.GetBookNumberReviews(bookId)
+	avgRatingChan := make(chan float64, 1)
+	numReviewsChan := make(chan int, 1)
 
-	if err != nil {
-		log.Error(err)
-		api.InternalErrorHandler(w)
-		return
-	}
+	go models.GetBookAverageRating(bookId, avgRatingChan)
+	go models.GetBookNumberReviews(bookId, numReviewsChan)
 
-	err = json.NewEncoder(w).Encode(avgRating)
+	var avgRating float64 = <- avgRatingChan
+	var numReviews int = <- numReviewsChan
+
+	summary := map[string]interface{}{"avgRating":avgRating, "numReviews":numReviews}
+
+	err = json.NewEncoder(w).Encode(summary)
 
 	if err != nil {
 		log.Error(err)
