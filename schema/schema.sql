@@ -47,10 +47,13 @@ CREATE TABLE read_list_items (
 	book_id int NOT NULL,
 	user_id int NOT NULL,
 
+	status ENUM('Unread', 'Read'),
+
 	FOREIGN KEY (book_id) REFERENCES books(id),
 	FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
+ALTER TABLE read_list_items ADD UNIQUE unique_user_book(user_id, book_id);
 
 CREATE TABLE reviews (
 	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -77,19 +80,6 @@ CREATE TABLE review_comments (
 
 	FOREIGN KEY (user_id) REFERENCES users(id),
 	FOREIGN KEY (review_id) REFERENCES reviews(id)
-);
-
-
-CREATE TABLE user_readlist (
-	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	
-	book_id int NOT NULL,
-	user_id int NOT NULL,
-
-	status ENUM('Unread', 'Read'),
-
-	FOREIGN KEY (book_id) REFERENCES books(id),
-	FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 
