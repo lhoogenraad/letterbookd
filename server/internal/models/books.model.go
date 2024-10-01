@@ -116,3 +116,22 @@ func GetBookAverageRating(bookId int) (float64, error) {
 
 	return avgReview, nil
 }
+
+
+
+func GetBookNumberReviews(bookId int) (float64, error) {
+	var selectQuery string = `
+	SELECT IFNULL(COUNT(id), 0)
+	FROM reviews
+	WHERE book_id=?`
+
+	row := tools.DB.QueryRow(selectQuery, bookId)
+
+	var numReviews int
+	err := row.Scan(&numReviews)
+	if err != nil {
+		return -1, errors.New(`Something went wrong on our end. Please try again later`)
+	}
+
+	return float64(numReviews), nil
+}

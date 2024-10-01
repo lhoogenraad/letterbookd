@@ -79,7 +79,7 @@ func GetBookReviewSummary (w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	avgRating, err:= models.GetBookAverageRating(bookId)
+	avgRating, err := models.GetBookNumberReviews(bookId)
 
 	if err != nil {
 		log.Error(err)
