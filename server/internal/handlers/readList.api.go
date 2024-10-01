@@ -122,5 +122,5 @@ func UpdateReadListItem (w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusAccepted) 
-	json.NewEncoder(w).Encode(`We've added this book to your readlist!`)
+	json.NewEncoder(w).Encode(`We've updated this book successfully!`)
 }

@@ -53,7 +53,7 @@ func handleReadListModSQLError(err error) (error, int) {
 	log.Error(err)
 	var errMsg string = fmt.Sprint(err)
 	var status int = 500
-	var returnErr error = errors.New("Sorry, something went wrong adding this book to your read list.")
+	var returnErr error = errors.New("Sorry, something went wrong.")
 
 	if strings.Contains(errMsg, "read_list_items.unique_user_book") {
 		returnErr = errors.New("Sorry, it appears this book is already on your read list!")
@@ -91,7 +91,7 @@ func UpdateReadListItem (bookId int, userId int, request resources.ReadListModRe
 	WHERE user_id = ?
 	AND book_id = ?`
 
-	_, err := tools.DB.Exec(updateQuery, request.Status, userId, bookId)
+	_, err := tools.DB.Query(updateQuery, request.Status, userId, bookId)
 	
 	if err != nil {
 		err, code := handleReadListModSQLError(err)
