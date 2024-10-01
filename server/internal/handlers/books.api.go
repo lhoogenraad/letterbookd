@@ -66,3 +66,32 @@ func GetSingleBook (w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+
+func GetBookReviewSummary (w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	bookIdParam := utils.GetParam(r, "bookId")
+	bookId, err := strconv.Atoi(bookIdParam)
+
+	if err != nil {
+		api.CustomErrorHandler(w, 400, "Invalid book ID was given as a parameter.")
+		return
+	}
+
+	avgRating, err:= models.GetBookAverageRating(bookId)
+
+	if err != nil {
+		log.Error(err)
+		api.InternalErrorHandler(w)
+		return
+	}
+
+	err = json.NewEncoder(w).Encode(avgRating)
+
+	if err != nil {
+		log.Error(err)
+		api.InternalErrorHandler(w)
+		return
+	}
+}
