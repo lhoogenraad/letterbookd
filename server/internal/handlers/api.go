@@ -42,6 +42,9 @@ func ApiHandler(r *chi.Mux) {
 		router.Get("/books", GetBooks)
 		router.Get("/books/{bookId}", GetSingleBook)
 
+		// Readlist
+		router.Post("/read-list/book/{bookId}", AddBookToReadList)
+
 		// Reviews
 		router.Post("/books/{bookId}/reviews", CreateReview)
 		router.Put("/reviews/{reviewId}", UpdateReview)
@@ -50,5 +53,6 @@ func ApiHandler(r *chi.Mux) {
 		// Review Comments
 		router.Post("/reviews/{reviewId}/comments", CreateReviewComment)
 		router.Get("/reviews/{reviewId}/comments", GetReviewComments)
+
 	})
 }
