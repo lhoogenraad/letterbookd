@@ -8,6 +8,6 @@ type ReadListItem struct {
 	Status string
 }
 
-type AddBookToReadlistRequest struct {
+type ReadListModReq struct {
 	Status string
 }

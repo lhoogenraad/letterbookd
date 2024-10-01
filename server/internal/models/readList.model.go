@@ -49,11 +49,11 @@ func GetReadListItems(userId int) ([]resources.ReadListItem, error) {
 	return readListItems, nil
 }
 
-func handleAddToReadListSQLError(err error) (error, int) {
+func handleReadListModSQLError(err error) (error, int) {
 	log.Error(err)
 	var errMsg string = fmt.Sprint(err)
 	var status int = 500
-	var returnErr error = errors.New("Sorry, something went wrong adding this book to your read list.")
+	var returnErr error = errors.New("Sorry, something went wrong.")
 
 	if strings.Contains(errMsg, "read_list_items.unique_user_book") {
 		returnErr = errors.New("Sorry, it appears this book is already on your read list!")
@@ -66,7 +66,7 @@ func handleAddToReadListSQLError(err error) (error, int) {
 	return returnErr, status
 }
 
-func AddBookToReadlist (bookId int, userId int, request resources.AddBookToReadlistRequest) (error, int) {
+func AddBookToReadlist (bookId int, userId int, request resources.ReadListModReq) (error, int) {
 	var insertQuery string = `
 	INSERT INTO read_list_items
 	(status, user_id, book_id)
@@ -76,7 +76,25 @@ func AddBookToReadlist (bookId int, userId int, request resources.AddBookToReadl
 	_, err := tools.DB.Exec(insertQuery, request.Status, userId, bookId)
 	
 	if err != nil {
-		err, code := handleAddToReadListSQLError(err)
+		err, code := handleReadListModSQLError(err)
+		return err, code
+	}
+
+	return nil, -1
+}
+
+
+func UpdateReadListItem (bookId int, userId int, request resources.ReadListModReq) (error, int) {
+	var updateQuery string = `
+	UPDATE read_list_items
+	SET status = ?
+	WHERE user_id = ?
+	AND book_id = ?`
+
+	_, err := tools.DB.Query(updateQuery, request.Status, userId, bookId)
+	
+	if err != nil {
+		err, code := handleReadListModSQLError(err)
 		return err, code
 	}
 
