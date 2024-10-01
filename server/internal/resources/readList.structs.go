@@ -7,3 +7,7 @@ type ReadListItem struct {
 	BookName string
 	Status string
 }
+
+type AddBookToReadlistRequest struct {
+	Status string
+}
