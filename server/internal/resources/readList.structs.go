@@ -1,8 +1,9 @@
 package resources
 
 type ReadListItem struct {
-	id int
-	userId int
-	bookId int
-	bookName string
+	Id int
+	UserId int
+	BookId int
+	BookName string
+	Status string
 }
