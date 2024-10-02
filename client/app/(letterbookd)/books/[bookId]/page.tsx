@@ -44,7 +44,7 @@ export default function Book({ params }: { params: { bookId: number } }) {
 
 	return (
 		<div className="book-container">
-			<BookInfoPanel book={book} load={refresh}/>
+			<BookInfoPanel book={book} reload={refresh}/>
 			<BookReviews key={updateKey} bookId={book.Id}/>
 		</div>
 	)

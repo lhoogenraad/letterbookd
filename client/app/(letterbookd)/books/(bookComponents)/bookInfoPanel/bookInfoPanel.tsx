@@ -7,9 +7,13 @@ import BookReviewAverage from './bookReviewAverage';
 import AddBookToReadlistButton from './addBookToReadlistButton';
 import AddReview from 'components/reviews/addReview';
 
-export default function BookInfoPanel({ book, load}) {
+export default function BookInfoPanel({ book, reload}) {
 	const [opened, { open, close }] = useDisclosure(false);
 
+	const closeModal = () => {
+		console.log('close modal called')
+		close();
+	}
 
 	if (!book) {
 		return (
@@ -86,7 +90,7 @@ export default function BookInfoPanel({ book, load}) {
 			size="85%"
 			transitionProps={{ transition: 'slide-down' }}
 			>
-		  		<AddReview book={book} load={load}/>
+		  		<AddReview book={book} reload={reload} closeModal={closeModal}/>
 		  </Modal>
 		</div>
 	)

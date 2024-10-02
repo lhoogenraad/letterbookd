@@ -7,14 +7,17 @@ import api from 'util/api/api';
 import notify from 'util/notify/notify';
 import './addReview.css'
 
-export default function AddReview({book, load}) {
+export default function AddReview({book, reload, closeModal}) {
 	const [submitting, setSubmitting] = useState(false);
 
 	const submitReview = async (bookId: number, rating: number, description: string) => {
 		setSubmitting(true);
 		api.reviews.submitReview({bookId, rating, description})
-		.then(() => load())
-		.catch((err) => notify.error({message: err.response?.data?.Message}))
+		.then(() => {
+			reload()
+			closeModal()
+		})
+		.catch((err) => notify.error({message: err.response?.data?.Message ?? err.message}))
 		.finally(() => setSubmitting(false));
 	}
 
