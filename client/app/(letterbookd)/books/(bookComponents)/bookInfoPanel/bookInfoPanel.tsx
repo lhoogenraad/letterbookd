@@ -8,7 +8,7 @@ import AddBookToReadlistButton from './addBookToReadlistButton';
 import AddReview from 'components/reviews/addReview';
 
 export default function BookInfoPanel({ book }) {
-	const [opened, { open, close }] = useDisclosure(true);
+	const [opened, { open, close }] = useDisclosure(false);
 
 
 	if (!book) {
