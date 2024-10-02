@@ -1,6 +1,5 @@
 "use client"
 
-import { usePathname } from 'next/navigation'
 import "./navbar.css"
 import { useRouter } from 'next/navigation'
 import { Button } from '@mantine/core';
