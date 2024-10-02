@@ -1,10 +1,15 @@
 import './bookInfoPanel.css';
-import { Image, Button } from '@mantine/core';
+
+import { useDisclosure } from '@mantine/hooks';
+import { Image, Button, Modal } from '@mantine/core';
 import { IconPencilPlus } from '@tabler/icons-react';
 import BookReviewAverage from './bookReviewAverage';
 import AddBookToReadlistButton from './addBookToReadlistButton';
+import AddReview from 'components/reviews/addReview';
 
 export default function BookInfoPanel({ book }) {
+	const [opened, { open, close }] = useDisclosure(true);
+
 
 	if (!book) {
 		return (
@@ -68,9 +73,20 @@ export default function BookInfoPanel({ book }) {
 
 				<div className="book-info-actions-container">
 					<AddBookToReadlistButton bookId={book.Id} />
-					<Button rightSection={<IconPencilPlus size={20}/>} fullWidth>Create Review</Button>
+					<Button onClick={open} rightSection={<IconPencilPlus size={20}/>} fullWidth>Create Review</Button>
 				</div>
 			</div>
+
+
+		  <Modal 
+		  	opened={opened} 
+			onClose={close} 
+			title={`Leave review for ${book.Title}`}
+			centered
+			size="85%"
+			>
+		  		<AddReview book={book} />
+		  </Modal>
 		</div>
 	)
 }
