@@ -14,7 +14,7 @@ const info = ({message, title="Notification"}) => {
 	})
 }
 
-const error = ({message, title="Error"}) => {
+const error = ({message="Unexpected error occured", title="Error"}) => {
 	notifications.show({
 		message,
 		position: 'top-center',
