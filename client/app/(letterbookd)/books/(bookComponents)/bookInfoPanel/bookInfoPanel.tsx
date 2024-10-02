@@ -1,9 +1,8 @@
 import './bookInfoPanel.css';
 import { Image, Button } from '@mantine/core';
 import { IconTablePlus, IconPencilPlus } from '@tabler/icons-react';
-import { Rating, Tooltip } from '@mantine/core';
-import { useState } from 'react';
 import BookReviewAverage from './bookReviewAverage';
+import AddBookToReadlistButton from './addBookToReadlistButton';
 
 export default function BookInfoPanel({ book }) {
 
@@ -68,7 +67,7 @@ export default function BookInfoPanel({ book }) {
 				/>
 
 				<div className="book-info-actions-container">
-					<Button rightSection={<IconTablePlus size={20}/>} fullWidth>Add to my Readlist</Button>
+					<AddBookToReadlistButton bookId={book.Id} />
 					<Button rightSection={<IconPencilPlus size={20}/>} fullWidth>Create Review</Button>
 				</div>
 			</div>

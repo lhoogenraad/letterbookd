@@ -8,7 +8,6 @@ const getAllBooks = async () => {
 };
 
 const getBook = async (id: number) => {
-	console.log('getting book')
 	return await api.get(`/books/${id}`).then((res) => res);
 }
 
