@@ -1,21 +1,34 @@
 import { notifications } from "@mantine/notifications";
 
-const info = ({message, title=""}) => {
+const info = ({message, title="Notification"}) => {
 	notifications.show({
 		message,
 		position: 'top-center',
 		title,
+		color: 'blue',
 		style: {
-			backgroundColor: '#222',
-			color: '#eee',
-			width: "50%",
-			margin: "0 auto",
-			padding: "1rem",
-			marginTop: "1rem",
+			backgroundColor: 'whitesmoke',
+			color: 'black',
+			width: '100%',
+		}
+	})
+}
+
+const error = ({message="Unexpected error occured", title="Error"}) => {
+	notifications.show({
+		message,
+		position: 'top-center',
+		title,
+		color: 'red',
+		style: {
+			backgroundColor: 'whitesmoke',
+			color: 'black',
+			width: '100%',
 		}
 	})
 }
 
 export default {
 	info,
+	error,
 };

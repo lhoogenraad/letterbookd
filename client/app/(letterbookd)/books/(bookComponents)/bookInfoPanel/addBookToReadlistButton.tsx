@@ -14,7 +14,7 @@ export default function BookInfoPanel({ bookId }: { bookId: number }) {
 		setLoading(true);
 		api.readlist.addBookToReadList(bookId, 'Unread')
 			.then((res) => notify.info({message: res.data ?? `Successfully added book`}))
-			.catch((err) => notify.info({ message: err.response?.data?.Message ?? defaultErrorMessage }))
+			.catch((err) => notify.error({ message: err.response?.data?.Message ?? defaultErrorMessage }))
 			.finally(() => setLoading(false))
 	};
 

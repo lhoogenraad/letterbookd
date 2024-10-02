@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 export default function Navbar() {
 	const router = useRouter();
 	const notifyNotImplemented = (resourceName: string) => {
-		notify.info({message: `${resourceName} not yet implemented, sorry!`});
+		notify.error({message: `${resourceName} not yet implemented, sorry!`});
 	}
 
 	const goTo = (url:string) => {

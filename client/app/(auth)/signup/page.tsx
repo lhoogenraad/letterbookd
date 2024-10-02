@@ -46,7 +46,7 @@ function Signup() {
 				router.push("/login");
 			})
 			.catch((err) => {
-				notify.info({
+				notify.error({
 					message: err?.response?.data?.Message
 						??
 						"Something went wrong while signing up. Please try again."

@@ -16,7 +16,7 @@ export default function BookReviewList({bookId}) {
 		.then((res) => {
 			if (res.data) setReviews(res.data)
 		})
-		.catch((err) => notify.info({message: `Failed to load reviews for this book. ${err.message}`}))
+		.catch((err) => notify.error({message: `Failed to load reviews for this book. ${err.message}`}))
 		.finally(() => setLoading(false));
 	};
 

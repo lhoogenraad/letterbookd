@@ -27,7 +27,7 @@ export default function Dashboard() {
 				setBooks(books);
 				setLoading(false);
 			})
-			.catch((err) => notify.info({ message: err?.response?.data?.Message }));
+			.catch((err) => notify.error({ message: err?.response?.data?.Message }));
 
 		// Get username
 		const claims = jwt.decode(localStorage.getItem("authToken"))
