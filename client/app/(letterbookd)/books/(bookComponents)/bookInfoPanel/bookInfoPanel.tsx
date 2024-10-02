@@ -1,10 +1,19 @@
 import './bookInfoPanel.css';
-import { Image, Button } from '@mantine/core';
-import { IconTablePlus, IconPencilPlus } from '@tabler/icons-react';
+
+import { useDisclosure } from '@mantine/hooks';
+import { Image, Button, Modal } from '@mantine/core';
+import { IconPencilPlus } from '@tabler/icons-react';
 import BookReviewAverage from './bookReviewAverage';
 import AddBookToReadlistButton from './addBookToReadlistButton';
+import AddReview from 'components/reviews/addReview';
 
-export default function BookInfoPanel({ book }) {
+export default function BookInfoPanel({ book, reload}) {
+	const [opened, { open, close }] = useDisclosure(false);
+
+	const closeModal = () => {
+		console.log('close modal called')
+		close();
+	}
 
 	if (!book) {
 		return (
@@ -68,9 +77,21 @@ export default function BookInfoPanel({ book }) {
 
 				<div className="book-info-actions-container">
 					<AddBookToReadlistButton bookId={book.Id} />
-					<Button rightSection={<IconPencilPlus size={20}/>} fullWidth>Create Review</Button>
+					<Button onClick={open} rightSection={<IconPencilPlus size={20}/>} fullWidth>Create Review</Button>
 				</div>
 			</div>
+
+
+		  <Modal 
+		  	opened={opened} 
+			onClose={close} 
+			title={book.Title}
+			centered
+			size="85%"
+			transitionProps={{ transition: 'slide-down' }}
+			>
+		  		<AddReview book={book} reload={reload} closeModal={closeModal}/>
+		  </Modal>
 		</div>
 	)
 }
