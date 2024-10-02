@@ -13,8 +13,9 @@ export default function Book({ params }: { params: { bookId: number } }) {
 	const [book, setBook] = useState(null);
 	const [loading, setLoading] = useState(false);
 
-	const refresh = () => {
+	const refresh = async () => {
 		console.log("refresh called")
+		await loadBook();
 		setUpdateKey(updateKey + 1);
 	}
 
@@ -44,7 +45,7 @@ export default function Book({ params }: { params: { bookId: number } }) {
 
 	return (
 		<div className="book-container">
-			<BookInfoPanel book={book} reload={refresh}/>
+			<BookInfoPanel key={updateKey} book={book} reload={refresh}/>
 			<BookReviews key={updateKey} bookId={book.Id}/>
 		</div>
 	)
