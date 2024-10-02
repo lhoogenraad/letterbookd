@@ -7,6 +7,10 @@ const getBookReviews = async (bookId: number) => {
 	return await api.get(`/books/${bookId}/reviews`).then((res) => res);
 };
 
+/**
+ * Retrieve summary of given book's rating(s)
+ * Includes avg rating and number of reviews
+ */
 const getBookAverageAndNumberReviews = async (bookId: number) => {
 	return await api.get(`/books/${bookId}/reviews/summary`).then((res) => res);
 }
