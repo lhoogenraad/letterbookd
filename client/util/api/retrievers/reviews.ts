@@ -15,8 +15,16 @@ const getBookAverageAndNumberReviews = async (bookId: number) => {
 	return await api.get(`/books/${bookId}/reviews/summary`).then((res) => res);
 }
 
+const submitReview = async ({rating, description, bookId} : {rating: number, description: string, bookId: number}) => {
+	return await api.post(
+		`/books/${bookId}/reviews`, 
+		{description, rating},
+	).then((res) => res);
+}
+
 
 export default {
 	getBookReviews,
 	getBookAverageAndNumberReviews,
+	submitReview,
 }
