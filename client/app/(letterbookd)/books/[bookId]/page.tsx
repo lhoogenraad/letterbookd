@@ -8,8 +8,15 @@ import BookInfoPanel from '../(bookComponents)/bookInfoPanel/bookInfoPanel';
 import BookReviews from '../(bookComponents)/bookReviewList/bookReviewList';
 
 export default function Book({ params }: { params: { bookId: number } }) {
+	// Uhhhh
+	const [updateKey, setUpdateKey] = useState(1);
 	const [book, setBook] = useState(null);
 	const [loading, setLoading] = useState(false);
+
+	const refresh = () => {
+		console.log("refresh called")
+		setUpdateKey(updateKey + 1);
+	}
 
 	const loadBook = async () => {
 		setLoading(true);
@@ -37,8 +44,8 @@ export default function Book({ params }: { params: { bookId: number } }) {
 
 	return (
 		<div className="book-container">
-			<BookInfoPanel book={book}/>
-			<BookReviews bookId={book.Id}/>
+			<BookInfoPanel book={book} load={refresh}/>
+			<BookReviews key={updateKey} bookId={book.Id}/>
 		</div>
 	)
 }

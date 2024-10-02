@@ -7,7 +7,7 @@ import BookReviewAverage from './bookReviewAverage';
 import AddBookToReadlistButton from './addBookToReadlistButton';
 import AddReview from 'components/reviews/addReview';
 
-export default function BookInfoPanel({ book }) {
+export default function BookInfoPanel({ book, load}) {
 	const [opened, { open, close }] = useDisclosure(false);
 
 
@@ -86,7 +86,7 @@ export default function BookInfoPanel({ book }) {
 			size="85%"
 			transitionProps={{ transition: 'slide-down' }}
 			>
-		  		<AddReview book={book} />
+		  		<AddReview book={book} load={load}/>
 		  </Modal>
 		</div>
 	)
