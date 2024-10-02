@@ -81,7 +81,7 @@ export default function BookInfoPanel({ book }) {
 		  <Modal 
 		  	opened={opened} 
 			onClose={close} 
-			title={`Leave review for ${book.Title}`}
+			title={book.Title}
 			centered
 			size="85%"
 			transitionProps={{ transition: 'slide-down' }}
