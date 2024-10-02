@@ -61,7 +61,8 @@ export default function BookInfoPanel({ book }) {
 				<Image 
 					className='book-tile-img'
 					src={null}
-					w='30vw'
+					h='auto'
+					w='auto'
 					radius="md"
 					fallbackSrc="https://placehold.co/600x400?text=Placeholder"
 				/>
