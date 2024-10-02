@@ -10,6 +10,7 @@ type ReviewData struct {
 	Rating int
 	Username string
 	UserId int
+	OwnedBy bool
 }
 
 type CreateReviewBody struct {
