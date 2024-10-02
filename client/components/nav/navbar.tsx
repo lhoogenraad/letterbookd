@@ -1,5 +1,4 @@
 "use client"
-// Client side rendered for nooow
 
 import "./navbar.css"
 import { IconBook } from '@tabler/icons-react';
@@ -35,12 +34,12 @@ export default function Navbar() {
 				<Button 
 					className="navbar-btn" 
 					variant="gradient"
-					gradient={{from: 'black', to: 'blue', deg: 30}}
+					gradient={{from: 'black', to: 'darkblue', deg: 30}}
 					onClick = {() => notifyNotImplemented('My Readlist')}>My Readlist</Button>
 				<Button 
 					className="navbar-btn" 
 					variant="gradient"
-					gradient={{from: 'black', to: 'pink', deg: 250}}
+					gradient={{from: 'black', to: 'darkred', deg: 250}}
 					onClick = {() => goTo('/books')} >Search Books</Button>
 				<LogoutButton />
 			</div>
