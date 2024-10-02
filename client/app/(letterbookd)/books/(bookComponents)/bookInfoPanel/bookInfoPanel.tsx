@@ -1,6 +1,6 @@
 import './bookInfoPanel.css';
 import { Image, Button } from '@mantine/core';
-import { IconTablePlus, IconPencilPlus } from '@tabler/icons-react';
+import { IconPencilPlus } from '@tabler/icons-react';
 import BookReviewAverage from './bookReviewAverage';
 import AddBookToReadlistButton from './addBookToReadlistButton';
 
