@@ -42,7 +42,7 @@ function LoginPage() {
 			router.push("/dashboard");
 		})
 		.catch((err) => {
-			notify.info({
+			notify.error({
 				message: err?.response?.data?.Message
 				??
 				"Something went wrong while logging you in. Please try again."

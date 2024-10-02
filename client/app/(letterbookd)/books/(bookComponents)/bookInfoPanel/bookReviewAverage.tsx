@@ -20,7 +20,7 @@ export default function BookReviewAverage({ bookId }) {
 			})
 			.catch((err) => {
 				console.error(err);
-				notify.info({ message: `Sorry, we failed to load a the average rating for this book.` })
+				notify.error({ message: `Sorry, we failed to load a the average rating for this book.` })
 			})
 			.finally(() => setLoading(false))
 	};

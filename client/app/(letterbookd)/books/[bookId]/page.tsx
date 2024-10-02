@@ -17,7 +17,7 @@ export default function Book({ params }: { params: { bookId: number } }) {
 			.then((res) => setBook(res.data))
 			.catch((error) => {
 				console.error(error)
-				notify.info({ message: `Failed to load this book` })
+				notify.error({ message: `Failed to load this book` })
 			})
 			.finally(() => setLoading(false));
 	};

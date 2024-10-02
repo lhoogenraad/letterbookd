@@ -17,7 +17,7 @@ export default function Books() {
 		setLoading(true);
 		await api.books.getAllBooks()
 			.then((res) => setBookList(res.data))
-			.catch(() => notify.info({
+			.catch(() => notify.error({
 				message: `Failed to load books list for ` +
 					`some reason, please try again later!`
 			}))
