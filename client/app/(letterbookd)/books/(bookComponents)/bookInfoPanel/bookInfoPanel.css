@@ -40,8 +40,12 @@
 }
 
 .book-info-review-aggregate{
-	margin-top: 4rem;
-	padding: 5px;
-	background-color: lightgreen;
+	margin-top: 3rem;
+	padding: 0.8rem 3rem;
+	background-color: #669966;
+	display: inline-block;
 
+	border-top-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+	border-top: 5px solid darkgreen;
 }

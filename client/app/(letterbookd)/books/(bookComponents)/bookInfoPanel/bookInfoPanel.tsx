@@ -2,11 +2,10 @@ import './bookInfoPanel.css';
 import { Image, Button } from '@mantine/core';
 import { IconTablePlus, IconPencilPlus } from '@tabler/icons-react';
 import { Rating, Tooltip } from '@mantine/core';
+import { useState } from 'react';
+import BookReviewAverage from './bookReviewAverage';
 
 export default function BookInfoPanel({ book }) {
-	// Test data
-	const avgRating = 8.3;
-	const numReviews = 501;
 
 	if (!book) {
 		return (
@@ -54,17 +53,7 @@ export default function BookInfoPanel({ book }) {
 				</div>
 
 				<div className="book-info-item">
-					<div className="book-info-review-aggregate">
-						<div className="review-average-rating">
-							Average rating: 
-								<Tooltip label={avgRating/2}>
-								<Rating readOnly fractions={2} value={avgRating/2}/>
-								</Tooltip>
-						</div>
-						<div className="review-number-views">
-							(Out of {numReviews} reviews)
-						</div>
-					</div>
+					<BookReviewAverage bookId={book.Id}/>
 				</div>
 			</div>
 
@@ -72,7 +61,8 @@ export default function BookInfoPanel({ book }) {
 				<Image 
 					className='book-tile-img'
 					src={null}
-					w='30vw'
+					h='auto'
+					w='auto'
 					radius="md"
 					fallbackSrc="https://placehold.co/600x400?text=Placeholder"
 				/>
