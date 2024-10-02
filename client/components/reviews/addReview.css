@@ -1,7 +1,12 @@
-.review-container {
+.review-form{
 	display: flex;
 	flex-direction: column;
 	padding: 1rem;
 
-	border: 1px solid red;
+	gap: 1.75rem;
+}
+
+.add-review-button {
+	width: 30%;
+	min-width: 100px;
 }

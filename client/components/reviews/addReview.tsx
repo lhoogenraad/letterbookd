@@ -36,11 +36,13 @@ export default function AddReview({book}) {
 	return (
 		<div className="review-container">
 			<form 
+				className="review-form"
 				onSubmit={form.onSubmit(async (values) => 
 					await submitReview(book.Id, parseFloat(values.rating)*2, values.description))}
 			>
 
 			<Rating 
+				size='lg'
 				fractions={2} 
 				{...form.getInputProps('rating')}
 				key={form.key('rating')} 
@@ -50,11 +52,18 @@ export default function AddReview({book}) {
 				{...form.getInputProps('description')}
 				placeholder="Your review here..."
 				autosize
-				minRows={2}
-				maxRows={4}
+				minRows={5}
+				maxRows={8}
 		  	/>
 
-			<Button loading={submitting} loaderProps={{ type: 'bars' }} type="submit">Submit</Button>
+			<Button 
+				className="add-review-button"
+				loading={submitting} 
+				loaderProps={{ type: 'bars' }} 
+				type="submit"
+			>
+			Submit
+			</Button>
 			</form>
 		</div>
 	)
