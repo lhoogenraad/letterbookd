@@ -12,4 +12,5 @@ type BookData struct {
 	NumPages int32
 	CoverURL string
 	Synopsis string
+	OnUserReadlist bool
 }
