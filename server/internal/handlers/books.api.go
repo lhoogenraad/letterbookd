@@ -26,6 +26,7 @@ func GetBooks (w http.ResponseWriter, r *http.Request) {
 		api.InternalErrorHandler(w)
 	}
 	userId := int(claims["userid"].(float64))
+
 	var books []resources.BookData
 	var err error
 	books, err = models.GetBooks(userId)
@@ -51,13 +52,21 @@ func GetSingleBook (w http.ResponseWriter, r *http.Request) {
 	bookIdParam := utils.GetParam(r, "bookId")
 	bookId, err := strconv.Atoi(bookIdParam)
 
+	// Grab user Id from claims
+	claims, ok := utils.GetClaims(r)
+	if !ok {
+		log.Error("Something went wrong grabbing token claim info")
+		api.InternalErrorHandler(w)
+	}
+	userId := int(claims["userid"].(float64))
+
 	if err != nil {
 		api.CustomErrorHandler(w, 400, "Invalid book ID was given as a parameter.")
 		return
 	}
 
 	var books resources.BookData
-	books, err, errCode := models.GetSingleBook(bookId)
+	books, err, errCode := models.GetSingleBook(bookId, userId)
 
 	if err != nil {
 		log.Error(err)

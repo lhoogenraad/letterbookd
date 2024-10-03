@@ -2,22 +2,23 @@ package models
 
 import (
 	"database/sql"
+	"errors"
+	"fmt"
 	"server/internal/resources"
 	"server/internal/tools"
 	"time"
-	"errors"
 )
 
 
 func GetBooks(userId int) ([]resources.BookData, error) {
 	var queryString string = `
 	SELECT 
-	books.id,
-	books.name, 
-	CONCAT(authors.first_name, ' ', authors.last_name) as author_name,
-	books.published_date, books.num_pages, IFNULL(books.cover_url, ''),
-	IFNULL(books.synopsis, 'No synopsis.'),
-	read_list_items.id IS NOT NULL
+		books.id,
+		books.name, 
+		CONCAT(authors.first_name, ' ', authors.last_name) as author_name,
+		books.published_date, books.num_pages, IFNULL(books.cover_url, ''),
+		IFNULL(books.synopsis, 'No synopsis.'),
+		read_list_items.id IS NOT NULL
 	FROM books
 	JOIN authors
 		ON books.author_id=authors.id
@@ -73,21 +74,26 @@ func readBookRows (rows *sql.Rows) ([]resources.BookData, error) {
 }
 
 
-func GetSingleBook(bookId int) (resources.BookData, error, int) {
+func GetSingleBook(bookId int, userId int) (resources.BookData, error, int) {
 	var queryString string = `
 	SELECT 
-	books.id,
-	books.name, 
-	CONCAT(authors.first_name, ' ', authors.last_name) as author_name,
-	books.published_date, books.num_pages, IFNULL(books.cover_url, ''),
-	IFNULL(books.synopsis, 'No synopsis.')
+		books.id,
+		books.name, 
+		CONCAT(authors.first_name, ' ', authors.last_name) as author_name,
+		books.published_date, 
+		books.num_pages, 
+		IFNULL(books.cover_url, ''),
+		IFNULL(books.synopsis, 'No synopsis.'),
+		read_list_items.id IS NOT NULL
 	FROM books
 	JOIN authors
-	ON books.author_id=authors.id
-	WHERE books.id = ?
-	`
+		ON books.author_id=authors.id
+	LEFT JOIN read_list_items
+		ON read_list_items.book_id = books.id
+		AND read_list_items.user_id = ?
+	WHERE books.id = ?;`
 
-	row := tools.DB.QueryRow(queryString, bookId)
+	row := tools.DB.QueryRow(queryString, userId, bookId)
 
 	var book resources.BookData
 	var date string
@@ -99,11 +105,12 @@ func GetSingleBook(bookId int) (resources.BookData, error, int) {
 		&book.NumPages,
 		&book.CoverURL,
 		&book.Synopsis,
+		&book.OnUserReadlist,
 	); err {
 	case sql.ErrNoRows:
 		return book, errors.New(`Could not find book`), 404
 	}
-
+	fmt.Println(`Retrieved book: `, book.Title)
 	var err error
 	book.Published, err = time.Parse("2006-01-02", date)
 	if err != nil {
