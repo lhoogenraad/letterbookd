@@ -31,10 +31,29 @@ func GetReviewComments (w http.ResponseWriter, r *http.Request) {
 
 	comments, err := models.GetReviewComments(reviewId)
 
+
 	if err != nil {
 		log.Error(err)
 		api.InternalErrorHandler(w)
 		return
+	}
+
+
+	// Grab user Id from claims
+	claims, ok := utils.GetClaims(r)
+	if !ok {
+		log.Error("Something went wrong grabbing token claim info")
+		api.InternalErrorHandler(w)
+	}
+	userId := int(claims["userid"].(float64))
+
+	// For each review, check if the owner is the current requester.
+	// If they are, set review.OwnedBy to true!
+	for i := range comments {
+		fmt.Print(comments[i])
+		if comments[i].UserId == userId {
+			comments[i].OwnedBy = true
+		}
 	}
 
 	err = json.NewEncoder(w).Encode(comments)

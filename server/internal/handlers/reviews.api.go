@@ -109,6 +109,23 @@ func GetBookReviews (w http.ResponseWriter, r *http.Request) {
 
 	reviews, err := models.GetBookReviews(bookId)
 
+	// Grab user Id from claims
+	claims, ok := utils.GetClaims(r)
+	if !ok {
+		log.Error("Something went wrong grabbing token claim info")
+		api.InternalErrorHandler(w)
+	}
+	userId := int(claims["userid"].(float64))
+
+	// For each review, check if the owner is the current requester.
+	// If they are, set review.OwnedBy to true!
+	for i := range reviews {
+		fmt.Print(reviews[i])
+		if reviews[i].UserId == userId {
+			reviews[i].OwnedBy = true
+		}
+	}
+
 	if err != nil {
 		log.Error(err)
 		api.InternalErrorHandler(w)
