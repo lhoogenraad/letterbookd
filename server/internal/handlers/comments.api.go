@@ -50,7 +50,6 @@ func GetReviewComments (w http.ResponseWriter, r *http.Request) {
 	// For each review, check if the owner is the current requester.
 	// If they are, set review.OwnedBy to true!
 	for i := range comments {
-		fmt.Print(comments[i])
 		if comments[i].UserId == userId {
 			comments[i].OwnedBy = true
 		}
