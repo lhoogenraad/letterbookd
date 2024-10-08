@@ -58,7 +58,7 @@ ALTER TABLE read_list_items ADD UNIQUE unique_user_book(user_id, book_id);
 CREATE TABLE reviews (
 	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 
-	description varchar(255) NOT NULL,
+	description text NOT NULL,
 	rating int NOT NULL,
 
 	book_id int NOT NULL,
@@ -73,7 +73,7 @@ ALTER TABLE reviews ADD UNIQUE user_book_review_unique (user_id, book_id);
 CREATE TABLE review_comments (
 	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 
-	comment varchar(255) NOT NULL,
+	comment text NOT NULL,
 
 	user_id int NOT NULL,
 	review_id int NOT NULL,

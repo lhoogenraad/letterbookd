@@ -32,7 +32,7 @@ export default function BookReviewList({bookId}) {
 		<div className="book-reviews-container">
 			{reviews.map((review: any, index: number) => (
 				<div key={index}>
-					<BookReview review={review}/>
+					<BookReview review={review} bookId={bookId}/>
 				</div>
 			))}
 		</div>

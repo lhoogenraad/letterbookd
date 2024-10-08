@@ -84,11 +84,22 @@ func GetBookReviews(bookId int) ( []resources.ReviewData, error ) {
 	users.id as user_id,
 	CONCAT( users.first_name, ' ', users.last_name) as user_name,
 	reviews.description,
-	reviews.rating
+	reviews.rating,
+	COUNT(review_comments.id) as num_comments
 	FROM reviews
 	JOIN users
 	ON users.id = reviews.user_id
-	WHERE reviews.book_id = ?`
+	LEFT JOIN review_comments
+	ON review_comments.review_id=reviews.id
+	WHERE reviews.book_id = ?
+
+	GROUP BY 
+		reviews.id,
+		users.id,
+		user_name,
+		reviews.description,
+		reviews.rating;
+	`
 
 	rows, err := tools.DB.Query(selectQueryString, bookId)
 
@@ -108,6 +119,7 @@ func GetBookReviews(bookId int) ( []resources.ReviewData, error ) {
 			&review.Username,
 			&review.Description,
 			&review.Rating,
+			&review.NumComments,
 		)
 
 		if err != nil {
