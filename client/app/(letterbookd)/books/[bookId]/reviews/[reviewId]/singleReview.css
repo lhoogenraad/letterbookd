@@ -1,10 +1,18 @@
+.container{
+	width: 85vw;
+	margin: 0 auto;
+}
+
+.review-book-title{
+	font-size: 2rem;
+}
+
 .comments-container{
 	margin-top: 2rem;
 }
 
 .comment-container{
 	width: 65vw;
-	margin: 0 auto;
 	padding: 0.5rem;
 }
 

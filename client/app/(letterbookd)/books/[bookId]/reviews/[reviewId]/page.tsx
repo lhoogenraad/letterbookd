@@ -4,6 +4,9 @@ import api from 'util/api/api';
 import notify from 'util/notify/notify';
 import { useState, useEffect } from 'react';
 import ReviewComment from './(reviewComments)/reviewComment';
+import AddComment from './(reviewComments)/addComment';
+import '../../../(bookComponents)/bookReviewList/review.css';
+import { Rating } from '@mantine/core';
 import './singleReview.css';
 
 export default function Review({ params }: { bookId: number, reviewId: number }) {
@@ -17,10 +20,15 @@ export default function Review({ params }: { bookId: number, reviewId: number })
 			.then((res) => setBook(res.data))
 	};
 
-	// const loadReview = async () => {
-	// 	await api.books.getBook(params.bookId)
-	// 	.then((res) => setReviewComments(res.data))
-	// };
+	const loadReview = async () => {
+		await api.reviews.getBookReviews(params.bookId)
+			.then((res) => {
+				const findReview = res.data.find((item) => {
+					return item.Id == params.reviewId;
+				})
+				setReview(findReview)
+			})
+	};
 
 	const loadComments = async () => {
 		await api.reviews.getReviewComments(params.reviewId)
@@ -31,7 +39,7 @@ export default function Review({ params }: { bookId: number, reviewId: number })
 		setLoading(true);
 
 		try {
-			const initPromises = [loadComments(), loadBook()];
+			const initPromises = [loadComments(), loadBook(), loadReview()];
 			await Promise.all(initPromises);
 		} catch (err) {
 			console.error(err);
@@ -54,20 +62,37 @@ export default function Review({ params }: { bookId: number, reviewId: number })
 	}
 
 	return (
-		<div>
+		<div className="container">
+			<div className="review-container">
+				<div className="review-book-title">
+					{book.Title}
+				</div>
+				<div className="review-metadata-container">
+					<div className="review-user">{review.Username}</div>
+					<div className="vertical-seperator">|</div>
+					<Rating readOnly fractions={2} value={review.Rating / 2} className="review-value" />
+					<div className="vertical-seperator">|</div>
+				</div>
+				<div className="review-description">{review.Description}</div>
+			</div>
+
 			<div className="comments-container">
 				<div className="comment-container">
-				<div className="comment-separator" />
+					<div style={{ marginBottom: '10px' }}>
+						{comments.length} Comments
+					</div>
+					<div className="comment-separator" />
 					{comments.map((comment: any, index: number) => (
 						<div>
 							<ReviewComment comment={comment} key={index} />
 							<div className="comment-separator" />
 						</div>
 					))}
+					<div>
+						<AddComment reload={loadComments} reviewId={review.Id} />
+					</div>
 				</div>
 			</div>
-			<div>bookId: {params.bookId}</div>
-			<div>reviewId: {params.reviewId}</div>
 		</div>
 	)
 }

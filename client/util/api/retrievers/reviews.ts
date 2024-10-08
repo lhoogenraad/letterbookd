@@ -29,10 +29,18 @@ const submitReview = async ({rating, description, bookId} : {rating: number, des
 	).then((res) => res);
 }
 
+const submitReviewComment = async (reviewId: number, comment: string) => {
+	return await api.post(
+		`/reviews/${reviewId}/comments`,
+		{comment},
+	);
+}
+
 
 export default {
 	getBookReviews,
 	getReviewComments,
 	getBookAverageAndNumberReviews,
 	submitReview,
+	submitReviewComment,
 }
