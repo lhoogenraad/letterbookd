@@ -1,0 +1,20 @@
+.single-comment-container{
+	display: flex;
+	flex-direction: row;
+	border: 1px solid red;
+	justify-content: space-evenly;
+
+	margin: 0 auto;
+	padding: 0.5rem;
+}
+
+.comment-username{
+	display: absolute;
+	border: 1px solid red;
+	width: 25%;
+}
+
+.comment-content{
+	border: 1px solid red;
+	width: 70%;
+}
