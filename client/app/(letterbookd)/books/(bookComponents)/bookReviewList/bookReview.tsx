@@ -13,7 +13,10 @@ export default function BookReview({ review, bookId }) {
 					<div className="vertical-seperator">|</div>
 					<Rating readOnly fractions={2} value={review.Rating / 2} className="review-value" />
 					<div className="vertical-seperator">|</div>
-					<Link style={{ textDecoration: "inherit", color: "inherit" }} href={`/books/${bookId}/reviews/${review.Id}`}>
+					<Link 
+						style={{ textDecoration: "inherit", color: "inherit" }} 
+						href={`/books/${bookId}/reviews/${review.Id}`}
+					>
 						<div className="review-comment-link">
 							<IconMessages />
 							{review.NumComments}
