@@ -27,3 +27,28 @@
 	font-size: 2rem;
 	font-weight: bold;
 }
+
+.review-comment-link{
+	display: flex;
+	align-content: center;
+	justify-content: space-between;
+	gap: 5px;
+	-webkit-user-select: none; /* Safari */        
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+/Edge */
+	user-select: none; /* Standard */
+	font-size: 1.2rem;
+}
+
+.review-comment-link:hover{
+	cursor: pointer;
+	color: gray;
+	transition: 0.1s;
+}
+
+.review-comment-link:active{
+	cursor: pointer;
+	color: #111;
+	transition: 0.1s;
+}
+
