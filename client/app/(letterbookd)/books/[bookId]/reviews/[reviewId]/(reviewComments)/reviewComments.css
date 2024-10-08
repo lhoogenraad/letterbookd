@@ -1,20 +1,26 @@
 .single-comment-container{
 	display: flex;
 	flex-direction: row;
-	border: 1px solid red;
 	justify-content: space-evenly;
 
 	margin: 0 auto;
 	padding: 0.5rem;
 }
 
+.single-comment-container:hover{
+	background-color: #efd;
+	transition: 0.1s;
+}
+
 .comment-username{
-	display: absolute;
-	border: 1px solid red;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 1rem;
 	width: 25%;
 }
 
 .comment-content{
-	border: 1px solid red;
 	width: 70%;
 }

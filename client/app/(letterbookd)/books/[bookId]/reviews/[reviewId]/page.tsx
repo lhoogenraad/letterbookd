@@ -57,7 +57,7 @@ export default function Review({ params }: { bookId: number, reviewId: number })
 		<div>
 			<div className="comments-container">
 				<div className="comment-container">
-					<div className="comment-separator" />
+				<div className="comment-separator" />
 					{comments.map((comment: any, index: number) => (
 						<div>
 							<ReviewComment comment={comment} key={index} />
