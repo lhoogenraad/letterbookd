@@ -45,7 +45,17 @@ export default function Book({ params }: { params: { bookId: number } }) {
 
 	return (
 		<div className="book-container">
-			<BookInfoPanel key={updateKey} book={book} reload={refresh}/>
+			<BookInfoPanel 
+				key={updateKey} 
+				book={book} 
+				reload={refresh}
+				setBookAdded={() => {
+					// Sorry I am being very lazy here
+					const newBook = structuredClone(book);
+					newBook.OnUserReadlist = true;
+					setBook(newBook)
+				}}
+			/>
 			<BookReviews key={updateKey} bookId={book.Id}/>
 		</div>
 	)

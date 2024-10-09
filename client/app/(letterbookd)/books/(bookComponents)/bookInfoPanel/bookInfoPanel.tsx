@@ -7,7 +7,7 @@ import BookReviewAverage from './bookReviewAverage';
 import AddBookToReadlistButton from './addBookToReadlistButton';
 import AddReview from 'components/reviews/addReview';
 
-export default function BookInfoPanel({ book, reload}) {
+export default function BookInfoPanel({ book, reload, setBookAdded}) {
 	const [opened, { open, close }] = useDisclosure(false);
 
 	const closeModal = () => {
@@ -76,7 +76,11 @@ export default function BookInfoPanel({ book, reload}) {
 				/>
 
 				<div className="book-info-actions-container">
-					<AddBookToReadlistButton bookId={book.Id} />
+					<AddBookToReadlistButton 
+						disabled={book.OnUserReadlist} 
+						bookId={book.Id} 
+						setBookAdded={setBookAdded}
+					/>
 					<Button onClick={open} rightSection={<IconPencilPlus size={20}/>} fullWidth>Create Review</Button>
 				</div>
 			</div>
