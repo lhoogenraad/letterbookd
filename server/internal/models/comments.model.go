@@ -70,3 +70,24 @@ func CreateReviewComment (reviewId int, userId int, request resources.CreateRevi
 
 	return nil, -1
 }
+
+func DeleteReviewComment (reviewId int, userId int, commentId int) (error, int) {
+	var deleteQuery = `
+	UPDATE review_comments
+	SET archived=true
+	WHERE
+		id = ? AND
+		user_id = ? AND
+		review_id = ?;
+	`
+
+	_, err := tools.DB.Exec(deleteQuery, commentId, userId, reviewId)
+	
+	if err != nil {
+		log.Error(err)
+
+		return errors.New("Sorry, something went wrong leaving this review"), 500
+	}
+
+	return nil, -1
+}

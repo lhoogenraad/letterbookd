@@ -105,3 +105,50 @@ func CreateReviewComment (w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusAccepted) 
 	json.NewEncoder(w).Encode(`Comment created successfully`)
 }
+
+
+
+func DeleteReviewComment (w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	claims, ok := utils.GetClaims(r)
+	if !ok {
+		log.Error("Something went wrong grabbing token claim info")
+		api.InternalErrorHandler(w)
+	}
+
+	//Grab request body
+	var request resources.CreateReviewCommentBody
+	err := json.NewDecoder(r.Body).Decode(&request)
+
+	if err != nil {
+		api.CustomErrorHandler(w, 400, "Invalid request body. Please try again")
+		return
+	}
+
+	//Convert userId to int
+	userId := int(claims["userid"].(float64))
+
+	//Grab review id param from url
+	reviewIdParam := utils.GetParam(r, "reviewId")
+	reviewId, err := strconv.Atoi(reviewIdParam)
+
+	//Grab review id param from url
+	commentIdParam := utils.GetParam(r, "commentId")
+	commentId, err := strconv.Atoi(commentIdParam)
+
+	if err != nil {
+		api.CustomErrorHandler(w, 400, "Invalid review ID was given as a parameter.")
+		return
+	}
+
+	err, code := models.DeleteReviewComment(reviewId, userId, commentId)
+
+	if err != nil {
+		api.CustomErrorHandler(w, code, fmt.Sprint(err))
+		return
+	}
+
+	w.WriteHeader(http.StatusAccepted) 
+	json.NewEncoder(w).Encode(`Archived comment successfully`)
+}
