@@ -57,6 +57,7 @@ func ApiHandler(r *chi.Mux) {
 		// Review Comments
 		router.Post("/reviews/{reviewId}/comments", CreateReviewComment)
 		router.Get("/reviews/{reviewId}/comments", GetReviewComments)
+		router.Delete("/reviews/{reviewId}/comments/{commentId}", DeleteReviewComment)
 
 	})
 }
