@@ -18,7 +18,8 @@ func GetReviewComments (reviewId int) ([]resources.ReviewComment, error) {
 	review_id
 	FROM review_comments
 	JOIN users ON users.id = user_id
-	WHERE review_id = ?;`
+	WHERE review_id = ?
+	AND archived = false;`
 
 	rows, err := tools.DB.Query(selectQuery, reviewId)
 
