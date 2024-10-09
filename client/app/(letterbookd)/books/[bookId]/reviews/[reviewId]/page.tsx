@@ -32,7 +32,7 @@ export default function Review({ params }: { bookId: number, reviewId: number })
 
 	const loadComments = async () => {
 		await api.reviews.getReviewComments(params.reviewId)
-			.then((res) => setReviewComments(res.data))
+			.then((res) => setReviewComments(res.data ?? []))
 	};
 
 	const init = async () => {

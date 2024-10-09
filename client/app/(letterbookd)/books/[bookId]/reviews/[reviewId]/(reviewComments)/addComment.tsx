@@ -47,6 +47,7 @@ export default function AddComment({ reviewId, reload }) {
 				{...form.getInputProps('comment')}
 			/>
 			<Button 
+				style={{marginTop: '0.7rem'}}
 				loading={submitting}
 				loaderProps={{ type: 'bars' }} 
 				type="submit">
