@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"net/http"
+	log "github.com/sirupsen/logrus"
 )
 
 type Error struct {
@@ -12,6 +13,7 @@ type Error struct {
 
 
 func writeError(w http.ResponseWriter, message string, code int) {
+	log.Error(code, ` Error: `, message)
 	resp := Error {
 		Code: code,
 		Message: message,
