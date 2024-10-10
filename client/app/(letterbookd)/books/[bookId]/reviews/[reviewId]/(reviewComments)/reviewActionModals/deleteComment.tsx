@@ -11,7 +11,7 @@ export default function DeleteComment({ comment, closeModal, reloadComments }) {
 	const deleteComment = async () => {
 		setLoading(true);
 		await api.reviews.deleteReviewComment(comment.ReviewId, comment.Id)
-			.then(() => { 
+			.then(() => {
 				reloadComments();
 				closeModal();
 			})
@@ -23,7 +23,9 @@ export default function DeleteComment({ comment, closeModal, reloadComments }) {
 		<div style={{
 			display: 'flex',
 			flexDirection: 'row',
-			justifyContent: 'space-around'
+			justifyContent: 'space-around',
+			maxWidth: '500px',
+			margin: '0 auto',
 		}}>
 			<Button onClick={() => closeModal()} variant="subtle" color="blue">No, go back!</Button>
 			<Button onClick={() => deleteComment()} loading={loading} variant="subtle" color="red">Yes please</Button>

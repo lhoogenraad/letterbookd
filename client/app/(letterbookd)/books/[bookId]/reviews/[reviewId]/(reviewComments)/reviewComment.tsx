@@ -36,7 +36,7 @@ export default function ReviewComment({ comment, reloadComments }) {
 			onClose={setShowDelete.close} 
 			title="Delete comment?"
 			centered
-			size="85%"
+			size="50%"
 			transitionProps={{ transition: 'slide-down' }}
 			>
 		  		<DeleteCommentModal 
@@ -52,7 +52,7 @@ export default function ReviewComment({ comment, reloadComments }) {
 			onClose={setShowEdit.close} 
 			title="Edit comment"
 			centered
-			size="85%"
+			size="50%"
 			transitionProps={{ transition: 'slide-down' }}
 			>
 		  		<EditCommentModal 
