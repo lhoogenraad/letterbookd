@@ -87,7 +87,28 @@ func DeleteReviewComment (reviewId int, userId int, commentId int) (error, int) 
 	if err != nil {
 		log.Error(err)
 
-		return errors.New("Sorry, something went wrong leaving this review"), 500
+		return errors.New("Sorry, something went wrong leaving your comment"), 500
+	}
+
+	return nil, -1
+}
+
+
+func UpdateReviewComment (reviewId int, userId int, commentId int, request resources.CreateReviewCommentBody) (error, int) {
+	var insertQuery string = `
+	UPDATE review_comments
+	SET comment=?
+	WHERE
+		comment_id=? AND
+		user_id=? AND
+		review_id=?`
+
+	_, err := tools.DB.Exec(insertQuery, request.Comment, commentId, userId, reviewId)
+	
+	if err != nil {
+		log.Error(err)
+
+		return errors.New("Sorry, something went wrong updating your comment"), 500
 	}
 
 	return nil, -1
