@@ -4,6 +4,8 @@ import (
 	"server/internal/tools"
 	"server/internal/resources"
 	"errors"
+	"time"
+	"fmt"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -16,7 +18,8 @@ func GetReviewComments (reviewId int) ([]resources.ReviewComment, error) {
 	user_id,
 	CONCAT(users.first_name, ' ', users.last_name),
 	review_id,
-	edited
+	edited,
+	timestamp
 	FROM review_comments
 	JOIN users ON users.id = user_id
 	WHERE review_id = ?
@@ -34,6 +37,7 @@ func GetReviewComments (reviewId int) ([]resources.ReviewComment, error) {
 	var comments []resources.ReviewComment
 	for rows.Next(){
 		var comment resources.ReviewComment
+		var date string
 		err := rows.Scan(
 			&comment.Id,
 			&comment.Comment,
@@ -41,12 +45,18 @@ func GetReviewComments (reviewId int) ([]resources.ReviewComment, error) {
 			&comment.Username,
 			&comment.ReviewId,
 			&comment.Edited,
+			&date,
 		)
 
 		if err != nil {
 			log.Error("Error scanning comment query results:")
 			log.Error(err)
 			return nil, err
+		}
+		fmt.Print(date)
+		comment.Timestamp, err = time.Parse("2006-01-02 15:04:05", date)
+		if err != nil {
+			return comments, err
 		}
 
 		comments = append(comments, comment)

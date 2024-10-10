@@ -90,9 +90,9 @@ func GetBookReviews(bookId int) ( []resources.ReviewData, error ) {
 	JOIN users
 	ON users.id = reviews.user_id
 	LEFT JOIN review_comments
-	ON review_comments.review_id=reviews.id
+		ON review_comments.review_id=reviews.id
+		AND review_comments.archived = false
 	WHERE reviews.book_id = ?
-	AND review_comments.archived = false
 
 	GROUP BY 
 		reviews.id,

@@ -32,8 +32,20 @@ export default function Review({ params }: { bookId: number, reviewId: number })
 
 	const loadComments = async () => {
 		await api.reviews.getReviewComments(params.reviewId)
-			.then((res) => setReviewComments(res.data ?? []))
+			.then((res) => { 
+				const sortedComments = sortComments(res.data ?? []);
+				setReviewComments(sortedComments);
+			})
 	};
+
+	const sortComments = (comments) => {
+		return comments.sort((c1, c2) => {
+			const d1 = new Date(c1.Timestamp);
+			const d2 = new Date(c2.Timestamp);
+			return d1 < d2;
+		})
+	}
+
 
 	const init = async () => {
 		setLoading(true);
