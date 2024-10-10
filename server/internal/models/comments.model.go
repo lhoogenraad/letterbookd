@@ -15,7 +15,8 @@ func GetReviewComments (reviewId int) ([]resources.ReviewComment, error) {
 	comment,
 	user_id,
 	CONCAT(users.first_name, ' ', users.last_name),
-	review_id
+	review_id,
+	edited
 	FROM review_comments
 	JOIN users ON users.id = user_id
 	WHERE review_id = ?
@@ -39,6 +40,7 @@ func GetReviewComments (reviewId int) ([]resources.ReviewComment, error) {
 			&comment.UserId,
 			&comment.Username,
 			&comment.ReviewId,
+			&comment.Edited,
 		)
 
 		if err != nil {
