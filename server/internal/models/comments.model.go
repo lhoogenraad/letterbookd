@@ -97,9 +97,11 @@ func DeleteReviewComment (reviewId int, userId int, commentId int) (error, int) 
 func UpdateReviewComment (reviewId int, userId int, commentId int, request resources.CreateReviewCommentBody) (error, int) {
 	var insertQuery string = `
 	UPDATE review_comments
-	SET comment=?
+	SET 
+		comment=?,
+		edited=true
 	WHERE
-		comment_id=? AND
+		id=? AND
 		user_id=? AND
 		review_id=?`
 
