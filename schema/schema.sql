@@ -77,7 +77,9 @@ CREATE TABLE review_comments (
 
 	user_id int NOT NULL,
 	review_id int NOT NULL,
+
 	archived boolean DEFAULT false,
+	edited boolean DEFAULT false,
 
 	FOREIGN KEY (user_id) REFERENCES users(id),
 	FOREIGN KEY (review_id) REFERENCES reviews(id)

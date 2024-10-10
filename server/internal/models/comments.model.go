@@ -15,7 +15,8 @@ func GetReviewComments (reviewId int) ([]resources.ReviewComment, error) {
 	comment,
 	user_id,
 	CONCAT(users.first_name, ' ', users.last_name),
-	review_id
+	review_id,
+	edited
 	FROM review_comments
 	JOIN users ON users.id = user_id
 	WHERE review_id = ?
@@ -39,6 +40,7 @@ func GetReviewComments (reviewId int) ([]resources.ReviewComment, error) {
 			&comment.UserId,
 			&comment.Username,
 			&comment.ReviewId,
+			&comment.Edited,
 		)
 
 		if err != nil {
@@ -87,7 +89,30 @@ func DeleteReviewComment (reviewId int, userId int, commentId int) (error, int) 
 	if err != nil {
 		log.Error(err)
 
-		return errors.New("Sorry, something went wrong leaving this review"), 500
+		return errors.New("Sorry, something went wrong leaving your comment"), 500
+	}
+
+	return nil, -1
+}
+
+
+func UpdateReviewComment (reviewId int, userId int, commentId int, request resources.CreateReviewCommentBody) (error, int) {
+	var insertQuery string = `
+	UPDATE review_comments
+	SET 
+		comment=?,
+		edited=true
+	WHERE
+		id=? AND
+		user_id=? AND
+		review_id=?`
+
+	_, err := tools.DB.Exec(insertQuery, request.Comment, commentId, userId, reviewId)
+	
+	if err != nil {
+		log.Error(err)
+
+		return errors.New("Sorry, something went wrong updating your comment"), 500
 	}
 
 	return nil, -1

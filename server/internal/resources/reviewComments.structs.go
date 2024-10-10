@@ -7,6 +7,7 @@ type ReviewComment struct {
 	Username string
 	ReviewId int
 	OwnedBy bool
+	Edited bool
 }
 
 type CreateReviewCommentBody struct {
