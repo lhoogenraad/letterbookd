@@ -78,6 +78,8 @@ CREATE TABLE review_comments (
 	user_id int NOT NULL,
 	review_id int NOT NULL,
 
+	timestamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
 	archived boolean DEFAULT false,
 	edited boolean DEFAULT false,
 

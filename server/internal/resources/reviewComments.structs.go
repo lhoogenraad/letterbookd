@@ -1,5 +1,9 @@
 package resources
 
+import (
+	"time"
+)
+
 type ReviewComment struct {
 	Id int
 	Comment string
@@ -8,6 +12,7 @@ type ReviewComment struct {
 	ReviewId int
 	OwnedBy bool
 	Edited bool
+	Timestamp time.Time
 }
 
 type CreateReviewCommentBody struct {
