@@ -41,4 +41,11 @@
 	flex-direction: row;
 	gap: 1.5rem;
 	padding-left: 10px;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.comment-timestamp{
+	font-size: 0.8rem;
+	text-decoration: italic;
 }
