@@ -11,7 +11,6 @@ export default function BookInfoPanel({ book, reload, setBookAdded}) {
 	const [opened, { open, close }] = useDisclosure(false);
 
 	const closeModal = () => {
-		console.log('close modal called')
 		close();
 	}
 
