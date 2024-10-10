@@ -117,15 +117,6 @@ func DeleteReviewComment (w http.ResponseWriter, r *http.Request) {
 		api.InternalErrorHandler(w)
 	}
 
-	//Grab request body
-	var request resources.CreateReviewCommentBody
-	err := json.NewDecoder(r.Body).Decode(&request)
-
-	if err != nil {
-		api.CustomErrorHandler(w, 400, "Invalid request body. Please try again")
-		return
-	}
-
 	//Convert userId to int
 	userId := int(claims["userid"].(float64))
 
