@@ -5,13 +5,16 @@ import { useState } from 'react';
 import api from 'util/api/api';
 import notify from 'util/notify/notify';
 
-export default function DeleteComment({ comment, closeModal }) {
+export default function DeleteComment({ comment, closeModal, reloadComments }) {
 	const [loading, setLoading] = useState(false);
 
 	const deleteComment = async () => {
 		setLoading(true);
 		await api.reviews.deleteReviewComment(comment.ReviewId, comment.Id)
-			.then(() => closeModal())
+			.then(() => { 
+				reloadComments();
+				closeModal();
+			})
 			.catch((err) => notify.error({ message: err.response.data.Message }))
 			.finally(() => setLoading(false))
 	}

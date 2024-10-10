@@ -7,7 +7,7 @@ import { useDisclosure } from '@mantine/hooks';
 import EditCommentModal from './reviewActionModals/editComment';
 import DeleteCommentModal from './reviewActionModals/deleteComment';
 
-export default function ReviewComment({ comment }) {
+export default function ReviewComment({ comment, reloadComments }) {
 	const [showDelete, setShowDelete] = useDisclosure(false);
 	const [showEdit, setShowEdit] = useDisclosure(false);
 
@@ -39,7 +39,11 @@ export default function ReviewComment({ comment }) {
 			size="85%"
 			transitionProps={{ transition: 'slide-down' }}
 			>
-		  		<DeleteCommentModal comment={comment} closeModal={setShowDelete.close}/>
+		  		<DeleteCommentModal 
+					reloadComments={reloadComments} 
+					comment={comment} 
+					closeModal={setShowDelete.close}
+				/>
 		  </Modal>
 
 
@@ -51,7 +55,11 @@ export default function ReviewComment({ comment }) {
 			size="85%"
 			transitionProps={{ transition: 'slide-down' }}
 			>
-		  		<EditCommentModal comment={comment} closeModal={setShowEdit.close} />
+		  		<EditCommentModal 
+					reloadComments={reloadComments} 
+					comment={comment} 
+					closeModal={setShowEdit.close} 
+				/>
 		  </Modal>
 		</div>
 	)
