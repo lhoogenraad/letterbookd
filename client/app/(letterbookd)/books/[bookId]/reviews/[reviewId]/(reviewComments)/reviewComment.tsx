@@ -11,10 +11,18 @@ export default function ReviewComment({ comment, reloadComments }) {
 	const [showDelete, setShowDelete] = useDisclosure(false);
 	const [showEdit, setShowEdit] = useDisclosure(false);
 
+	const commentDate = new Date(comment.Timestamp);
 	const displayDateTimeString =
-		new Date(comment.Timestamp).toLocaleDateString() +
-		`, ` +
-		new Date(comment.Timestamp).toLocaleTimeString();
+		commentDate.toLocaleString('en-NZ', {
+			year: 'numeric',
+			month: 'numeric',
+			day: 'numeric',
+			
+			hour: 'numeric',
+			hour12: true,
+			minute: 'numeric',
+
+		});
 
 	return (
 		<div className="single-comment-container">
