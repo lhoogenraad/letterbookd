@@ -5,6 +5,7 @@ import '@mantine/core/styles.css';
 import notify from 'util/notify/notify';
 import api from 'util/api/api';
 import './readlist.css';
+import ReadListItem from './(readlistItem)/readlistItem';
 
 async function getReadList() {
 	let books: object;
@@ -18,7 +19,7 @@ export default function Dashboard() {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		// Get books
+		// Get read list
 		getReadList()
 			.then((list) => {
 				setReadList(list);
@@ -37,7 +38,11 @@ export default function Dashboard() {
 
 	return (
 		<div className='readlist-container'>
-		{JSON.stringify(readList)}
+			{readList.map((listItem: any) => {
+				return (
+					<ReadListItem item={listItem} />
+				)
+			})}
 		</div>
 	)
 };
