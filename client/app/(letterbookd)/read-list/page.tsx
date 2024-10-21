@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import '@mantine/core/styles.css';
 import notify from 'util/notify/notify';
 import api from 'util/api/api';
+import statusOptions from 'configs/readlistStatusOptions';
 import { MultiSelect } from '@mantine/core';
 import './readlist.css';
 import ReadListItem from './(readlistItem)/readlistItem';
@@ -55,7 +56,7 @@ export default function Dashboard() {
 		<h2>Your readlist</h2>
 		<MultiSelect 
 			className='status-filter'
-			data={['Read', 'Unread']} 
+			data={statusOptions} 
 			onChange={setSearchFilters} 
 			label="Status"
 		/>
