@@ -61,6 +61,7 @@ export default function Dashboard() {
 		/>
 		</div>
 		<div className='readlist-items'>
+		<div className='readlist-item-count'>{filteredReadlist.length} Items</div>
 			{filteredReadlist.map((listItem: any, index: number) => {
 				return (
 					<ReadListItem item={listItem} key={index}/>
