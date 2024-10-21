@@ -1,6 +1,10 @@
 .readlist-container {
 	width: 95%;
 	margin: 0 auto;
+	background-color: #eee;
+	border-bottom-left-radius: 1rem;
+	border-bottom-right-radius: 1rem;
+	padding: 1rem;
 }
 
 .readlist-header-container{

@@ -12,34 +12,36 @@ export default function ReadListItem({ item }) {
 	const [status, setStatus] = useState(item.Status)
 	const [loading, setLoading] = useState(false);
 
-	const updateStatus = async (status: string) => {
+	const updateStatus = async (newStatus: string) => {
+		// If status value is same as current status, don't send request
+		if (newStatus === status) return;
 		setLoading(true);
-		await api.readlist.updateReadListItem(item.BookId, status)
-			.then(() => setStatus(status))
+		await api.readlist.updateReadListItem(item.BookId, newStatus)
+			.then(() => setStatus(newStatus))
 			.catch((err) => notify.error({ message: err?.response?.data?.Message }))
 			.finally(() => setLoading(false))
 	}
 
 	return (
 		<div className="readlist-item-container">
-			<Link
-				style={{ textDecoration: "inherit", color: "inherit" }}
-				href={`/books/${item.BookId}`}
-			>
-				<div className="readlist-item-header-container">
-					<div className="img">
-						<Image
-							src={null}
-							h='5rem'
-							radius="md"
-							fallbackSrc="https://placehold.co/600x400?text=Placeholder"
-						/>
-					</div>
-					<div className="title">{item.BookName}</div>
+			<div className="readlist-item-header-container">
+				<div className="img">
+					<Image
+						src={null}
+						h='5rem'
+						radius="md"
+						fallbackSrc="https://placehold.co/600x400?text=Placeholder"
+					/>
 				</div>
-			</Link>
+				<Link
+					style={{ textDecoration: "inherit", color: "inherit" }}
+					href={`/books/${item.BookId}`}
+				>
+					<div className="title">{item.BookName}</div>
+				</Link>
+			</div>
 			<div className="readlist-item-body-container">
-				<Select 
+				<Select
 					className="readlist-status"
 					data={statusOptions}
 					value={status}

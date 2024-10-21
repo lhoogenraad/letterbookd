@@ -3,6 +3,7 @@ import { Notifications } from '@mantine/notifications';
 import '@mantine/carousel/styles.css';
 import '@mantine/notifications/styles.css';
 import '@mantine/core/styles.css';
+import './style.css';
 
 export default function RootLayout({children,}: {children: React.ReactNode}) {
 	const theme = createTheme({
@@ -13,7 +14,7 @@ export default function RootLayout({children,}: {children: React.ReactNode}) {
 
 	return (
 		<html lang="en">
-			<body>
+			<body className='body'>
 				<MantineProvider theme={theme}>
 					<Notifications position="top-center" limit={5} />
 					{children}
