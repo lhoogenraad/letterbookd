@@ -1,0 +1,29 @@
+.readlist-item-container{
+	max-height: 200px;
+	padding: 0.2rem;
+}
+
+.readlist-item-header-container{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 2rem;
+}
+
+.readlist-item-header-container:hover{
+	color: #555;
+	transition: 0.1s;
+}
+
+.readlist-item-body-container{
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+	margin-top: 0.75rem;
+}
+
+.title{
+	font-size: 1.2rem;
+	text-align: center;
+}
