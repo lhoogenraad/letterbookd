@@ -50,7 +50,14 @@ export default function ReadListItem({ item }) {
 					disabled={loading}
 					onChange={async (val) => await updateStatus(val)}
 				/>
+				{
+					status == 'Read' ?
+						'Create review here'
+						:
+						null
+				}
 				<div className="readlist-date">01/04/2022</div>
+
 			</div>
 		</div>
 	)
