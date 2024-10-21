@@ -42,8 +42,10 @@ export default function ReadListItem({ item }) {
 			</div>
 			<div className="readlist-item-body-container">
 				<Select
+					variant='unstyled'
 					className="readlist-status"
 					data={statusOptions}
+					rightSection={''}
 					value={status}
 					disabled={loading}
 					onChange={async (val, _) => await updateStatus(val)}

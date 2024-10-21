@@ -23,6 +23,14 @@
 
 .readlist-status{
 	width: 8rem;
+	border-radius: 5px;
+	border: 1px solid #eee;
+	padding: 3px 10px;
+}
+
+.readlist-status:hover{
+	background-color: #eee;
+	transition: 0.3s;
 }
 
 .title{
