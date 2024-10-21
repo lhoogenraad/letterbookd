@@ -1,5 +1,7 @@
+"use client";
+
 import './readlistItem.css';
-import { Image } from '@mantine/core';
+import { Image, Select } from '@mantine/core';
 import Link from 'next/link';
 
 export default function ReadListItem({ item }) {
