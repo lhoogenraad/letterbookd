@@ -1,7 +1,7 @@
 "use client";
 
 import './readlistItem.css';
-import { Image, Select } from '@mantine/core';
+import { Image, Select, Loader } from '@mantine/core';
 import Link from 'next/link';
 import api from 'util/api/api';
 import notify from 'util/notify/notify';
@@ -45,10 +45,10 @@ export default function ReadListItem({ item }) {
 					variant='unstyled'
 					className="readlist-status"
 					data={statusOptions}
-					rightSection={''}
+					rightSection={loading ? <Loader size='xs' /> : null}
 					value={status}
 					disabled={loading}
-					onChange={async (val, _) => await updateStatus(val)}
+					onChange={async (val) => await updateStatus(val)}
 				/>
 				<div className="readlist-date">01/04/2022</div>
 			</div>
