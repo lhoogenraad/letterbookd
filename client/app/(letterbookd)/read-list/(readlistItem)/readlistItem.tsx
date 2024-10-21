@@ -3,8 +3,23 @@
 import './readlistItem.css';
 import { Image, Select } from '@mantine/core';
 import Link from 'next/link';
+import api from 'util/api/api';
+import notify from 'util/notify/notify';
+import statusOptions from 'configs/readlistStatusOptions';
+import { useState } from 'react';
 
 export default function ReadListItem({ item }) {
+	const [status, setStatus] = useState(item.Status)
+	const [loading, setLoading] = useState(false);
+
+	const updateStatus = async (status: string) => {
+		setLoading(true);
+		await api.readlist.updateReadListItem(item.BookId, status)
+			.then(() => setStatus(status))
+			.catch((err) => notify.error({ message: err?.response?.data?.Message }))
+			.finally(() => setLoading(false))
+	}
+
 	return (
 		<div className="readlist-item-container">
 			<Link
@@ -24,7 +39,13 @@ export default function ReadListItem({ item }) {
 				</div>
 			</Link>
 			<div className="readlist-item-body-container">
-				<div className="readlist-status">{item.Status}</div>
+				<Select 
+					className="readlist-status"
+					data={statusOptions}
+					value={status}
+					disabled={loading}
+					onChange={async (val, _) => await updateStatus(val)}
+				/>
 				<div className="readlist-date">01/04/2022</div>
 			</div>
 		</div>
