@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import '@mantine/core/styles.css';
 import notify from 'util/notify/notify';
 import api from 'util/api/api';
-import Link from 'next/link';
+import { MultiSelect } from '@mantine/core';
 import './readlist.css';
 import ReadListItem from './(readlistItem)/readlistItem';
 
@@ -18,6 +18,18 @@ async function getReadList() {
 export default function Dashboard() {
 	const [readList, setReadList] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [searchFilters, setSearchFilters] = useState<string[]>([]);
+
+	const filterReadlist = () => {
+		// If no filters selected, return everything
+		if(searchFilters.length <= 0) return readList;
+		return readList.filter((item: any) => {
+			// Filter based on matching status value
+			return searchFilters.includes(item.Status);
+		})
+	}
+
+	const filteredReadlist = filterReadlist();
 
 	useEffect(() => {
 		// Get read list
@@ -39,11 +51,19 @@ export default function Dashboard() {
 
 	return (
 		<div className='readlist-container'>
+		<div className='readlist-header-container'>
 		<h2>Your readlist</h2>
+		<MultiSelect 
+			className='status-filter'
+			data={['Read', 'Unread']} 
+			onChange={setSearchFilters} 
+			label="Status"
+		/>
+		</div>
 		<div className='readlist-items'>
-			{readList.map((listItem: any) => {
+			{filteredReadlist.map((listItem: any, index: number) => {
 				return (
-						<ReadListItem item={listItem} />
+					<ReadListItem item={listItem} key={index}/>
 				)
 			})}
 			</div>

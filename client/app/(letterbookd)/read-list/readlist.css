@@ -3,9 +3,21 @@
 	margin: 0 auto;
 }
 
+.readlist-header-container{
+	border: 1px solid red;
+	display: flex; 
+	flex-direction: column;
+	gap: 1rem;
+}
+
 .readlist-items {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	gap: 2rem;
+}
+
+.status-filter{
+	width: 30%;
+	max-width: 16rem;
 }
