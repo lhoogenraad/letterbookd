@@ -5,15 +5,11 @@ import { IconBook } from '@tabler/icons-react';
 import LogoutButton from './logoutButton';
 import { Button } from '@mantine/core';
 import Link from 'next/link';
-import notify from 'util/notify/notify';
 import { useRouter } from "next/navigation";
 
 
 export default function Navbar() {
 	const router = useRouter();
-	const notifyNotImplemented = (resourceName: string) => {
-		notify.error({message: `${resourceName} not yet implemented, sorry!`});
-	}
 
 	const goTo = (url:string) => {
 		router.push(url);
@@ -35,7 +31,7 @@ export default function Navbar() {
 					className="navbar-btn" 
 					variant="gradient"
 					gradient={{from: 'black', to: 'darkblue', deg: 30}}
-					onClick = {() => notifyNotImplemented('My Readlist')}>My Readlist</Button>
+					onClick = {() => goTo('/read-list')}>My Readlist</Button>
 				<Button 
 					className="navbar-btn" 
 					variant="gradient"
