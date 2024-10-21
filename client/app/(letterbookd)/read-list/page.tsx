@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import '@mantine/core/styles.css';
 import notify from 'util/notify/notify';
 import api from 'util/api/api';
+import Link from 'next/link';
 import './readlist.css';
 import ReadListItem from './(readlistItem)/readlistItem';
 
@@ -39,11 +40,13 @@ export default function Dashboard() {
 	return (
 		<div className='readlist-container'>
 		<h2>Your readlist</h2>
+		<div className='readlist-items'>
 			{readList.map((listItem: any) => {
 				return (
-					<ReadListItem item={listItem} />
+						<ReadListItem item={listItem} />
 				)
 			})}
+			</div>
 		</div>
 	)
 };

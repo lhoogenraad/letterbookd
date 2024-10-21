@@ -1,9 +1,10 @@
 .readlist-item-container{
 	border: 1px solid red;
 	max-height: 200px;
+	padding: 0.2rem;
 }
 
-.readlist-header-container{
+.readlist-item-header-container{
 	border: 1px solid red;
 	display: flex;
 	flex-direction: row;
@@ -12,12 +13,20 @@
 	gap: 2rem;
 }
 
-.img{
-	height: auto;
+.readlist-item-header-container:hover{
+	color: #555;
+	transition: 0.1s;
+}
+
+.readlist-item-body-container{
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+	margin-top: 0.75rem;
 }
 
 .title{
-	font-size: 1.5rem;
+	font-size: 1.2rem;
 	text-align: center;
 	border: 1px solid green;
 }
