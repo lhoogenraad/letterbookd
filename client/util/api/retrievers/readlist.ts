@@ -18,7 +18,7 @@ const addBookToReadList = async (bookId: number, status: string) => {
 }
 
 /**
- * Add book to read list
+ * Update a read list item's status
  */
 const updateReadListItem = async (bookId: number, status: string) => {
 	return await api.put(

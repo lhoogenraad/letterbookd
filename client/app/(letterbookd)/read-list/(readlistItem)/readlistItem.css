@@ -1,6 +1,8 @@
 .readlist-item-container{
 	max-height: 200px;
-	padding: 0.2rem;
+	padding: 1rem;
+	background-color: #fff;
+	border-radius: 15px;
 }
 
 .readlist-item-header-container{
@@ -11,10 +13,6 @@
 	gap: 2rem;
 }
 
-.readlist-item-header-container:hover{
-	color: #555;
-	transition: 0.1s;
-}
 
 .readlist-item-body-container{
 	display: flex;
@@ -23,7 +21,27 @@
 	margin-top: 0.75rem;
 }
 
+.readlist-status{
+	width: 10rem;
+	border-radius: 5px;
+	border: 1px solid #eee;
+	padding: 3px 10px;
+}
+
+.readlist-status:hover{
+	background-color: #eee;
+	transition: 0.3s;
+}
+
 .title{
-	font-size: 1.2rem;
+	font-size: 1.1rem;
 	text-align: center;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+.title:hover{
+	color: white;
+	background-color: black;
+	transition: 0.1s;
 }

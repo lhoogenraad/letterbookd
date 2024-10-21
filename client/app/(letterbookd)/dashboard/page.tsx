@@ -45,7 +45,7 @@ export default function Dashboard() {
 	return (
 		<div className='dashboard-container'>
 			<div className='title-container'>
-				<h1 className='title'>
+				<h1 className='dashboard-title'>
 					{
 						firstName ?
 							`Welcome back, ${firstName}!` :
