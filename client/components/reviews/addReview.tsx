@@ -14,8 +14,8 @@ export default function AddReview({book, reload, closeModal}) {
 		setSubmitting(true);
 		api.reviews.submitReview({bookId, rating, description})
 		.then(() => {
-			reload()
-			closeModal()
+			if (reload) reload();
+			closeModal();
 		})
 		.catch((err) => notify.error({message: err.response?.data?.Message ?? err.message}))
 		.finally(() => setSubmitting(false));
