@@ -48,35 +48,37 @@ export default function ReadListItem({ item }) {
 				</Link>
 			</div>
 			<div className="readlist-item-body-container">
-				<Select
-					variant='unstyled'
-					className="readlist-status"
-					data={statusOptions}
-					rightSection={loading ? <Loader size='xs' /> : null}
-					value={status}
-					disabled={loading}
-					onChange={async (val) => await updateStatus(val)}
-				/>
+				<div style={{display: 'flex', flexDirection: 'row', gap:'2rem'}}>
+					<Select
+						variant='unstyled'
+						className="readlist-status"
+						data={statusOptions}
+						rightSection={loading ? <Loader size='xs' /> : null}
+						value={status}
+						disabled={loading}
+						onChange={async (val) => await updateStatus(val)}
+					/>
+					<div className="readlist-date">
+						<div className='readlist-date-title'>Date added:</div>
+						<div>01/04/2022 <span style={{ fontSize: '0.6rem' }}>(placeholder)</span></div>
+					</div>
+				</div>
 				{
 					status == 'Read' ?
 						<Button variant='transparent' onClick={open}>Create review</Button>
 						:
 						null
 				}
-				<div className="readlist-date">
-					<div className='readlist-date-title'>Date added:</div>
-					<div>01/04/2022 <span style={{fontSize: '0.6rem'}}>(placeholder)</span></div>
-				</div>
-		  <Modal 
-		  	opened={opened} 
-			onClose={close} 
-			title={item.BookName}
-			centered
-			size="85%"
-			transitionProps={{ transition: 'slide-down' }}
-			>
-		  		<AddReview book={{Id: item.BookId}} reload={undefined} closeModal={closeModal}/>
-		  </Modal>
+				<Modal
+					opened={opened}
+					onClose={close}
+					title={item.BookName}
+					centered
+					size="85%"
+					transitionProps={{ transition: 'slide-down' }}
+				>
+					<AddReview book={{ Id: item.BookId }} reload={undefined} closeModal={closeModal} />
+				</Modal>
 			</div>
 		</div>
 	)
