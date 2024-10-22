@@ -13,7 +13,7 @@ export default function DeleteReadlistItem({ bookId, closeModal, removeItem }) {
 		await api.readlist.removeReadlistItem(bookId)
 			.then(() => {
 				closeModal();
-				removeItem(bookId);
+				removeItem();
 			})
 			.catch((err) => notify.error({ message: err.response.data.Message }))
 			.finally(() => setLoading(false))
