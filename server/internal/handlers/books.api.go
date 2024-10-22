@@ -95,16 +95,7 @@ func GetBookReviewSummary (w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	avgRatingChan := make(chan float64, 1)
-	numReviewsChan := make(chan int, 1)
-
-	go models.GetBookAverageRating(bookId, avgRatingChan)
-	go models.GetBookNumberReviews(bookId, numReviewsChan)
-
-	var avgRating float64 = <- avgRatingChan
-	var numReviews int = <- numReviewsChan
-
-	summary := map[string]interface{}{"avgRating":avgRating, "numReviews":numReviews}
+	var summary map[string]interface{} = getBookStats(bookId)
 
 	err = json.NewEncoder(w).Encode(summary)
 
@@ -113,4 +104,31 @@ func GetBookReviewSummary (w http.ResponseWriter, r *http.Request) {
 		api.InternalErrorHandler(w)
 		return
 	}
+}
+
+func getBookStats(bookId int) map[string]interface{} {
+	avgRatingChan := make(chan float64, 1)
+	numReviewsChan := make(chan int, 1)
+	numCompletedReads := make(chan int, 1)
+	numReadlistOccurences := make(chan int, 1)
+
+	go models.GetBookAverageRating(bookId, avgRatingChan)
+	go models.GetBookNumberReviews(bookId, numReviewsChan)
+	go models.GetBookCompletedReads(bookId, numCompletedReads)
+	go models.GetBookReadlistOccurences(bookId, numReadlistOccurences)
+
+
+	var avgRating float64 = <- avgRatingChan
+	var numReviews int = <- numReviewsChan
+	var completedReads int = <- numCompletedReads
+	var readlistOccurences int = <- numReadlistOccurences
+
+	summary := map[string]interface{}{
+		"avgRating":avgRating, 
+		"numReviews":numReviews,
+		"numCompletedReads":completedReads,
+		"numReadlistOccurences":readlistOccurences,
+	}
+
+	return summary
 }
