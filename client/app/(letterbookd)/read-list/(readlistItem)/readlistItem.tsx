@@ -63,7 +63,7 @@ export default function ReadListItem({ item, removeItem }) {
 				</div>
 				<div>
 				{
-					status == 'Read' ?
+					status == 'Read' && !item.UserReviewed ?
 						<Button variant='transparent' onClick={setCreateReviewModal.open}>Create review</Button>
 						:
 						null
