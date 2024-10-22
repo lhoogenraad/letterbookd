@@ -1,16 +1,23 @@
 "use client";
 
 import './readlistItem.css';
-import { Image, Select, Loader } from '@mantine/core';
+import { Image, Select, Loader, Modal, Button } from '@mantine/core';
 import Link from 'next/link';
 import api from 'util/api/api';
 import notify from 'util/notify/notify';
 import statusOptions from 'configs/readlistStatusOptions';
+import AddReview from 'components/reviews/addReview';
+import { useDisclosure } from '@mantine/hooks';
 import { useState } from 'react';
 
 export default function ReadListItem({ item }) {
 	const [status, setStatus] = useState(item.Status)
 	const [loading, setLoading] = useState(false);
+	const [opened, { open, close }] = useDisclosure(false);
+
+	const closeModal = () => {
+		close();
+	}
 
 	const updateStatus = async (newStatus: string) => {
 		// If status value is same as current status, don't send request
@@ -41,16 +48,37 @@ export default function ReadListItem({ item }) {
 				</Link>
 			</div>
 			<div className="readlist-item-body-container">
-				<Select
-					variant='unstyled'
-					className="readlist-status"
-					data={statusOptions}
-					rightSection={loading ? <Loader size='xs' /> : null}
-					value={status}
-					disabled={loading}
-					onChange={async (val) => await updateStatus(val)}
-				/>
-				<div className="readlist-date">01/04/2022</div>
+				<div style={{display: 'flex', flexDirection: 'row', gap:'2rem'}}>
+					<Select
+						variant='unstyled'
+						className="readlist-status"
+						data={statusOptions}
+						rightSection={loading ? <Loader size='xs' /> : null}
+						value={status}
+						disabled={loading}
+						onChange={async (val) => await updateStatus(val)}
+					/>
+					<div className="readlist-date">
+						<div className='readlist-date-title'>Date added:</div>
+						<div>01/04/2022 <span style={{ fontSize: '0.6rem' }}>(placeholder)</span></div>
+					</div>
+				</div>
+				{
+					status == 'Read' ?
+						<Button variant='transparent' onClick={open}>Create review</Button>
+						:
+						null
+				}
+				<Modal
+					opened={opened}
+					onClose={close}
+					title={item.BookName}
+					centered
+					size="85%"
+					transitionProps={{ transition: 'slide-down' }}
+				>
+					<AddReview book={{ Id: item.BookId }} reload={undefined} closeModal={closeModal} />
+				</Modal>
 			</div>
 		</div>
 	)

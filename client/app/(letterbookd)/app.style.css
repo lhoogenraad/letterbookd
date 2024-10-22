@@ -1,7 +1,7 @@
 .app{
-	background-color: white;
+	background-color: inherit;
 	width: 95%;
-	min-height: 95vh;
+	min-height: 80vh;
 	margin: 0 auto;
-	padding: 0 1rem 1rem 1rem;
+	padding: 0 0.25rem 0.25rem 0.25rem;
 }

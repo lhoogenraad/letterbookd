@@ -53,7 +53,7 @@ export default function Dashboard() {
 	return (
 		<div className='readlist-container'>
 		<div className='readlist-header-container'>
-		<h2>Your readlist</h2>
+		<h1>Your readlist</h1>
 		<MultiSelect 
 			className='status-filter'
 			data={statusOptions} 
