@@ -31,11 +31,9 @@ export default function Dashboard() {
 	}
 
 	const removeItem = (bookId: number) => {
-		console.dir(`old array ${readList}`)
 		const newArr = readList.filter((item: any) => {
 			return item.BookId != bookId
 		});
-		console.dir(`new array ${newArr}`)
 		setReadList(newArr);
 	}
 
@@ -56,7 +54,14 @@ export default function Dashboard() {
 		return <p>Loading...</p>
 	}
 	if (!readList || !readList.length) {
-		return <p>It appears you've got no books on your read list!</p>
+		return (
+		<div className='readlist-container'>
+			<div className='readlist-header-container'>
+				<h1>Your readlist</h1>
+				<p>It appears you've got no books on your read list!</p>
+			</div>
+		</div>
+		)
 	}
 
 	return (
