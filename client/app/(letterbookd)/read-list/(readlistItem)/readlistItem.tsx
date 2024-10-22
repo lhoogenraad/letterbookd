@@ -59,11 +59,14 @@ export default function ReadListItem({ item }) {
 				/>
 				{
 					status == 'Read' ?
-						<Button onClick={open}>Create review</Button>
+						<Button variant='transparent' onClick={open}>Create review</Button>
 						:
 						null
 				}
-				<div className="readlist-date">01/04/2022</div>
+				<div className="readlist-date">
+					<div className='readlist-date-title'>Date added:</div>
+					<div>01/04/2022 <span style={{fontSize: '0.6rem'}}>(placeholder)</span></div>
+				</div>
 		  <Modal 
 		  	opened={opened} 
 			onClose={close} 
