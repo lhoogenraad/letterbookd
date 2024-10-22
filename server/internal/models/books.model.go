@@ -158,3 +158,42 @@ func GetBookNumberReviews(bookId int, output chan <- int) (int, error) {
 	output <- numReviews
 	return numReviews, nil
 }
+
+
+func GetBookCompletedReads(bookId int, output chan <- int) (int, error) {
+	var selectQuery string = `
+	SELECT IFNULL(COUNT(id), 0)
+	FROM read_list_items
+	WHERE book_id=?
+	AND status='Read'`
+
+	row := tools.DB.QueryRow(selectQuery, bookId)
+
+	var numReads int
+	err := row.Scan(&numReads)
+	if err != nil {
+		return -1, errors.New(`Something went wrong on our end. Please try again later`)
+	}
+
+	output <- numReads
+	return numReads, nil
+}
+
+
+func GetBookReadlistOccurences(bookId int, output chan <- int) (int, error) {
+	var selectQuery string = `
+	SELECT IFNULL(COUNT(id), 0)
+	FROM read_list_items
+	WHERE book_id=?`
+
+	row := tools.DB.QueryRow(selectQuery, bookId)
+
+	var numOccurences int
+	err := row.Scan(&numOccurences)
+	if err != nil {
+		return -1, errors.New(`Something went wrong on our end. Please try again later`)
+	}
+
+	output <- numOccurences
+	return numOccurences, nil
+}

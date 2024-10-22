@@ -49,3 +49,16 @@
 	border-bottom-right-radius: 15px;
 	border-top: 5px solid darkgreen;
 }
+
+.readlist-stats{
+	margin-top: 20px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+.readlist-stats-item{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
