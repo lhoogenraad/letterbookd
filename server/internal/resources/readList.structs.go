@@ -5,7 +5,9 @@ type ReadListItem struct {
 	UserId int
 	BookId int
 	BookName string
+	BookSynopsis string
 	Status string
+	UserReviewed bool
 }
 
 type ReadListModReq struct {

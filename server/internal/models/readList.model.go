@@ -17,12 +17,19 @@ func GetReadListItems(userId int) ([]resources.ReadListItem, error) {
 		read_list_items.user_id,
 		books.id,
 		books.name,
-		read_list_items.status
+		IFNULL(books.synopsis, ''),
+		read_list_items.status,
+		reviews.id IS NOT NULL
 		FROM read_list_items
 		JOIN books
-			ON books.id = read_list_items.book_id;`
+			ON books.id = read_list_items.book_id
+		JOIN reviews
+			ON reviews.book_id = books.id
+			AND reviews.user_id = ?
+		WHERE read_list_items.user_id = ?
+		;`
 
-	rows, err := tools.DB.Query(queryString)
+	rows, err := tools.DB.Query(queryString, userId, userId)
 	if err != nil {
 		return nil, err
 	}
@@ -37,7 +44,9 @@ func GetReadListItems(userId int) ([]resources.ReadListItem, error) {
 			&item.UserId,
 			&item.BookId,
 			&item.BookName,
+			&item.BookSynopsis,
 			&item.Status,
+			&item.UserReviewed,
 		); err != nil {
 			return readListItems, err
 		}

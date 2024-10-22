@@ -63,7 +63,6 @@ export default function Dashboard() {
 		<div className='readlist-container'>
 		<div className='readlist-header-container'>
 		<h1>Your readlist</h1>
-		{JSON.stringify(readList)}
 		<MultiSelect 
 			className='status-filter'
 			data={statusOptions} 
