@@ -27,8 +27,13 @@ const updateReadListItem = async (bookId: number, status: string) => {
 	).then((res) => res);
 }
 
+const removeReadlistItem = async (bookId: number) => {
+	return await api.delete(`/read-list/book/${bookId}`).then((res) => res);
+}
+
 export default {
 	getReadList,
 	addBookToReadList,
 	updateReadListItem,
+	removeReadlistItem,
 }

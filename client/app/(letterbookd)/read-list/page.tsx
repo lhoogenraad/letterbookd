@@ -30,6 +30,15 @@ export default function Dashboard() {
 		})
 	}
 
+	const removeItem = (bookId: number) => {
+		console.dir(`old array ${readList}`)
+		const newArr = readList.filter((item: any) => {
+			return item.BookId != bookId
+		});
+		console.dir(`new array ${newArr}`)
+		setReadList(newArr);
+	}
+
 	const filteredReadlist = filterReadlist();
 
 	useEffect(() => {
@@ -54,6 +63,7 @@ export default function Dashboard() {
 		<div className='readlist-container'>
 		<div className='readlist-header-container'>
 		<h1>Your readlist</h1>
+		{JSON.stringify(readList)}
 		<MultiSelect 
 			className='status-filter'
 			data={statusOptions} 
@@ -65,7 +75,11 @@ export default function Dashboard() {
 		<div className='readlist-item-count'>{filteredReadlist.length} Items</div>
 			{filteredReadlist.map((listItem: any, index: number) => {
 				return (
-					<ReadListItem item={listItem} key={index}/>
+					<ReadListItem
+						removeItem={() => removeItem(listItem.BookId)}
+						item={listItem} 
+						key={index}
+					/>
 				)
 			})}
 			</div>

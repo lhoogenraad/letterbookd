@@ -9,15 +9,13 @@ import statusOptions from 'configs/readlistStatusOptions';
 import AddReview from 'components/reviews/addReview';
 import { useDisclosure } from '@mantine/hooks';
 import { useState } from 'react';
+import DeleteReadlistItem from './deleteReadlistItem';
 
-export default function ReadListItem({ item }) {
+export default function ReadListItem({ item, removeItem }) {
 	const [status, setStatus] = useState(item.Status)
 	const [loading, setLoading] = useState(false);
-	const [opened, { open, close }] = useDisclosure(false);
-
-	const closeModal = () => {
-		close();
-	}
+	const [createReviewOpened, setCreateReviewModal] = useDisclosure(false);
+	const [deleteReadlistItemOpened, setDeleteReadlistItemModal] = useDisclosure(false);
 
 	const updateStatus = async (newStatus: string) => {
 		// If status value is same as current status, don't send request
@@ -63,21 +61,45 @@ export default function ReadListItem({ item }) {
 						<div>01/04/2022 <span style={{ fontSize: '0.6rem' }}>(placeholder)</span></div>
 					</div>
 				</div>
+				<div>
 				{
 					status == 'Read' ?
-						<Button variant='transparent' onClick={open}>Create review</Button>
+						<Button variant='transparent' onClick={setCreateReviewModal.open}>Create review</Button>
 						:
 						null
 				}
+				<Button variant='transparent' color="red" onClick={setDeleteReadlistItemModal.open}>Remove book</Button>
+				</div>
+
 				<Modal
-					opened={opened}
-					onClose={close}
+					opened={createReviewOpened}
+					onClose={setCreateReviewModal.close}
 					title={item.BookName}
 					centered
 					size="85%"
 					transitionProps={{ transition: 'slide-down' }}
 				>
-					<AddReview book={{ Id: item.BookId }} reload={undefined} closeModal={closeModal} />
+					<AddReview 
+						book={{ Id: item.BookId }} 
+						reload={undefined} 
+						closeModal={setCreateReviewModal.close} 
+					/>
+				</Modal>
+
+
+				<Modal
+					opened={deleteReadlistItemOpened}
+					onClose={setDeleteReadlistItemModal.close}
+					title={`Are you sure you want to remove ${item.BookName} from your read list?`}
+					centered
+					size="40%"
+					transitionProps={{ transition: 'slide-down' }}
+				>
+					<DeleteReadlistItem 
+						bookId={item.BookId}
+						removeItem={removeItem} 
+						closeModal={setDeleteReadlistItemModal.close} 
+					/>
 				</Modal>
 			</div>
 		</div>
