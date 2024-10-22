@@ -1,4 +1,5 @@
 .container {
+	background-color: white;
 	width: 70vw;
 	max-width: 750px;
 	margin: 20vh auto;
@@ -35,6 +36,10 @@
 	flex-direction: row;
 	justify-content: space-between;
 	gap: 2vw;
+}
+
+.name-input .form-input {
+	width: 45%;
 }
 
 .switch-page-text {
