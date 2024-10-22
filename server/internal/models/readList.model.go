@@ -23,7 +23,7 @@ func GetReadListItems(userId int) ([]resources.ReadListItem, error) {
 		FROM read_list_items
 		JOIN books
 			ON books.id = read_list_items.book_id
-		JOIN reviews
+		LEFT JOIN reviews
 			ON reviews.book_id = books.id
 			AND reviews.user_id = ?
 		WHERE read_list_items.user_id = ?
