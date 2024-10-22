@@ -46,6 +46,7 @@ func ApiHandler(r *chi.Mux) {
 		router.Get("/read-list", GetReadListItems)
 		router.Post("/read-list/book/{bookId}", AddBookToReadList)
 		router.Put("/read-list/book/{bookId}", UpdateReadListItem)
+		router.Delete("/read-list/book/{bookId}", DeleteReadListItem)
 
 		// Reviews
 		router.Post("/books/{bookId}/reviews", CreateReview)

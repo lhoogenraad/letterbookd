@@ -103,15 +103,13 @@ func UpdateReadListItem (bookId int, userId int, request resources.ReadListModRe
 
 
 
-func DeleteReadListItem (readlistItemId int, bookId int, userId int) (error, int) {
+func DeleteReadListItem (bookId int, userId int) (error, int) {
 	var updateQuery string = `
 	DELETE FROM read_list_items
 	WHERE user_id = ?
-	AND book_id = ?
-	AND id = ?
-	`
+	AND book_id = ?;`
 
-	_, err := tools.DB.Query(updateQuery, userId, bookId, readlistItemId)
+	_, err := tools.DB.Query(updateQuery, userId, bookId)
 	
 	if err != nil {
 		err, code := handleReadListModSQLError(err)

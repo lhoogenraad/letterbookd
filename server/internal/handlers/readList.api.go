@@ -124,3 +124,35 @@ func UpdateReadListItem (w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusAccepted) 
 	json.NewEncoder(w).Encode(`We've updated this book successfully!`)
 }
+
+
+func DeleteReadListItem (w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	claims, ok := utils.GetClaims(r)
+	if !ok {
+		log.Error("Something went wrong grabbing token claim info")
+		api.InternalErrorHandler(w)
+	}
+
+	//Convert userId to int
+	userId := int(claims["userid"].(float64))
+
+	bookIdParam := utils.GetParam(r, "bookId")
+	bookId, err := strconv.Atoi(bookIdParam)
+
+	if err != nil {
+		api.CustomErrorHandler(w, 400, "Invalid book ID was given as a parameter.")
+		return
+	}
+
+	err, code := models.DeleteReadListItem(bookId, userId)
+
+	if err != nil {
+		api.CustomErrorHandler(w, code, fmt.Sprint(err))
+		return
+	}
+
+	w.WriteHeader(http.StatusAccepted) 
+	json.NewEncoder(w).Encode(`We've removed this item from your readlist successfully!`)
+}
