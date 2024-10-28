@@ -1,9 +1,10 @@
 package authors
 
 import (
-    "bufio"
-    "fmt"
-    "os"
+	"bufio"
+	"fmt"
+	"os"
+	"strings"
 )
 
 func ReadAndUpload () error {
@@ -20,7 +21,11 @@ func ReadAndUpload () error {
 	i := 0
 	max := 100
 	for scanner.Scan() && i < max {
-		fmt.Println(i, scanner.Text())
+		text := scanner.Text()
+		textSplit := strings.Split(text, "{")
+		textSplit = textSplit[1:]
+		cleaned := strings.Join(textSplit, "{")
+		fmt.Println(i, "\n", text, "\n", cleaned, "\n\n")
 		i++
 	}
 
