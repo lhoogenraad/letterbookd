@@ -5,6 +5,7 @@ import (
 	// "scripts/util"
 	"fmt"
 	"scripts/books"
+	"time"
 	"scripts/util"
 	"strings"
 )
@@ -49,6 +50,17 @@ func getListOfAuthorIds() (map[string]int, error) {
 	return authors, nil
 }
 
+func hasBirthDate(author Author) ( time.Time, bool ) {
+	dob := author.Birth_date
+	date_of_birth, err := time.Parse("2006", dob)
+	if err == nil {return date_of_birth, true}
+	date_of_birth, err = time.Parse("01 Feb, 2006", dob)
+	if err == nil {return date_of_birth, true}
+	date_of_birth, err = time.Parse("2006-02-01", dob)
+	if err != nil {return date_of_birth, false}
+	return date_of_birth, true;
+}
+
 func ReadAndUpload () error {
 	authorIdMap, err := getListOfAuthorIds()
 	if err != nil {
@@ -70,9 +82,14 @@ func ReadAndUpload () error {
 		author := getLineAsJSON(scanner.Text())
 		id := author.Key
 		_, exists := authorIdMap[id]
-		if exists {
-			authorsToAdd = append(authorsToAdd, author)
-			delete(authorIdMap, id)
+
+		if exists && author.Birth_date != ""{
+			dob, ok := hasBirthDate(author)
+			if ok {
+				fmt.Println(author, "dob:", dob)
+				authorsToAdd = append(authorsToAdd, author)
+				delete(authorIdMap, id)
+			}
 		}
 		if i % 1000000 == 0{
 			fmt.Println(authorIdMap[id])
