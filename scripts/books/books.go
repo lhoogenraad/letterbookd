@@ -5,6 +5,7 @@ import (
 	"scripts/util"
 	"strings"
 	"fmt"
+	"time"
 )
 
 type Book struct{
@@ -40,6 +41,27 @@ func isEnglish(book Book) bool {
 	return false
 }
 
+func isRecent(book Book) bool {
+	var format string
+	var dateString string = book.Publish_date
+	var date time.Time
+
+	// Commonly the Pub dates are just the year
+	if len(dateString) == 4 {
+		format = "2000"
+	} else {
+		format = "Jan 02, 2006"
+	}
+
+	date, err := time.Parse(format, dateString)
+
+	minDate, err := time.Parse("2006-02-01", "1980-01-01")
+	if err == nil && date.After(minDate){
+		return true
+	} 
+	return false
+}
+
 func hasEnoughPages(book Book) bool {
 	num_pages := book.Number_of_pages
 	return num_pages > 200 
@@ -54,20 +76,22 @@ func ReadAndUpload () error {
 		return err
 	}
 
+
 	i := 0
-	max := 100000
-	for scanner.Scan() && i < max {
+	var validBooks []Book
+	for scanner.Scan(){
 		book := getLineAsJSON(scanner.Text())
-		if hasEnoughPages(book) {
-			fmt.Println(book.Title, book.Publish_date)
-			for _, author := range book.Authors {
-				fmt.Print(author, " ")
-			}
-			fmt.Println("\n")
+		if i > 269000 {
+			fmt.Println(i, "\n\n\n")
+			fmt.Println(book, "\n")
 		}
 		i++
 	}
-
+	err = scanner.Err()
+	if err != nil{
+		fmt.Println(`\n\nEncountered err:`, err, "\n\n")
+	}
+	fmt.Println(`Found`, len(validBooks), `valid books`)
 	return nil
 }
 
