@@ -14,6 +14,9 @@ type Book struct{
 	Title string `json:"title"`
 	Number_of_pages int16 `json:"number_of_pages`
 	Publish_date string `json:"publish_date"`
+	Authors []struct {
+		Key string `json: "key"`
+	}
 }
 
 func getLineAsJSON (text string) Book {
@@ -57,6 +60,10 @@ func ReadAndUpload () error {
 		book := getLineAsJSON(scanner.Text())
 		if hasEnoughPages(book) {
 			fmt.Println(book.Title, book.Publish_date)
+			for _, author := range book.Authors {
+				fmt.Print(author, " ")
+			}
+			fmt.Println("\n")
 		}
 		i++
 	}
