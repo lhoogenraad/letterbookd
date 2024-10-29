@@ -52,12 +52,12 @@ func getListOfAuthorIds() (map[string]int, error) {
 
 func hasBirthDate(author Author) ( time.Time, bool ) {
 	dob := author.Birth_date
-	date_of_birth, err := time.Parse("2006", dob)
-	if err == nil {return date_of_birth, true}
-	date_of_birth, err = time.Parse("01 Feb, 2006", dob)
+	date_of_birth, err := time.Parse("01 Feb, 2006", dob)
 	if err == nil {return date_of_birth, true}
 	date_of_birth, err = time.Parse("2006-02-01", dob)
 	if err != nil {return date_of_birth, false}
+	date_of_birth, err = time.Parse("2006", dob)
+	if err == nil {return date_of_birth, true}
 	return date_of_birth, true;
 }
 
