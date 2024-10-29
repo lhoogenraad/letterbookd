@@ -73,6 +73,7 @@ func shouldAddBook(book Book) bool {
 
 func GetValidBooks () ([]Book, error) {
 	filepath := `/home/leon/Downloads/ol_dump_editions_2024-09-30.txt`
+	fmt.Println(`Retrieving valid books from`, filepath)
 	scanner, err := util.GetScanner(filepath)
 
 	if err != nil{
