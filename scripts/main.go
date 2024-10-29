@@ -1,7 +1,7 @@
 package main
 
-import "scripts/authors"
+import "scripts/books"
 
 func main(){
-	authors.ReadAndUpload()
+	books.ReadAndUpload()
 }
