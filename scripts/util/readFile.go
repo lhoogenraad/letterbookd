@@ -13,8 +13,8 @@ func GetScanner (filepath string) ( *bufio.Scanner, error ) {
 	
 	// Set max read in len
 
-	maxIn := 512000
-    buf := make([]byte, maxIn)
+	maxIn := 5000*5000
+    buf := make([]byte, 0, maxIn)
 	scanner.Buffer(buf, maxIn)
 
 	if err != nil{

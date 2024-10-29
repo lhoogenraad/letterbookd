@@ -24,7 +24,7 @@ func getLineAsJSON (text string) Book {
 	book := Book{}
 	textSplit := strings.Split(text, "{")
 	textSplit = textSplit[1:]
-	cleaned := strings.Join(textSplit, "{")
+cleaned := strings.Join(textSplit, "{")
 	cleaned = "{" + cleaned
 	json.Unmarshal([]byte(cleaned), &book)
 
@@ -67,23 +67,30 @@ func hasEnoughPages(book Book) bool {
 	return num_pages > 200 
 }
 
-func ReadAndUpload () error {
+func shouldAddBook(book Book) bool {
+	return hasEnoughPages(book) && isRecent(book) && isEnglish(book)
+}
+
+func GetValidBooks () ([]Book, error) {
 	filepath := `/home/leon/Downloads/ol_dump_editions_2024-09-30.txt`
 	scanner, err := util.GetScanner(filepath)
 
 	if err != nil{
 		fmt.Println(err)
-		return err
+		return nil, err
 	}
 
 
 	i := 0
+	max := 1000000
 	var validBooks []Book
-	for scanner.Scan(){
+	for scanner.Scan() && i < max{
 		book := getLineAsJSON(scanner.Text())
-		if i > 269000 {
-			fmt.Println(i, "\n\n\n")
-			fmt.Println(book, "\n")
+		if shouldAddBook(book) {
+			validBooks = append(validBooks, book)
+		}
+		if i % 10000 == 0{
+			fmt.Println(`Got to iteration`, i)
 		}
 		i++
 	}
@@ -91,7 +98,8 @@ func ReadAndUpload () error {
 	if err != nil{
 		fmt.Println(`\n\nEncountered err:`, err, "\n\n")
 	}
+	
 	fmt.Println(`Found`, len(validBooks), `valid books`)
-	return nil
+	return validBooks, nil
 }
 
