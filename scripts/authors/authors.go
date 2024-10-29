@@ -3,20 +3,29 @@ package authors
 import (
 	"encoding/json"
 	// "scripts/util"
-	"strings"
 	"fmt"
 	"scripts/books"
+	"scripts/util"
+	"strings"
 )
 
-func getLineAsJSON (text string) map[string]interface{} {
+
+type Author struct {
+	Key string `json: "key"`
+	Name string `json: "name"`
+	Birth_date string `json: "birth_date"`
+}
+
+
+func getLineAsJSON (text string) Author {
 	textSplit := strings.Split(text, "{")
 	textSplit = textSplit[1:]
 	cleaned := strings.Join(textSplit, "{")
 	cleaned = "{" + cleaned
-	var jsonMap map[string]interface{}
-	json.Unmarshal([]byte(cleaned), &jsonMap)
+	var author Author
+	json.Unmarshal([]byte(cleaned), &author)
 
-	return jsonMap
+	return author
 }
 
 // Creates map of author IDs to 
@@ -46,27 +55,31 @@ func ReadAndUpload () error {
 		fmt.Println(err)
 		return err
 	}
-	fmt.Println(authorIdMap)
 
-	// filepath := `/home/leon/Downloads/ol_dump_authors_2024-09-30.txt`
-	// scanner, err := util.GetScanner(filepath)
+	filepath := `/home/leon/Downloads/ol_dump_authors_2024-09-30.txt`
+	scanner, err := util.GetScanner(filepath)
 
-	// if err != nil{
-	// 	fmt.Println(err)
-	// 	return err
-	// }
+	if err != nil{
+		fmt.Println(err)
+		return err
+	}
 
-	// i := 0
-	// max := 100000
-	// for scanner.Scan() && i < max {
-	// 	jsonMap := getLineAsJSON(scanner.Text())
-	// 	name := jsonMap["name"]
-	// 	dob := jsonMap["birth_date"]
-	// 	if name != nil && dob != nil {
-	// 		fmt.Println(name, "\n", dob, "\n", "\n\n")
-	// 	}
-	// 	i++
-	// }
-
+	var authorsToAdd []Author
+	i := 0
+	for scanner.Scan() {
+		author := getLineAsJSON(scanner.Text())
+		id := author.Key
+		_, exists := authorIdMap[id]
+		if exists {
+			authorsToAdd = append(authorsToAdd, author)
+			delete(authorIdMap, id)
+		}
+		if i % 1000000 == 0{
+			fmt.Println(authorIdMap[id])
+			fmt.Println(`Got to iteration`, i)
+		}
+		i++
+	}
+	fmt.Println(`authors to add:`, authorsToAdd)
 	return nil
 }
