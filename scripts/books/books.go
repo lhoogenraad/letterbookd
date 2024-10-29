@@ -83,7 +83,7 @@ func GetValidBooks () ([]Book, error) {
 
 
 	i := 0
-	max := 3000000
+	max := 100000000
 	var validBooks []Book
 	for scanner.Scan() && i < max{
 		book := getLineAsJSON(scanner.Text())

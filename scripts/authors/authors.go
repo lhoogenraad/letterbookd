@@ -2,11 +2,10 @@ package authors
 
 import (
 	"encoding/json"
-	// "scripts/util"
+	"scripts/util"
 	"fmt"
 	"scripts/books"
 	"time"
-	"scripts/util"
 	"strings"
 )
 
@@ -15,6 +14,7 @@ type Author struct {
 	Key string `json: "key"`
 	Name string `json: "name"`
 	Birth_date string `json: "birth_date"`
+	DOB time.Time
 }
 
 
@@ -93,9 +93,14 @@ func ReadAndUpload () error {
 		if exists && author.Birth_date != ""{
 			dob, ok := hasBirthDate(author)
 			if ok {
-				fmt.Println(author, "dob:", dob)
-				authorsToAdd = append(authorsToAdd, author)
-				delete(authorIdMap, id)
+				author.DOB = dob
+				fmt.Println(`Adding author`, author)
+				err := UploadAuthor(author)
+				if err != nil {
+					delete(authorIdMap, id)
+				} else {
+					fmt.Println(`Failed to upload author `, author, "\n\n")
+				}
 			}
 		}
 		if i % 1000000 == 0{
