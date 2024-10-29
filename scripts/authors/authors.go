@@ -1,18 +1,15 @@
 package authors
 
 import (
-	"bufio"
-	"fmt"
-	"os"
+	"scripts/util"
 	"strings"
+	"fmt"
 )
 
 func ReadAndUpload () error {
 	filepath := `/home/leon/Downloads/ol_dump_authors_2024-09-30.txt`
-	file, err := os.Open(filepath)
-	scanner := bufio.NewScanner(file)
-    scanner.Split(bufio.ScanLines)
-	
+	scanner, err := util.GetScanner(filepath)
+
 	if err != nil{
 		fmt.Println(err)
 		return err
