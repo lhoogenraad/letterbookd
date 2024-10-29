@@ -52,13 +52,20 @@ func getListOfAuthorIds() (map[string]int, error) {
 
 func hasBirthDate(author Author) ( time.Time, bool ) {
 	dob := author.Birth_date
-	date_of_birth, err := time.Parse("01 Feb, 2006", dob)
-	if err == nil {return date_of_birth, true}
-	date_of_birth, err = time.Parse("2006-02-01", dob)
-	if err != nil {return date_of_birth, false}
-	date_of_birth, err = time.Parse("2006", dob)
-	if err == nil {return date_of_birth, true}
-	return date_of_birth, true;
+	var format string
+	if len(dob) == 4 {
+		format = "2006"
+	} else if len(dob) == 10 {
+		format = "2006-01-02"
+	} else {
+		format = "2 January 2006"
+	}
+	date_of_birth, err := time.Parse(format, dob)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	return date_of_birth, err == nil;
 }
 
 func ReadAndUpload () error {
