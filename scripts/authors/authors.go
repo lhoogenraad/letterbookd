@@ -114,21 +114,23 @@ func ReadAndUpload () error {
 }
 
 /**
-Retrieves all user IDs and puts them into a map[string]int
+Retrieves all author IDs and puts them into a map[string]int
+The string key is the ol ID, and the int value is letterbookd's author ID
 */
 func GetAllAuthorIds () (map[string]int, error) {
 	var authors = make(map[string]int)
-	var selectQuery string = `SELECT ol_id FROM authors;`
+	var selectQuery string = `SELECT id, ol_id FROM authors WHERE ol_id IS NOT NULL;`
 	rows, err := util.DB.Query(selectQuery);
 
 	if err != nil {return authors, err}
 
 	for rows.Next() {
-		var authorId string
-		err := rows.Scan(&authorId)
+		var olId string
+		var authorId int
+		err := rows.Scan(&authorId, &olId)
 		if err != nil {return authors, err}
 		
-		authors[authorId] = 1
+		authors[olId] = authorId
 	}
 
 	return authors, nil
