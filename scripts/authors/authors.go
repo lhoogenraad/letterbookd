@@ -7,23 +7,18 @@ import (
 	"scripts/books"
 	"time"
 	"strings"
+	"scripts/structs"
 )
 
 
-type Author struct {
-	Key string `json: "key"`
-	Name string `json: "name"`
-	Birth_date string `json: "birth_date"`
-	DOB time.Time
-}
 
 
-func getLineAsJSON (text string) Author {
+func getLineAsJSON (text string) structs.Author {
 	textSplit := strings.Split(text, "{")
 	textSplit = textSplit[1:]
 	cleaned := strings.Join(textSplit, "{")
 	cleaned = "{" + cleaned
-	var author Author
+	var author structs.Author
 	json.Unmarshal([]byte(cleaned), &author)
 
 	return author
@@ -50,7 +45,7 @@ func getListOfAuthorIds() (map[string]int, error) {
 	return authors, nil
 }
 
-func hasBirthDate(author Author) ( time.Time, bool ) {
+func hasBirthDate(author structs.Author) ( time.Time, bool ) {
 	dob := author.Birth_date
 	var format string
 	if len(dob) == 4 {
@@ -83,7 +78,7 @@ func ReadAndUpload () error {
 		return err
 	}
 
-	var authorsToAdd []Author
+	var authorsToAdd []structs.Author
 	i := 0
 	for scanner.Scan() {
 		author := getLineAsJSON(scanner.Text())

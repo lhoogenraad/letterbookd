@@ -1,5 +1,4 @@
-package books
-
+package structs
 
 type Book struct{
 	Languages []struct  {
@@ -11,4 +10,9 @@ type Book struct{
 	Authors []struct {
 		Key string `json: "key"`
 	}
+	Description struct {
+		Key string `json: "key"`
+		Value string `json: "value"`
+	}
+	Key string `json: "key"`
 }
