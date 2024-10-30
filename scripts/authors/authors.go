@@ -112,3 +112,24 @@ func ReadAndUpload () error {
 	fmt.Println(`authors to add:`, authorsToAdd)
 	return nil
 }
+
+/**
+Retrieves all user IDs and puts them into a map[string]int
+*/
+func GetAllAuthorIds () (map[string]int, error) {
+	var authors = make(map[string]int)
+	var selectQuery string = `SELECT ol_id FROM authors;`
+	rows, err := util.DB.Query(selectQuery);
+
+	if err != nil {return authors, err}
+
+	for rows.Next() {
+		var authorId string
+		err := rows.Scan(&authorId)
+		if err != nil {return authors, err}
+		
+		authors[authorId] = 1
+	}
+
+	return authors, nil
+}
