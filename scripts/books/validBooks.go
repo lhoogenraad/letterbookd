@@ -16,7 +16,6 @@ func getLineAsJSON (text string) structs.Book {
 	textSplit = textSplit[1:]
 	cleaned := strings.Join(textSplit, "{")
 	cleaned = "{" + cleaned
-	fmt.Println(cleaned)
 	json.Unmarshal([]byte(cleaned), &book)
 
 	return book
@@ -31,6 +30,7 @@ func isEnglish(book structs.Book) bool {
 	}
 	return false
 }
+
 
 func isRecent(book structs.Book) bool {
 	var format string
