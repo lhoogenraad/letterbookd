@@ -36,8 +36,8 @@ func ReadAndUpload() error {
 		return err
 	}
 
-	// Ten milly
-	books, err := books.GetAllBooks(1000*1000*10)
+	// One milly
+	books, err := books.GetAllBooks(1000*1000*1)
 
 	if err != nil {
 		return err
@@ -54,7 +54,7 @@ func ReadAndUpload() error {
 				failed++
 			}
 		} 
-		if i % 1000000 == 0{
+		if i % 100000 == 0{
 			fmt.Printf("%d out of %d books checked. %d to go!\n", i, len(books), len(books) - i)
 		}
 	}
@@ -78,21 +78,55 @@ func parseBookDateString(book structs.Book) ( time.Time, error ) {
 	if err != nil {
 		format = "January 2, 2006"
 		date, err = time.Parse(format, book.Publish_date)
+		if err == nil {return date, nil}
 	}
 
 	if err != nil {
 		format = "January 2006"
 		date, err = time.Parse(format, book.Publish_date)
+		if err == nil {return date, nil}
 	}
 
 	if err != nil {
 		format = "Jan 2, 2006"
 		date, err = time.Parse(format, book.Publish_date)
+		if err == nil {return date, nil}
 	}
 
 	if err != nil {
 		format = "Jan 02, 2006"
 		date, err = time.Parse(format, book.Publish_date)
+		if err == nil {return date, nil}
+	}
+
+	if err != nil {
+		format = "2006-01-02"
+		date, err = time.Parse(format, book.Publish_date)
+		if err == nil {return date, nil}
+	}
+
+	if err != nil {
+		format = "2006-Jan-02"
+		date, err = time.Parse(format, book.Publish_date)
+		if err == nil {return date, nil}
+	}
+
+	if err != nil {
+		format = "2006-January-02"
+		date, err = time.Parse(format, book.Publish_date)
+		if err == nil {return date, nil}
+	}
+
+	if err != nil {
+		format = "02 Jan 2006"
+		date, err = time.Parse(format, book.Publish_date)
+		if err == nil {return date, nil}
+	}
+
+	if err != nil {
+		format = "2 Jan 2006"
+		date, err = time.Parse(format, book.Publish_date)
+		if err == nil {return date, nil}
 	}
 
 	return date, err
