@@ -36,13 +36,14 @@ func ReadAndUpload() error {
 		return err
 	}
 
-	books, err := books.GetAllBooks(1000)
+	// Ten milly
+	books, err := books.GetAllBooks(1000*1000*10)
 
 	if err != nil {
 		return err
 	}
 
-	for _, book := range books {
+	for i, book := range books {
 		total++
 		authorId, ok := getAuthorId(book, authorMap)
 		if ok {
@@ -53,6 +54,9 @@ func ReadAndUpload() error {
 				failed++
 			}
 		} 
+		if i % 1000000 == 0{
+			fmt.Printf("%d out of %d books checked. %d to go!\n", i, len(books), len(books) - i)
+		}
 	}
 	fmt.Printf("\n\nTotal books: %d\tTotal attempted: %d\tUploaded %d\t %d failed", total, totalOked, totalOked-failed, failed)
 	return nil
@@ -78,6 +82,16 @@ func parseBookDateString(book structs.Book) ( time.Time, error ) {
 
 	if err != nil {
 		format = "January 2006"
+		date, err = time.Parse(format, book.Publish_date)
+	}
+
+	if err != nil {
+		format = "Jan 2, 2006"
+		date, err = time.Parse(format, book.Publish_date)
+	}
+
+	if err != nil {
+		format = "Jan 02, 2006"
 		date, err = time.Parse(format, book.Publish_date)
 	}
 
