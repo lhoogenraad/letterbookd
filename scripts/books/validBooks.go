@@ -6,32 +6,22 @@ import (
 	"strings"
 	"fmt"
 	"time"
+	"scripts/structs"
 )
 
-type Book struct{
-	Languages []struct  {
-		Key string `json: "key"`
-	}
-	Title string `json:"title"`
-	Number_of_pages int16 `json:"number_of_pages`
-	Publish_date string `json:"publish_date"`
-	Authors []struct {
-		Key string `json: "key"`
-	}
-}
 
-func getLineAsJSON (text string) Book {
-	book := Book{}
+func getLineAsJSON (text string) structs.Book {
+	book := structs.Book{}
 	textSplit := strings.Split(text, "{")
 	textSplit = textSplit[1:]
-cleaned := strings.Join(textSplit, "{")
+	cleaned := strings.Join(textSplit, "{")
 	cleaned = "{" + cleaned
 	json.Unmarshal([]byte(cleaned), &book)
 
 	return book
 }
 
-func isEnglish(book Book) bool {
+func isEnglish(book structs.Book) bool {
 	languages := book.Languages
 	for _, val := range languages {
 		if val.Key == "/languages/eng"{
@@ -41,7 +31,8 @@ func isEnglish(book Book) bool {
 	return false
 }
 
-func isRecent(book Book) bool {
+
+func isRecent(book structs.Book) bool {
 	var format string
 	var dateString string = book.Publish_date
 	var date time.Time
@@ -62,16 +53,16 @@ func isRecent(book Book) bool {
 	return false
 }
 
-func hasEnoughPages(book Book) bool {
+func hasEnoughPages(book structs.Book) bool {
 	num_pages := book.Number_of_pages
 	return num_pages > 200 
 }
 
-func shouldAddBook(book Book) bool {
+func shouldAddBook(book structs.Book) bool {
 	return hasEnoughPages(book) && isRecent(book) && isEnglish(book)
 }
 
-func GetValidBooks () ([]Book, error) {
+func GetValidBooks () ([]structs.Book, error) {
 	filepath := `/home/leon/Downloads/ol_dump_editions_2024-09-30.txt`
 	fmt.Println(`Retrieving valid books from`, filepath)
 	scanner, err := util.GetScanner(filepath)
@@ -84,7 +75,7 @@ func GetValidBooks () ([]Book, error) {
 
 	i := 0
 	max := 100000000
-	var validBooks []Book
+	var validBooks []structs.Book
 	for scanner.Scan() && i < max{
 		book := getLineAsJSON(scanner.Text())
 		if shouldAddBook(book) {
@@ -99,8 +90,38 @@ func GetValidBooks () ([]Book, error) {
 	if err != nil{
 		fmt.Println(`\n\nEncountered err:`, err, "\n\n")
 	}
-	
+
 	fmt.Println(`Found`, len(validBooks), `valid books`)
 	return validBooks, nil
 }
+
+
+func GetAllBooks (limit int) ([]structs.Book, error) {
+	filepath := `/home/leon/Downloads/ol_dump_editions_2024-09-30.txt`
+	fmt.Println(`Retrieving all books from`, filepath, `up until`, limit)
+	scanner, err := util.GetScanner(filepath)
+
+	if err != nil{
+		fmt.Println(err)
+		return nil, err
+	}
+
+	i := 0
+	var books []structs.Book
+	for scanner.Scan() && i < limit{
+		book := getLineAsJSON(scanner.Text())
+		books = append(books, book)
+		if i % 10000 == 0{
+			fmt.Println(`Got to iteration`, i)
+		}
+		i++
+	}
+	err = scanner.Err()
+	if err != nil{
+		fmt.Println(`\n\nEncountered err:`, err, "\n\n")
+	}
+
+	return books, nil
+}
+
 

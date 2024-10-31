@@ -5,9 +5,10 @@ import (
 	"scripts/util"
 	"strings"
 	"time"
+	"scripts/structs"
 )
 
-func UploadAuthor(author Author) error {
+func UploadAuthor(author structs.Author) error {
 	nameSplit := strings.Split(author.Name, " ")
 	var firstName string
 	var lastName string
