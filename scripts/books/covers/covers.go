@@ -26,7 +26,7 @@ func AddCoversToBooks() error {
 			url, err := UploadCoverAndGetURL(filepath)
 			if err == nil {
 				bookId := bookMap[book.Key]
-				fmt.Printf(`Setting book id %d (%s) (%s) cover url to %s\n`, bookId, book.Key, book.Title, url)
+				fmt.Printf("Setting book id %d (%s) (%s) cover url to %s \n", bookId, book.Key, book.Title, url)
 				SetBookUrl(bookId, url)
 			}
 		}
