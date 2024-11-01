@@ -29,11 +29,12 @@ file hosting service, then returns the URL to the file
 */
 func UploadCoverAndGetURL(filepath string) (string, error) {
 	filename := getFilename(filepath)
-	savePath := `/home/leon/Documents/letterbookd/client/covers` + filename
+	savePath := `/home/leon/Documents/letterbookd/client/public/covers` + filename
 	err := os.Rename(filepath, savePath)
 	if err != nil {
 		return "", err
 	}
 
-	return savePath, nil
+	clientPath := `covers/` + filename
+	return clientPath, nil
 }
