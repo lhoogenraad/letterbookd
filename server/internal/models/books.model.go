@@ -24,7 +24,12 @@ func GetBooks(userId int) ([]resources.BookData, error) {
 		ON books.author_id=authors.id
 	LEFT JOIN read_list_items
 		ON read_list_items.book_id = books.id
-		AND read_list_items.user_id = ?;
+		AND read_list_items.user_id = ?
+	
+
+	WHERE cover_url IS NOT NULL
+	LIMIT 50
+		;
 	`
 
 	rows, err := tools.DB.Query(queryString, userId)

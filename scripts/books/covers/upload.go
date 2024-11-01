@@ -2,21 +2,38 @@ package covers
 
 import (
 	"fmt"
-	"scripts/books"
+	"os"
 	"scripts/util"
+	"strings"
 )
 
-func AddCoversToBooks() error {
-	// bookMap, err := books.GetBookOpenLibIdMap()
-	// if err != nil {return err}
-	books, err := books.GetAllBooks(1*1000*1)
-	if err != nil {return err}
-	fmt.Println(books)
-	return nil
+func getFilename(filepath string) string {
+	filepathSplit := strings.Split(filepath, "/")
+	filename := filepathSplit[len(filepathSplit)-1]
+	return filename
 }
 
 func SetBookUrl(bookId int, coverURL string) error {
 	updateQuery := `UPDATE books SET cover_url = ? WHERE id = ?`
 	_, err := util.DB.Exec(updateQuery, coverURL, bookId)
+	
+	if err != nil {fmt.Println("Failed to set book url", err)}
+
 	return err
+}
+
+
+/**
+Takes in a filepath for an img file, uploads the file to the
+file hosting service, then returns the URL to the file
+*/
+func UploadCoverAndGetURL(filepath string) (string, error) {
+	filename := getFilename(filepath)
+	savePath := `/home/leon/Documents/letterbookd_files/covers/` + filename
+	err := os.Rename(filepath, savePath)
+	if err != nil {
+		return "", err
+	}
+
+	return savePath, nil
 }
