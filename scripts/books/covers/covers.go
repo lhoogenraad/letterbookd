@@ -15,7 +15,7 @@ func getFilename(filepath string) string {
 Takes in a filepath for an img file, uploads the file to the
 file hosting service, then returns the URL to the file
 */
-func UploadCover(filepath string) (string, error) {
+func UploadCoverAndGetURL(filepath string) (string, error) {
 	filename := getFilename(filepath)
 	savePath := `/home/leon/Documents/letterbookd_files/` + filename
 	err := os.Rename(filepath, savePath)

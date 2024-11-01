@@ -15,4 +15,5 @@ type Book struct{
 		Value string `json: "value"`
 	}
 	Key string `json: "key"`
+	Covers []int `json: "covers"`
 }
