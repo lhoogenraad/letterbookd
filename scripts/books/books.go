@@ -1,7 +1,6 @@
 package books
 
 import (
-	"scripts/structs"
 	"scripts/util"
 )
 
