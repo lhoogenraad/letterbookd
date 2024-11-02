@@ -23,11 +23,17 @@ func AddCoversToBooks() error {
 	for _, book := range books {
 		for _, cover := range book.Covers {
 			filepath := getFilepathOfCoverInt(cover)
+			bookId, ok := bookMap[book.Key]
+			if !ok {
+				fmt.Println(book.Title, " was not found in map")
+				continue
+			}
 			url, err := UploadCoverAndGetURL(filepath)
 			if err == nil {
-				bookId := bookMap[book.Key]
 				fmt.Printf("Setting book id %d (%s) (%s) cover url to %s \n", bookId, book.Key, book.Title, url)
 				SetBookUrl(bookId, url)
+			} else {
+				fmt.Println("Failed to upload book cover", filepath, "for book", book.Title)
 			}
 		}
 	}
