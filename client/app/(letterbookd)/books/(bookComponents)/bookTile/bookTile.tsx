@@ -6,7 +6,7 @@ export default function BookTile({book}) {
 		<Card className="book-tile-container">
 			<Image 
 				className='book-tile-img'
-				src={null}
+				src={book.CoverURL}
 				w='8rem'
 				radius="md"
 				fallbackSrc="https://placehold.co/600x400?text=Placeholder"

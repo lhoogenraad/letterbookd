@@ -62,6 +62,41 @@ func ReadAndUpload() error {
 	return nil
 }
 
+
+
+func UpdateBooksSynopses() error{
+	bookMap, err:= books.GetBookOpenLibIdMap()
+	if err != nil {
+		return err
+	}
+
+	// Ten milly
+	books, err := books.GetAllBooks(1000*1000*1)
+
+	if err != nil {
+		return err
+	}
+
+	for i, book := range books {
+		bookId, ok := bookMap[book.Key]
+		if ok {
+			fmt.Println(bookId, book.Description)
+			err = updateBookSynopsis(bookId, book.Description)
+			if err != nil {
+				fmt.Printf("Error updating %s\t", book.Title)
+				fmt.Println(err)
+			}
+		} 
+		if i % 100000 == 0{
+			fmt.Printf("%d out of %d books checked. %d to go!\n", i, len(books), len(books) - i)
+		}
+	}
+	return nil
+}
+
+
+
+
 func parseBookDateString(book structs.Book) ( time.Time, error ) {
 	var format string
 	var date time.Time
@@ -151,7 +186,7 @@ func InsertBook(book structs.Book, authorId int) error {
 		authorId,
 		bookDate.Format("2006-01-02"),
 		book.Number_of_pages,
-		book.Description.Key,
+		book.Description,
 		book.Key,
 	)
 
@@ -161,3 +196,16 @@ func InsertBook(book structs.Book, authorId int) error {
 	return nil
 }
 
+func updateBookSynopsis (bookId int, synopsis string) error {
+	updateQuery := `
+	UPDATE books
+	SET synopsis=?
+	WHERE id=?;`
+
+	_, err := util.DB.Exec(updateQuery, synopsis, bookId)
+
+	if err != nil {
+		return err
+	}
+	return nil
+}
