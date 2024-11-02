@@ -1,8 +1,8 @@
 package main
 
 import (
+	"scripts/books/bookupload"
 	"scripts/util"
-	"scripts/books/covers"
 )
 
 func setupDatabase() error{
@@ -16,6 +16,6 @@ func setupDatabase() error{
 
 func main(){
 	setupDatabase()
-	err := covers.AddCoversToBooks()
+	err := bookupload.UpdateBooksSynopses()
 	if err != nil {panic(err)}
 }

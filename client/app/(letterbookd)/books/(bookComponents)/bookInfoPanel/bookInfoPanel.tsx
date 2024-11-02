@@ -67,7 +67,7 @@ export default function BookInfoPanel({ book, reload, setBookAdded}) {
 			<div className="book-info-img">
 				<Image 
 					className='book-tile-img'
-					src={null}
+					src={book.CoverURL}
 					h='auto'
 					w='auto'
 					radius="md"
