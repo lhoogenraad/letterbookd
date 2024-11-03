@@ -46,6 +46,30 @@ func GetBooks (w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+
+func GetBooksCount (w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	var booksCount int
+	var err error
+	booksCount, err = models.GetBooksCount()
+
+	if err != nil {
+		log.Error(err)
+		api.InternalErrorHandler(w)
+		return
+	}
+
+	err = json.NewEncoder(w).Encode(booksCount)
+
+	if err != nil {
+		log.Error(err)
+		api.InternalErrorHandler(w)
+		return
+	}
+}
+
+
 func GetSingleBook (w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
