@@ -4,28 +4,29 @@ import api from 'util/api/api';
 import notify from 'util/notify/notify';
 import { useState, useEffect } from 'react';
 import BookTile from './(bookComponents)/bookTile/bookTile';
-import { Input, CloseButton, Select, Pagination } from '@mantine/core';
+import { Input, Select, Pagination } from '@mantine/core';
 import './books.css';
+import {IconSearch} from '@tabler/icons-react';
 import Link from 'next/link';
 
 export default function Books() {
 	const PAGE_SIZE = 50;
-	const [books, setBookList] = useState(null);
+	const [books, setBookList] = useState([]);
 	const [pagCount, setPagCount] = useState(0);
 	const [loading, setLoading] = useState(false);
 	const [searchText, setSearchText] = useState('');
 	const [currPage, setCurrPage] = useState(1);
 
 	const getBooksCount = async () => {
-		await api.books.getBooksCount()
+		await api.books.getBooksCount(searchText)
 		.then((res) => setPagCount(res.data / PAGE_SIZE))
 		.catch((err) => console.error(err))
 	};
 
 	const getBooksList = async (page: number, pageSize: number) => {
 		setLoading(true);
-		await api.books.getAllBooks(page, pageSize)
-			.then((res) => setBookList(res.data))
+		await api.books.getAllBooks(page, pageSize, searchText)
+			.then((res) => setBookList(res.data ?? []))
 			.catch(() => notify.error({
 				message: `Failed to load books list for ` +
 					`some reason, please try again later!`
@@ -34,44 +35,19 @@ export default function Books() {
 	};
 
 	const init = async () => {
+		setCurrPage(1)
 		await getBooksCount();
 		await getBooksList(1, PAGE_SIZE);
 	}
 
-	const filterBookList = (books: Array<object>, searchText: string) => {
-		if (!searchText || searchText === "") return books;
-
-		return books.filter((book: object) => {
-			let bookHasMatching = false;
-			Object.values(book).forEach((bookAttribute) => {
-
-				try {
-					if (bookAttribute.toString().toLowerCase().includes(searchText.toLowerCase())) {
-						bookHasMatching = true;
-						return;
-					}
-				} catch (error) {
-					console.error(error.message);
-					console.error("Failed to filter on book", book);
-				}
-			});
-			return bookHasMatching;
-		});
-	};
-
-	const filteredBooks = filterBookList(books, searchText);
 
 	useEffect(() => {
 		init();
 	}, []);
 
 
-	if (loading || !books) {
-		return <div>Loading..</div>
-	}
-	return (
-		<div className="books-container">
-
+	const filterJSX = (
+		<div>
 			<div className="books-filters-container">
 				<Input
 					variant='filled'
@@ -80,9 +56,10 @@ export default function Books() {
 					value={searchText}
 					rightSectionPointerEvents="all"
 					rightSection = {
-						<CloseButton 
-							aria-label='Clear input'
-							onClick = {() => setSearchText('')}
+						<IconSearch 
+							className="search-button"
+							aria-label='Search'
+							onClick = {() => init()}
 							style={{ display: searchText ? undefined : 'none' }}
 						/>
 					}
@@ -114,9 +91,24 @@ export default function Books() {
 					}}
 				/>
 			</div>
+		</div>
+	)
+
+	if (loading) {
+		return (
+			<div className="books-container">
+				{filterJSX}
+				<div>Loading...</div>
+			</div>
+		)
+	}
+	return (
+		<div className="books-container">
+
+			{filterJSX}
 
 			<div className="books-list-container">
-				{filteredBooks.map((book: any, index: number) => (
+				{books.map((book: any, index: number) => (
 					<Link href={{pathname: `/books/${book.Id}`}}>
 					<div className="book-tile" key={index}>
 						<BookTile book={book} />
