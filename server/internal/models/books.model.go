@@ -49,6 +49,17 @@ func GetBooks(userId int, page int, pageSize int) ([]resources.BookData, error) 
 }
 
 
+func GetBooksCount() (int, error) {
+	var queryString string = `SELECT COUNT(id) FROM books;`
+
+	row := tools.DB.QueryRow(queryString)
+	var count int
+	err := row.Scan(&count); 
+	if err != nil {return count, err}
+
+	return count, nil
+}
+
 func readBookRows (rows *sql.Rows) ([]resources.BookData, error) {
 	var books []resources.BookData
 

@@ -7,6 +7,10 @@ const getAllBooks = async (page: number, pageSize: number) => {
 	return await api.get(`/books?page=${page}&pageSize=${pageSize}`).then((res) => res);
 };
 
+const getBooksCount = async () => {
+	return await api.get(`/books/count`).then((res) => res);
+}
+
 const getBook = async (id: number) => {
 	return await api.get(`/books/${id}`).then((res) => res);
 }
@@ -14,4 +18,5 @@ const getBook = async (id: number) => {
 export default {
 	getAllBooks,
 	getBook,
+	getBooksCount,
 }
