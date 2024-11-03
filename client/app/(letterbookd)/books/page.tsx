@@ -11,9 +11,16 @@ import Link from 'next/link';
 export default function Books() {
 	const PAGE_SIZE = 50;
 	const [books, setBookList] = useState(null);
+	const [pagCount, setPagCount] = useState(0);
 	const [loading, setLoading] = useState(false);
 	const [searchText, setSearchText] = useState('');
 	const [currPage, setCurrPage] = useState(1);
+
+	const getBooksCount = async () => {
+		await api.books.getBooksCount()
+		.then((res) => setPagCount(res.data / PAGE_SIZE))
+		.catch((err) => console.error(err))
+	};
 
 	const getBooksList = async (page: number, pageSize: number) => {
 		setLoading(true);
@@ -25,6 +32,11 @@ export default function Books() {
 			}))
 			.finally(() => setLoading(false));
 	};
+
+	const init = async () => {
+		await getBooksCount();
+		await getBooksList(1, PAGE_SIZE);
+	}
 
 	const filterBookList = (books: Array<object>, searchText: string) => {
 		if (!searchText || searchText === "") return books;
@@ -50,7 +62,7 @@ export default function Books() {
 	const filteredBooks = filterBookList(books, searchText);
 
 	useEffect(() => {
-		getBooksList(1, PAGE_SIZE);
+		init();
 	}, []);
 
 
@@ -95,7 +107,7 @@ export default function Books() {
 					withEdges
 					withControls
 					value={currPage}
-					total={10}
+					total={pagCount}
 					onChange={(val: number) => {
 						getBooksList(val, PAGE_SIZE)
 						setCurrPage(val)
@@ -118,7 +130,7 @@ export default function Books() {
 					withEdges
 					withControls
 					value={currPage}
-					total={10}
+					total={pagCount}
 					onChange={(val: number) => {
 						getBooksList(val, PAGE_SIZE)
 						setCurrPage(val)
