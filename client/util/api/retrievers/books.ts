@@ -3,8 +3,8 @@ import api from '../axios';
 /**
  * Retrieve all books available
  */
-const getAllBooks = async () => {
-	return await api.get('/books').then((res) => res);
+const getAllBooks = async (page: number, pageSize: number) => {
+	return await api.get(`/books?page=${page}&pageSize=${pageSize}`).then((res) => res);
 };
 
 const getBook = async (id: number) => {

@@ -9,13 +9,15 @@ import './books.css';
 import Link from 'next/link';
 
 export default function Books() {
+	const PAGE_SIZE = 50;
 	const [books, setBookList] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [searchText, setSearchText] = useState('');
+	const [currPage, setCurrPage] = useState(1);
 
-	const getBooksList = async () => {
+	const getBooksList = async (page: number, pageSize: number) => {
 		setLoading(true);
-		await api.books.getAllBooks()
+		await api.books.getAllBooks(page, pageSize)
 			.then((res) => setBookList(res.data))
 			.catch(() => notify.error({
 				message: `Failed to load books list for ` +
@@ -23,7 +25,6 @@ export default function Books() {
 			}))
 			.finally(() => setLoading(false));
 	};
-
 
 	const filterBookList = (books: Array<object>, searchText: string) => {
 		if (!searchText || searchText === "") return books;
@@ -49,7 +50,7 @@ export default function Books() {
 	const filteredBooks = filterBookList(books, searchText);
 
 	useEffect(() => {
-		getBooksList();
+		getBooksList(1, PAGE_SIZE);
 	}, []);
 
 
@@ -88,6 +89,19 @@ export default function Books() {
 				</div>
 			</div>
 
+			<div className="pagination-container">
+				<Pagination
+					withEdges
+					withControls
+					value={currPage}
+					total={10}
+					onChange={(val: number) => {
+						getBooksList(val, PAGE_SIZE)
+						setCurrPage(val)
+					}}
+				/>
+			</div>
+
 			<div className="books-list-container">
 				{filteredBooks.map((book: any, index: number) => (
 					<Link href={{pathname: `/books/${book.Id}`}}>
@@ -101,7 +115,12 @@ export default function Books() {
 				<Pagination
 					withEdges
 					withControls
+					value={currPage}
 					total={10}
+					onChange={(val: number) => {
+						getBooksList(val, PAGE_SIZE)
+						setCurrPage(val)
+					}}
 				/>
 			</div>
 		</div>
