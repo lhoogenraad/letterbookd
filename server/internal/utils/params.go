@@ -13,6 +13,11 @@ func GetParam (req *http.Request, paramName string) string {
 	return param
 }
 
+func GetUrlQuery (req *http.Request, queryParamName string) string {
+	queryParam := req.URL.Query().Get(queryParamName)
+	return queryParam
+}
+
 func GetPagination(req *http.Request) resources.Paginators {
 	pagination := req.Context().Value("pagination").(resources.Paginators)
 	return pagination
