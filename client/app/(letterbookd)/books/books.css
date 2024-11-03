@@ -32,3 +32,9 @@
 	grid-gap: 3rem; /* 3 */
 	justify-content: space-between; /* 4 */
 }
+
+.pagination-container{
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}

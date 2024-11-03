@@ -4,7 +4,7 @@ import api from 'util/api/api';
 import notify from 'util/notify/notify';
 import { useState, useEffect } from 'react';
 import BookTile from './(bookComponents)/bookTile/bookTile';
-import { Input, CloseButton, Select, MultiSelect } from '@mantine/core';
+import { Input, CloseButton, Select, Pagination } from '@mantine/core';
 import './books.css';
 import Link from 'next/link';
 
@@ -81,14 +81,9 @@ export default function Books() {
 				<div className='books-filters-select-container'>
 					<Select 
 						clearable
+						disabled
 						label='Genre'
 						data={['Fantasy', 'History', 'Drama']}
-					/>
-
-					<MultiSelect 
-						clearable
-						label='Rating'
-						data={['1', '2', '3', '4', '5']}
 					/>
 				</div>
 			</div>
@@ -101,6 +96,13 @@ export default function Books() {
 					</div>
 					</Link>
 				))}
+			</div>
+			<div className="pagination-container">
+				<Pagination
+					withEdges
+					withControls
+					total={10}
+				/>
 			</div>
 		</div>
 	)
