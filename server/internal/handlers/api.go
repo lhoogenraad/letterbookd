@@ -37,6 +37,7 @@ func ApiHandler(r *chi.Mux) {
 
 		// Middleware for auth on these sensitive routes
 		router.Use(middleware.Authorisation)
+		router.Use(middleware.Paginate)
 
 		// Books
 		router.Get("/books", GetBooks)
