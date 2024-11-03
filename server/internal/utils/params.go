@@ -14,7 +14,7 @@ func GetParam (req *http.Request, paramName string) string {
 }
 
 func GetUrlQuery (req *http.Request, queryParamName string) string {
-	queryParam := chi.URLParam(req, queryParamName)
+	queryParam := req.URL.Query().Get(queryParamName)
 	return queryParam
 }
 
