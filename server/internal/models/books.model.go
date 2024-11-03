@@ -65,13 +65,14 @@ func GetBooksWithFilter(userId int, page int, pageSize int, filterString string)
 	LEFT JOIN read_list_items
 		ON read_list_items.book_id = books.id
 		AND read_list_items.user_id = ?
-	WHERE books.name LIKE ?
-	OR author_name LIKE ?
+	WHERE 
+	   books.name LIKE ?
+	OR CONCAT(authors.first_name, ' ', authors.last_name) LIKE ?
 	OR books.synopsis LIKE ?
 	LIMIT ?
 	OFFSET ?
 	;`
-	filter := "'%" + filterString + "%'"
+	filter := "%" + filterString + "%"
 	offset := utils.CalculateOffset(page, pageSize)
 	rows, err := tools.DB.Query(
 		queryString, 

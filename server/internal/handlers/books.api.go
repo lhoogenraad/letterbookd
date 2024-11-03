@@ -26,10 +26,16 @@ func GetBooks (w http.ResponseWriter, r *http.Request) {
 	}
 	userId := int(claims["userid"].(float64))
 	pagination := utils.GetPagination(r)
+	filter := utils.GetUrlQuery(r, "searchText")
+	fmt.Println("Filter", filter)
 
 	var books []resources.BookData
 	var err error
-	books, err = models.GetBooks(userId, pagination.Page, pagination.PageSize)
+	if filter == "" {
+		books, err = models.GetBooks(userId, pagination.Page, pagination.PageSize)
+	} else {
+		books, err = models.GetBooksWithFilter(userId, pagination.Page, pagination.PageSize, filter)
+	}
 
 	if err != nil {
 		log.Error(err)
