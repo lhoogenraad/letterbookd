@@ -4,7 +4,10 @@ import api from '../axios';
  * Retrieve all books available
  */
 const getAllBooks = async (page: number, pageSize: number, filter: string) => {
-	return await api.get(`/books?page=${page}&pageSize=${pageSize}?&searchText=${filter}`).then((res) => res);
+	let url = `/books?page=${page}&pageSize=${pageSize}`;
+	if (filter) url += `&filter=${filter}`;
+
+	return await api.get(url).then((res) => res);
 };
 
 const getBooksCount = async (filter: string) => {
