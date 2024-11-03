@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"server/internal/resources"
 	"server/internal/tools"
+	"server/internal/utils"
 	"time"
 )
 
@@ -29,7 +30,7 @@ func GetBooks(userId int, page int, pageSize int) ([]resources.BookData, error) 
 	OFFSET ?
 	;`
 
-	offset := (page-1) * pageSize
+	offset := utils.CalculateOffset(page, pageSize)
 	rows, err := tools.DB.Query(queryString, userId, pageSize, offset)
 
 	if err != nil {

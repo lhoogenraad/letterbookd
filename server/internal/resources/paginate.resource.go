@@ -1,4 +1,4 @@
-package models
+package resources
 
 type Paginators struct {
 	Page int

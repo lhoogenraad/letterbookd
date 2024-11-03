@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 	"strconv"
-	"server/internal/models"
+	"server/internal/resources"
 )
 
 var DEFAULT_PAGE int = 1
@@ -16,7 +16,7 @@ var MAX_PAGE_SIZE int = 500
 
 func Paginate(next http.Handler) http.Handler {
 	return http.HandlerFunc(func (w http.ResponseWriter, r *http.Request) {
-		var pagination models.Paginators
+		var pagination resources.Paginators
 		pageStr := r.URL.Query().Get(string("page"))
 		pageSizeStr := r.URL.Query().Get(string("pageSize"))
 
