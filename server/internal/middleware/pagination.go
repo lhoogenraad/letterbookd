@@ -7,10 +7,12 @@ import (
 	"server/internal/models"
 )
 
-
 var DEFAULT_PAGE int = 1
+var MIN_PAGE int = 1
+
 var DEFAULT_PAGE_SIZE int = 50
 var MAX_PAGE_SIZE int = 500
+
 
 func Paginate(next http.Handler) http.Handler {
 	return http.HandlerFunc(func (w http.ResponseWriter, r *http.Request) {
@@ -42,6 +44,9 @@ func determinePage(pageString string) int {
 
 	page, err := strconv.Atoi(pageString)
 	if err != nil {page = DEFAULT_PAGE}
+
+	if page < MIN_PAGE {page = DEFAULT_PAGE}
+
 	return page
 }
 

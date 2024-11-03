@@ -10,7 +10,7 @@ import (
 )
 
 
-func GetBooks(userId int) ([]resources.BookData, error) {
+func GetBooks(userId int, page int, pageSize int) ([]resources.BookData, error) {
 	var queryString string = `
 	SELECT 
 		books.id,
@@ -25,10 +25,12 @@ func GetBooks(userId int) ([]resources.BookData, error) {
 	LEFT JOIN read_list_items
 		ON read_list_items.book_id = books.id
 		AND read_list_items.user_id = ?
-		
-	LIMIT 50;`
+	LIMIT ?
+	OFFSET ?
+	;`
 
-	rows, err := tools.DB.Query(queryString, userId)
+	offset := (page-1) * pageSize
+	rows, err := tools.DB.Query(queryString, userId, pageSize, offset)
 
 	if err != nil {
 		return nil, err
