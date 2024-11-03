@@ -18,7 +18,8 @@ import (
 
 func GetBooks (w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-
+	pagination := utils.GetPagination(r)
+	fmt.Printf("Page: %d\t Page Size: %d\n", pagination.Page, pagination.PageSize)
 	// Grab user Id from claims
 	claims, ok := utils.GetClaims(r)
 	if !ok {

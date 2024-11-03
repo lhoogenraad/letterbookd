@@ -4,7 +4,6 @@ import (
 	"context"
 	"net/http"
 	"strconv"
-	"fmt"
 	"server/internal/models"
 )
 
@@ -34,7 +33,6 @@ func parsePaginationValues(pageString string, pageSizeString string) (int, int) 
 	var page int = determinePage(pageString)
 	var pageSize int = determinePageSize(pageSizeString)
 
-	fmt.Printf("pageSize: %d\tpage: %d\n", pageSize, page)
 	return page, pageSize
 }
 
