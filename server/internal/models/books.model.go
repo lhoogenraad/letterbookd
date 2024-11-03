@@ -49,6 +49,54 @@ func GetBooks(userId int, page int, pageSize int) ([]resources.BookData, error) 
 }
 
 
+
+func GetBooksWithFilter(userId int, page int, pageSize int, filterString string) ([]resources.BookData, error) {
+	var queryString string = `
+	SELECT 
+		books.id,
+		books.name, 
+		CONCAT(authors.first_name, ' ', authors.last_name) as author_name,
+		books.published_date, books.num_pages, IFNULL(books.cover_url, ''),
+		IFNULL(books.synopsis, 'No synopsis.'),
+		read_list_items.id IS NOT NULL
+	FROM books
+	JOIN authors
+		ON books.author_id=authors.id
+	LEFT JOIN read_list_items
+		ON read_list_items.book_id = books.id
+		AND read_list_items.user_id = ?
+	WHERE books.name LIKE ?
+	OR author_name LIKE ?
+	OR books.synopsis LIKE ?
+	LIMIT ?
+	OFFSET ?
+	;`
+	filter := "'%" + filterString + "%'"
+	offset := utils.CalculateOffset(page, pageSize)
+	rows, err := tools.DB.Query(
+		queryString, 
+		filter, filter, filter,
+		userId, 
+		pageSize, 
+		offset,
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	var books []resources.BookData
+	books, err = readBookRows(rows)
+
+	if err = rows.Err(); err != nil {
+		return books, err
+	}
+	return books, nil
+}
+
+
 func GetBooksCount() (int, error) {
 	var queryString string = `SELECT COUNT(id) FROM books;`
 
