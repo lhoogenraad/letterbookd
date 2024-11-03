@@ -27,7 +27,6 @@ func GetBooks (w http.ResponseWriter, r *http.Request) {
 	userId := int(claims["userid"].(float64))
 	pagination := utils.GetPagination(r)
 	filter := utils.GetUrlQuery(r, "searchText")
-	fmt.Println("Filter", filter)
 
 	var books []resources.BookData
 	var err error
@@ -58,7 +57,12 @@ func GetBooksCount (w http.ResponseWriter, r *http.Request) {
 
 	var booksCount int
 	var err error
-	booksCount, err = models.GetBooksCount()
+	filter := utils.GetUrlQuery(r, "searchText")
+	if filter == "" {
+		booksCount, err = models.GetBooksCount()
+	} else {
+		booksCount, err = models.GetBooksCountWithFilter(filter)
+	}
 
 	if err != nil {
 		log.Error(err)

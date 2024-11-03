@@ -109,6 +109,27 @@ func GetBooksCount() (int, error) {
 	return count, nil
 }
 
+func GetBooksCountWithFilter(filterString string) (int, error) {
+	var queryString string = `
+		SELECT COUNT(books.id) FROM books
+		JOIN authors
+			ON books.author_id=authors.id
+		WHERE 
+		   books.name LIKE ?
+		OR CONCAT(authors.first_name, ' ', authors.last_name) LIKE ?
+		OR books.synopsis LIKE ?`
+
+	filter := "%" + filterString + "%"
+
+	row := tools.DB.QueryRow(queryString, filter, filter, filter)
+	var count int
+	err := row.Scan(&count); 
+	if err != nil {return count, err}
+
+	return count, nil
+}
+
+
 func readBookRows (rows *sql.Rows) ([]resources.BookData, error) {
 	var books []resources.BookData
 
