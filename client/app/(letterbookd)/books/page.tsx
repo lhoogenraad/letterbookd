@@ -91,6 +91,7 @@ export default function Books() {
 
 			<div className="pagination-container">
 				<Pagination
+					color="violet"
 					withEdges
 					withControls
 					value={currPage}
@@ -113,6 +114,7 @@ export default function Books() {
 			</div>
 			<div className="pagination-container">
 				<Pagination
+					color="violet"
 					withEdges
 					withControls
 					value={currPage}
