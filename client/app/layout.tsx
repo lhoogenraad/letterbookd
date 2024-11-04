@@ -12,7 +12,7 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
 		headings: { fontFamily: 'Greycliff CF, sans-serif' },
 		colors: {
 			'primary': [
-				"#f1f7f9",
+				"#244855",
 				"#e4eaed",
 				"#c3d5db",
 				"#9fbeca",
@@ -24,7 +24,7 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
 				"#34677a"
 			],
 			'secondary': [
-				"#ffebe7",
+				"#e64831",
 				"#ffd7d2",
 				"#f7afa5",
 				"#ef8375",
@@ -36,7 +36,7 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
 				"#a0190c"
 			],
 			'tertiary': [
-				"#fef1ee",
+				"#874f41",
 				"#f0e2df",
 				"#dcc4be",
 				"#c9a399",
@@ -48,16 +48,16 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
 				"#784336"
 			],
 			'text': [
-				"#gbe9d0",
-				"#fbebd3",
-				"#f6d4a6",
-				"#f1bd75",
-				"#eda94b",
-				"#eb9c32",
-				"#ea9623",
-				"#d08117",
-				"#ba7310",
-				"#a16202"
+				'#fbe9d0',
+				'#fbebd3',
+				'#f6d4a6',
+				'#f1bd75',
+				'#eda94b',
+				'#eb9c32',
+				'#ea9623',
+				'#d08117',
+				'#ba7310',
+				'#a16202'
 			]
 		}
 	});
