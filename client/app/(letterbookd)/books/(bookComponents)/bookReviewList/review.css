@@ -1,18 +1,23 @@
 .review-container{
 	padding: 0.5rem;
-	border: 1px solid #eee;
+	border: 1px solid var(--mantine-color-secondary-0);
+	border-top: none;
 	border-bottom-right-radius: 15px;
 
 	display: flex;
 	flex-direction: column;
+	background-color: var(--mantine-color-primary-8);
+	color: var(--mantine-color-text-5)
 }
 
 .review-header{
 	font-size: 1.15rem;
 	padding: 0 1rem;
-	background-color: black;
-	color: #eee;
+	background-color: var(--mantine-color-primary-9);
 	border-top-left-radius: 15px;
+
+	border: 1px solid var(--mantine-color-secondary-0);
+	border-bottom: none;
 }
 
 .review-metadata-container{
@@ -42,13 +47,11 @@
 
 .review-comment-link:hover{
 	cursor: pointer;
-	color: gray;
 	transition: 0.1s;
 }
 
 .review-comment-link:active{
 	cursor: pointer;
-	color: #111;
 	transition: 0.1s;
 }
 
