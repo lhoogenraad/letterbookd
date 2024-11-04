@@ -4,8 +4,8 @@
 	justify-content: space-between;
 	padding: 1rem 1rem;
 	margin: 0 auto;
-	background-color: black;
-	color: white;
+	background-color: var(--mantine-color-secondary-5);
+	color: var(--mantine-color-text-0);
 
 	border-bottom-left-radius: 5%;
 	border-bottom-right-radius: 5%;

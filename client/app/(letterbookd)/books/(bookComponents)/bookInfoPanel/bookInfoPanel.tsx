@@ -80,7 +80,12 @@ export default function BookInfoPanel({ book, reload, setBookAdded}) {
 						bookId={book.Id} 
 						setBookAdded={setBookAdded}
 					/>
-					<Button onClick={open} rightSection={<IconPencilPlus size={20}/>} fullWidth>Create Review</Button>
+					<Button 
+						onClick={open} 
+						rightSection={<IconPencilPlus size={20}/>} 
+						fullWidth
+						color="secondary"
+					>Create Review</Button>
 				</div>
 			</div>
 

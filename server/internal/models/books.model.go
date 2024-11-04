@@ -26,6 +26,7 @@ func GetBooks(userId int, page int, pageSize int) ([]resources.BookData, error) 
 	LEFT JOIN read_list_items
 		ON read_list_items.book_id = books.id
 		AND read_list_items.user_id = ?
+	AND cover_url IS NOT NULL
 	LIMIT ?
 	OFFSET ?
 	;`
@@ -69,10 +70,12 @@ func GetBooksWithFilter(userId int, page int, pageSize int, filterString string)
 	   books.name LIKE ?
 	OR CONCAT(authors.first_name, ' ', authors.last_name) LIKE ?
 	OR books.synopsis LIKE ?
+	AND cover_url IS NOT NULL
 	LIMIT ?
 	OFFSET ?
 	;`
 	filter := "%" + filterString + "%"
+	fmt.Printf(filter)
 	offset := utils.CalculateOffset(page, pageSize)
 	rows, err := tools.DB.Query(
 		queryString, 

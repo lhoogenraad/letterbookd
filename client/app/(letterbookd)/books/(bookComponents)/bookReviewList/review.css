@@ -55,3 +55,7 @@
 	transition: 0.1s;
 }
 
+
+.review-description{
+	color: var(--mantine-color-text-2);
+}

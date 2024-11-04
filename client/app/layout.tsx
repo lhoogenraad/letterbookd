@@ -12,7 +12,7 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
 		headings: { fontFamily: 'Greycliff CF, sans-serif' },
 		colors: {
 			'primary': [
-				"#244855",
+				"#141d24",
 				"#e4eaed",
 				"#c3d5db",
 				"#9fbeca",
