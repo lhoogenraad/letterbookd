@@ -4,11 +4,11 @@
 	justify-content: space-between;
 	padding: 1rem 1rem;
 	margin: 0 auto;
-	background-color: var(--mantine-color-secondary-5);
+	background-color: var(--mantine-color-secondary-9);
 	color: var(--mantine-color-text-0);
 
-	border-bottom-left-radius: 5%;
-	border-bottom-right-radius: 5%;
+	border-bottom-left-radius: 12%;
+	border-bottom-right-radius: 12%;
 }
 
 .navbar-title {

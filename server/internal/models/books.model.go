@@ -75,7 +75,6 @@ func GetBooksWithFilter(userId int, page int, pageSize int, filterString string)
 	OFFSET ?
 	;`
 	filter := "%" + filterString + "%"
-	fmt.Printf(filter)
 	offset := utils.CalculateOffset(page, pageSize)
 	rows, err := tools.DB.Query(
 		queryString, 
