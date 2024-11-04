@@ -1,7 +1,11 @@
 .app{
-	background-color: white;
+	background-color: var(--mantine-color-primary-0);
 	width: 95%;
 	min-height: 80vh;
 	margin: 0 auto;
 	padding: 0 0.25rem 0.25rem 0.25rem;
+}
+
+* {
+	color: var(--mantine-color-text-0);
 }

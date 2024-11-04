@@ -15,7 +15,7 @@
 	font-size: 1.4rem;
 	/* font-weight: bold; */
 
-	color: white;
+	color: var(--mantine-color-text-0);
 	text-decoration: none;
 }
 
@@ -26,5 +26,5 @@
 }
 
 .navbar-btn .root {
-	color: purple;
+	color: var(--mantine-color-text-0);
 }
