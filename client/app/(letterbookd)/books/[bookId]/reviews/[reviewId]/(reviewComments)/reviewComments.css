@@ -6,7 +6,7 @@
 }
 
 .single-comment-container:hover{
-	background-color: #efe;
+	background-color: var(--mantine-color-primary-9);
 	transition: 0.1s;
 }
 

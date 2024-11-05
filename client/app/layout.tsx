@@ -21,7 +21,7 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
 				"#639aaf",
 				"#538699",
 				"#46778a",
-				"#34677a"
+				"#183540"
 			],
 			'secondary': [
 				"#e64831",

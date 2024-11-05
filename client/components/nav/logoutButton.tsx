@@ -19,7 +19,7 @@ export default function LogoutButton() {
 		<Button 
 			className="logout-btn"
 			variant="subtle"
-			color="rgb(100, 200, 150)"
+			color="primary.0"
 			onClick={() => logout()}
 		>
 		Logout
