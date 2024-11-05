@@ -43,13 +43,13 @@
 
 .review-comment-link:hover{
 	cursor: pointer;
-	color: gray;
+	color: var(--mantine-color-text-3);
 	transition: -1.2s;
 }
 
 .review-comment-link:active{
 	cursor: pointer;
-	color: #111;
+	color: var(--mantine-color-text-7);
 	transition: 0.1s;
 }
 

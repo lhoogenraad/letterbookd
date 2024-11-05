@@ -26,7 +26,8 @@ func GetBooks(userId int, page int, pageSize int) ([]resources.BookData, error) 
 	LEFT JOIN read_list_items
 		ON read_list_items.book_id = books.id
 		AND read_list_items.user_id = ?
-	AND cover_url IS NOT NULL
+	WHERE cover_url IS NOT NULL
+	AND cover_url != ''
 	LIMIT ?
 	OFFSET ?
 	;`
@@ -71,6 +72,7 @@ func GetBooksWithFilter(userId int, page int, pageSize int, filterString string)
 	OR CONCAT(authors.first_name, ' ', authors.last_name) LIKE ?
 	OR books.synopsis LIKE ?
 	AND cover_url IS NOT NULL
+	AND cover_url != ''
 	LIMIT ?
 	OFFSET ?
 	;`
@@ -101,7 +103,10 @@ func GetBooksWithFilter(userId int, page int, pageSize int, filterString string)
 
 
 func GetBooksCount() (int, error) {
-	var queryString string = `SELECT COUNT(id) FROM books;`
+	var queryString string = `SELECT COUNT(id) FROM books
+	WHERE cover_url IS NOT NULL
+	AND cover_url != ''
+	;`
 
 	row := tools.DB.QueryRow(queryString)
 	var count int

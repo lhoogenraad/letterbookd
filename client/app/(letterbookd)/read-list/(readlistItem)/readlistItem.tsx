@@ -32,7 +32,7 @@ export default function ReadListItem({ item, removeItem }) {
 			<div className="readlist-item-header-container">
 				<div className="img">
 					<Image
-						src={null}
+						src={item.CoverURL}
 						h='5rem'
 						radius="md"
 						fallbackSrc="https://placehold.co/600x400?text=Placeholder"
@@ -68,7 +68,7 @@ export default function ReadListItem({ item, removeItem }) {
 						:
 						null
 				}
-				<Button variant='transparent' color="red" onClick={setDeleteReadlistItemModal.open}>Remove book</Button>
+				<Button variant='subtle' color="secondary.0" onClick={setDeleteReadlistItemModal.open}>Remove book</Button>
 				</div>
 
 				<Modal
