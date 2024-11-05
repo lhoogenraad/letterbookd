@@ -6,9 +6,6 @@
 	margin: 0 auto;
 	background-color: var(--mantine-color-secondary-9);
 	color: var(--mantine-color-text-0);
-
-	border-bottom-left-radius: 12%;
-	border-bottom-right-radius: 12%;
 }
 
 .navbar-title {
@@ -23,6 +20,12 @@
 	display: flex;
 	flex-direction: row;
 	gap: 2rem;
+}
+
+.navbar-btn {
+	border-radius: 15px;
+	border: 2px solid var(--mantine-color-tertiary-5);
+	background-color: var(--mantine-color-primary-0);
 }
 
 .navbar-btn .root {
