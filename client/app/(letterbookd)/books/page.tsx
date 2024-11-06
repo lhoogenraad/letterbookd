@@ -59,8 +59,12 @@ export default function Books() {
 						<IconSearch 
 							className="search-button"
 							aria-label='Search'
+							color="#e64831"
 							onClick = {() => init()}
-							style={{ display: searchText ? undefined : 'none' }}
+							style={{ 
+								display: searchText ? undefined : 'none',
+								color: "red"
+							}}
 						/>
 					}
 					onChange={(ev) => {
@@ -80,7 +84,7 @@ export default function Books() {
 
 			<div className="pagination-container">
 				<Pagination
-					color="primary"
+					color="tertiary.0"
 					withEdges
 					withControls
 					value={currPage}
@@ -118,7 +122,7 @@ export default function Books() {
 			</div>
 			<div className="pagination-container">
 				<Pagination
-					color="primary"
+					color="tertiary.0"
 					withEdges
 					withControls
 					value={currPage}

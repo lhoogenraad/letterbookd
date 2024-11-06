@@ -67,9 +67,9 @@ export default function BookInfoPanel({ book, reload, setBookAdded}) {
 			<div className="book-info-img">
 				<Image 
 					className='book-tile-img'
-					src={book.CoverURL}
-					h='auto'
-					w='auto'
+					src={'http://localhost:3000/' + book.CoverURL}
+					h='600'
+					w='350'
 					radius="md"
 					fallbackSrc="https://placehold.co/600x400?text=Placeholder"
 				/>
@@ -80,7 +80,12 @@ export default function BookInfoPanel({ book, reload, setBookAdded}) {
 						bookId={book.Id} 
 						setBookAdded={setBookAdded}
 					/>
-					<Button onClick={open} rightSection={<IconPencilPlus size={20}/>} fullWidth>Create Review</Button>
+					<Button 
+						onClick={open} 
+						rightSection={<IconPencilPlus size={20}/>} 
+						fullWidth
+						color="secondary"
+					>Create Review</Button>
 				</div>
 			</div>
 

@@ -26,8 +26,9 @@ export default function DeleteComment({ comment, closeModal, reloadComments }) {
 			justifyContent: 'space-around',
 			maxWidth: '500px',
 			margin: '0 auto',
+			backgroundColor: "primary.0",
 		}}>
-			<Button onClick={() => closeModal()} variant="subtle" color="blue">No, go back!</Button>
+			<Button onClick={() => closeModal()} variant="subtle" color="primary.0">No, go back!</Button>
 			<Button onClick={() => deleteComment()} loading={loading} variant="subtle" color="red">Yes please</Button>
 		</div>
 	)

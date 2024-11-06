@@ -3,19 +3,16 @@
 	flex-direction: row;
 	justify-content: space-between;
 	padding: 1rem 1rem;
-	margin: 0 auto;
-	background-color: black;
-	color: white;
-
-	border-bottom-left-radius: 5%;
-	border-bottom-right-radius: 5%;
+	margin: 20px auto;
+	background-color: var(--mantine-color-secondary-9);
+	color: var(--mantine-color-text-0);
 }
 
 .navbar-title {
 	font-size: 1.4rem;
 	/* font-weight: bold; */
 
-	color: white;
+	color: var(--mantine-color-text-0);
 	text-decoration: none;
 }
 
@@ -25,6 +22,12 @@
 	gap: 2rem;
 }
 
+.navbar-btn {
+	border-radius: 15px;
+	border: 2px solid var(--mantine-color-tertiary-5);
+	background-color: var(--mantine-color-primary-0);
+}
+
 .navbar-btn .root {
-	color: purple;
+	color: var(--mantine-color-text-0);
 }

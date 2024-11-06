@@ -1,8 +1,9 @@
 .readlist-item-container{
 	max-height: 200px;
 	padding: 1rem;
-	background-color: #fff;
-	border-radius: 15px;
+	border-top-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+	background-color: var(--mantine-color-primary-8);
 }
 
 .readlist-item-header-container{
@@ -26,7 +27,7 @@
 .readlist-status{
 	width: 10rem;
 	border-radius: 5px;
-	border: 1px solid #eee;
+	border: 1px solid var(--mantine-color-secondary-0);
 	padding: 3px 10px;
 }
 

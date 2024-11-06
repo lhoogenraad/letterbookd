@@ -27,7 +27,7 @@ export default function DeleteReadlistItem({ bookId, closeModal, removeItem }) {
 			maxWidth: '500px',
 			margin: '0 auto',
 		}}>
-			<Button onClick={() => closeModal()} variant="subtle" color="blue">No, go back!</Button>
+			<Button onClick={() => closeModal()} variant="subtle" color="primary.0">No, go back!</Button>
 			<Button onClick={() => deleteReadlistItem()} loading={loading} variant="subtle" color="red">Yes please</Button>
 		</div>
 	)

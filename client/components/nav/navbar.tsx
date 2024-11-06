@@ -28,14 +28,14 @@ export default function Navbar() {
 
 			<div className="navbar-btns">
 				<Button 
+					variant="subtle"
 					className="navbar-btn" 
-					variant="gradient"
-					gradient={{from: 'black', to: 'darkblue', deg: 30}}
+					color="primary.0"
 					onClick = {() => goTo('/read-list')}>My Readlist</Button>
 				<Button 
+					variant="subtle"
 					className="navbar-btn" 
-					variant="gradient"
-					gradient={{from: 'black', to: 'darkred', deg: 250}}
+					color="primary.0"
 					onClick = {() => goTo('/books')} >Search Books</Button>
 				<LogoutButton />
 			</div>

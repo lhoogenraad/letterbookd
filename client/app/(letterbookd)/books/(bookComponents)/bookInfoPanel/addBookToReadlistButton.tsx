@@ -29,6 +29,7 @@ export default function BookInfoPanel({ bookId, disabled, setBookAdded }: { book
 				disabled={disabled}
 				loading={loading}
 				onClick={() => sendAddBookToReadlistRequest(bookId)}
+				color="secondary"
 			>
 				Add to my Readlist
 			</Button>

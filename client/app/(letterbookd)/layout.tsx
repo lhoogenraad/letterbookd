@@ -5,9 +5,11 @@ import './app.style.css';
 
 export default function RootLayout({ children, }: { children: React.ReactNode }) {
 	return (
-		<div className='app'>
+		<div>
 			<Navbar />
-			{children}
+			<div className='app'>
+				{children}
+			</div>
 		</div>
 	)
 }

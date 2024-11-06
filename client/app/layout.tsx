@@ -9,10 +9,11 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
 	const theme = createTheme({
 		fontFamily: 'Arial, Helvetica, sans-serif',
 		fontFamilyMonospace: 'Monaco, Courier, monospace',
+		autoContrast: true,
 		headings: { fontFamily: 'Greycliff CF, sans-serif' },
 		colors: {
 			'primary': [
-				"#244855",
+				"#141d24",
 				"#e4eaed",
 				"#c3d5db",
 				"#9fbeca",
@@ -21,7 +22,7 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
 				"#639aaf",
 				"#538699",
 				"#46778a",
-				"#34677a"
+				"#183540"
 			],
 			'secondary': [
 				"#e64831",
@@ -65,7 +66,7 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
 	return (
 		<html lang="en">
 			<body className='body'>
-				<MantineProvider theme={theme}>
+				<MantineProvider theme={theme} defaultColorScheme="dark">
 					<Notifications position="top-center" limit={5} />
 					{children}
 				</MantineProvider>

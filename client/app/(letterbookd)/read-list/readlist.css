@@ -1,6 +1,6 @@
 .readlist-container {
 	margin: 0 auto;
-	background-color: #eee;
+	background-color: var(--mantine-color-primary-9);
 	border-bottom-left-radius: 1rem;
 	border-bottom-right-radius: 1rem;
 	padding: 1rem;
