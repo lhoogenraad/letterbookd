@@ -73,7 +73,6 @@ func queryOpenLibraryForFirstBook (search string) (resources.BookDataOL, error) 
 	}
 	//Convert the body to type string
 	sb := string(body)
-	fmt.Println(sb)
 	var parsed resources.OpenLibraryEditionResponse
 	err = StringToStruct(sb, &parsed)
 	if err != nil {return firstBook, err}
@@ -97,7 +96,7 @@ func convertOpenLibaryEditionToBook(res resources.OpenLibraryEdition) resources.
 	if len(res.PublishDate) > 0{
 		pub, err := parseEditionPublishedDateString(res.PublishDate[0])
 		if err != nil {
-			fmt.Println("We fucked up the parsing", res.PublishDate[0])
+			fmt.Println("We messed up the parsing", res.PublishDate[0])
 		} else { parsedBook.Published = pub }
 	}
 	if len(res.EditionKey) > 0 {
@@ -179,7 +178,6 @@ func parseEditionPublishedDateString(dateString string)  ( time.Time, error ) {
 
 
 func saveCoverImage(stream io.Reader, filepath string) error {
-	fmt.Println("FILEPATH: ", filepath)
 	file, err := os.Create(filepath)
 	if err != nil {return err}
 	defer file.Close()
@@ -188,4 +186,12 @@ func saveCoverImage(stream io.Reader, filepath string) error {
 	if err != nil {return err}
 
 	return nil
+}
+
+
+
+func UploadBookFromOpenLibrary (olId string) (resources.BookDataOL, error) {
+	fmt.Println("olId:", olId)
+	var book resources.BookDataOL
+	return book, nil
 }

@@ -116,6 +116,8 @@ func GetSingleBook (w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+
 func SearchOpenLibrary(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
@@ -128,6 +130,23 @@ func SearchOpenLibrary(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	err = json.NewEncoder(w).Encode(book)
+}
+
+
+func ConfirmOpenLibraryBookUpload(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	olId := utils.GetParam(r, "olId")
+
+	var book resources.BookDataOL
+	book, err := utils.UploadBookFromOpenLibrary(olId)
+
+	if err != nil {
+		log.Error(err)
+		api.InternalErrorHandler(w)
+		return
+	}
+	err = json.NewEncoder(w).Encode("Successfully uploaded " + book.Title)
 }
 
 
