@@ -120,7 +120,7 @@ func SearchOpenLibrary(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	var book resources.BookDataOL
-	book, err := utils.SearchOpenLibrary("A Game of Thrones (Song of Ice and Fire)")
+	book, err := utils.SearchOpenLibrary("20th century american drama")
 
 	if err != nil {
 		log.Error(err)
