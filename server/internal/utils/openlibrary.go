@@ -40,7 +40,7 @@ func retrieveAndSaveCoverImage(olCoverId string) (string, error){
 	err = saveCoverImage(body, path)
 	if err != nil {return path, err}
 
-	return path, nil
+	return "covers/" + olCoverId + ".jpg", nil
 }
 
 func SearchOpenLibrary (search string) (resources.BookDataOL, error) {
@@ -48,8 +48,13 @@ func SearchOpenLibrary (search string) (resources.BookDataOL, error) {
 	book, err := queryOpenLibraryForFirstBook(search)
 	if err != nil {return book, err}
 
-	_, err = retrieveAndSaveCoverImage(book.CoverEdition)
+	path, err := retrieveAndSaveCoverImage(book.CoverEdition)
 	if err != nil {return book, err}
+
+	book.CoverURL = path
+	err = SaveBook(book)
+	if err != nil {return book, err}
+
 	return book, nil
 }
 
