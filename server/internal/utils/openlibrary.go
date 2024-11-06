@@ -13,7 +13,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-var OPEN_LIBRARY_EDITION_URL = "https://openlibrary.org/search.json?title="
+var OPEN_LIBRARY_EDITION_URL = "https://openlibrary.org/search.json?q="
 var OPEN_LIBRARY_COVER_URL = "https://covers.openlibrary.org/b/olid/"
 
 func generateEditionSearchURL (searchValue string) string {
@@ -73,6 +73,7 @@ func queryOpenLibraryForFirstBook (search string) (resources.BookDataOL, error) 
 	}
 	//Convert the body to type string
 	sb := string(body)
+	fmt.Println(sb)
 	var parsed resources.OpenLibraryEditionResponse
 	err = StringToStruct(sb, &parsed)
 	if err != nil {return firstBook, err}
@@ -191,7 +192,11 @@ func saveCoverImage(stream io.Reader, filepath string) error {
 
 
 func UploadBookFromOpenLibrary (olId string) (resources.BookDataOL, error) {
-	fmt.Println("olId:", olId)
 	var book resources.BookDataOL
+	book, err := queryOpenLibraryForFirstBook(olId)
+	fmt.Println(err, book)
+	if err != nil {return book, nil}
+
+	fmt.Println("Book:", book)
 	return book, nil
 }
