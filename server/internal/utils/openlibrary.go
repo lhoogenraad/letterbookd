@@ -89,12 +89,19 @@ func queryOpenLibraryForFirstBook (search string) (resources.BookDataOL, error) 
 func convertOpenLibaryEditionToBook(res resources.OpenLibraryEdition) resources.BookDataOL {
 	var parsedBook resources.BookDataOL
 	parsedBook.Title = res.Title
-	parsedBook.Author = res.Author_Name[0]
-	pub, err := parseEditionPublishedDateString(res.PublishDate[0])
-	if err != nil {
-		fmt.Println("We fucked up the parsing", res.PublishDate[0])
-	} else { parsedBook.Published = pub }
-	parsedBook.OpenLibraryKey = res.EditionKey[0]
+	if len(res.AuthorKey) > 0 {
+		parsedBook.Author = res.Author_Name[0]
+		parsedBook.AuthorOLId = res.AuthorKey[0]
+	}
+	if len(res.PublishDate) > 0{
+		pub, err := parseEditionPublishedDateString(res.PublishDate[0])
+		if err != nil {
+			fmt.Println("We fucked up the parsing", res.PublishDate[0])
+		} else { parsedBook.Published = pub }
+	}
+	if len(res.EditionKey) > 0 {
+		parsedBook.OpenLibraryKey = res.EditionKey[0]
+	}
 	return parsedBook
 }
 

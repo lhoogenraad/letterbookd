@@ -7,6 +7,7 @@ type OpenLibraryEditionResponse struct {
 
 type OpenLibraryEdition struct {
 	Author_Name []string `json:"author_name"`
+	AuthorKey []string `json:"author_key"`
 	Title string `json:"title"`
 	PublishDate []string `json:"publish_date"`
 	EditionKey []string `json:"edition_key"`

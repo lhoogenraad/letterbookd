@@ -20,6 +20,7 @@ type BookDataOL struct {
 	Id int
 	Title string
 	Author string
+	AuthorOLId string
 	Published time.Time
 	NumPages int32
 	CoverURL string
