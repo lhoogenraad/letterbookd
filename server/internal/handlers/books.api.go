@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"io"
 	"server/api"
 
 	// "time"
@@ -110,6 +111,51 @@ func GetSingleBook (w http.ResponseWriter, r *http.Request) {
 
 	err = json.NewEncoder(w).Encode(books)
 
+	if err != nil {
+		log.Error(err)
+		api.InternalErrorHandler(w)
+		return
+	}
+}
+
+type res struct {
+	NumFound int `json:"numFound"`
+	Docs []book `json:"docs"`
+}
+
+type book struct {
+	Author_Name []string `json:"author_name"`
+	Title string `json:"title"`
+}
+func SearchOpenLibrary(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	resp, err := http.Get("https://openlibrary.org/search.json?q=mistborn&fields=key,title,author_name,editions")
+	if err != nil {
+		log.Error(err)
+		api.InternalErrorHandler(w)
+		return
+	}
+
+	//We Read the response body on the line below.
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	//Convert the body to type string
+	sb := string(body)
+	var parsed res
+	err = utils.StringToStruct(sb, &parsed)
+	if err != nil {
+		fmt.Println("Error unmarshaling JSON:", err)
+		return
+	}
+	fmt.Println("WEEEEEEEEEEEE")
+	// fmt.Println(sb)
+	fmt.Println(parsed)
+
+
+	err = json.NewEncoder(w).Encode("hey")
 	if err != nil {
 		log.Error(err)
 		api.InternalErrorHandler(w)
