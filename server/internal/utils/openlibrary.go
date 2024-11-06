@@ -13,7 +13,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-var OPEN_LIBRARY_EDITION_URL = "https://openlibrary.org/search.json?q="
+var OPEN_LIBRARY_EDITION_URL = "https://openlibrary.org/search.json?olid="
 var OPEN_LIBRARY_COVER_URL = "https://covers.openlibrary.org/b/olid/"
 
 func generateEditionSearchURL (searchValue string) string {
