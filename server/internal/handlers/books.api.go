@@ -146,7 +146,7 @@ func ConfirmOpenLibraryBookUpload(w http.ResponseWriter, r *http.Request) {
 		api.CustomErrorHandler(w, 500, fmt.Sprint(err))
 		return
 	}
-	err = json.NewEncoder(w).Encode("Successfully uploaded " + book.Title)
+	err = json.NewEncoder(w).Encode(book)
 }
 
 

@@ -91,7 +91,6 @@ func queryOpenLibraryForFirstBook (search string) (resources.BookDataOL, error) 
 
 func searchOpenLibraryForOLID (olId string) (resources.BookDataOL, error) {
 	var firstBook resources.BookDataOL
-	fmt.Println(generateOLIDSearchURL(olId))
 	resp, err := http.Get(generateOLIDSearchURL(olId))
 	if err != nil {
 		return firstBook, err
@@ -104,7 +103,7 @@ func searchOpenLibraryForOLID (olId string) (resources.BookDataOL, error) {
 		return firstBook, err
 	}
 
-	firstBook, err = parseOLServerResponse(body)
+	firstBook, err = parseOLWorksServerResponse(body)
 	if err != nil {
 		log.Error(err)
 		return firstBook, err
@@ -126,8 +125,19 @@ func parseOLServerResponse (body []byte) (resources.BookDataOL, error) {
 		return firstBook, errors.New("No books found sorry")
 	}
 	firstBook = convertOpenLibaryEditionToBook(parsed.Docs[0])
-	fmt.Println(firstBook)
 	return firstBook, nil
+}
+
+func parseOLWorksServerResponse (body []byte) (resources.BookDataOL, error) {
+	var book resources.BookDataOL
+
+	sb := string(body)
+	var parsed resources.OpenLibraryEdition
+	err := StringToStruct(sb, &parsed)
+	if err != nil {return book, err}
+
+	book = convertOpenLibaryEditionToBook(parsed)
+	return book, nil
 }
 
 func convertOpenLibaryEditionToBook(res resources.OpenLibraryEdition) resources.BookDataOL {
@@ -146,8 +156,10 @@ func convertOpenLibaryEditionToBook(res resources.OpenLibraryEdition) resources.
 	if len(res.EditionKey) > 0 {
 		parsedBook.OpenLibraryKey = res.EditionKey[0]
 	}
-	parsedBook.OlID = res.OlID
+	splitWorkID := strings.Split(res.OlID, "/")
+	parsedBook.OlID = splitWorkID[len(splitWorkID)-1]
 	parsedBook.CoverEdition = res.CoverEditionKey
+	parsedBook.Synopsis = res.Description
 	return parsedBook
 }
 
@@ -238,9 +250,17 @@ func saveCoverImage(stream io.Reader, filepath string) error {
 func UploadBookFromOpenLibrary (olId string) (resources.BookDataOL, error) {
 	var book resources.BookDataOL
 	book, err := searchOpenLibraryForOLID(olId)
-	fmt.Println(err, book)
+	fmt.Println(book)
 	if err != nil {return book, nil}
 
 	fmt.Println("Book:", book)
 	return book, nil
+}
+
+
+func retrieveAuthorFromOL (authorId string) resources.Author {
+	var author resources.Author
+	author.FirstName = "huh"
+
+	return author
 }
