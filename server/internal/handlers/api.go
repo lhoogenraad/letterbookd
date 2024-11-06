@@ -42,6 +42,7 @@ func ApiHandler(r *chi.Mux) {
 		// Books
 		router.Get("/books", GetBooks)
 		router.Get("/books/count", GetBooksCount)
+		router.Get("/books/search/open-library", SearchOpenLibrary)
 		router.Get("/books/{bookId}", GetSingleBook)
 
 		// Readlist

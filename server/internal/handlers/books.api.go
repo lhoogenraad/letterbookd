@@ -116,6 +116,19 @@ func GetSingleBook (w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+func SearchOpenLibrary(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	var book resources.BookDataOL
+	book, err := utils.SearchOpenLibrary("20th century american drama")
+
+	if err != nil {
+		log.Error(err)
+		api.InternalErrorHandler(w)
+		return
+	}
+	err = json.NewEncoder(w).Encode(book)
+}
 
 
 func GetBookReviewSummary (w http.ResponseWriter, r *http.Request) {

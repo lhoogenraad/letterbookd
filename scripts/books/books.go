@@ -6,7 +6,9 @@ import (
 
 func GetBookOpenLibIdMap() ( map[string]int, error) {
 	var books = make(map[string]int)
-	selectQuery := `SELECT ol_id, id FROM books WHERE ol_id IS NOT NULL;`
+	selectQuery := `SELECT ol_id, id FROM books WHERE ol_id IS NOT NULL
+	AND (cover_url = ''
+	OR cover_url IS NULL);`
 
 	rows, err := util.DB.Query(selectQuery);
 
