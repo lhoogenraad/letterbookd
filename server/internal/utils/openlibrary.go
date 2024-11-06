@@ -13,8 +13,9 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-var OPEN_LIBRARY_EDITION_URL = "https://openlibrary.org/search.json?olid="
+var OPEN_LIBRARY_EDITION_URL = "https://openlibrary.org/search.json?q="
 var OPEN_LIBRARY_COVER_URL = "https://covers.openlibrary.org/b/olid/"
+var OPEN_LIBRARY_OLID_SEARCH_URL = "https://openlibrary.org/works/"
 
 func generateEditionSearchURL (searchValue string) string {
 	url := OPEN_LIBRARY_EDITION_URL + searchValue + "&limit=1"
@@ -25,6 +26,11 @@ func generateEditionSearchURL (searchValue string) string {
 func generateCoverSearchURL (coverString string) string {
 	url := OPEN_LIBRARY_COVER_URL + coverString + "-L.jpg"
 	url = strings.ReplaceAll(url, " ", "+")
+	return url
+}
+
+func generateOLIDSearchURL (olId string) string {
+	url := OPEN_LIBRARY_OLID_SEARCH_URL + olId + ".json"
 	return url
 }
 
@@ -69,21 +75,58 @@ func queryOpenLibraryForFirstBook (search string) (resources.BookDataOL, error) 
 	//We Read the response body on the line below.
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatalln(err)
+		log.Error(err)
+		return firstBook, err
 	}
-	//Convert the body to type string
+
+	firstBook, err = parseOLServerResponse(body)
+	if err != nil {
+		log.Error(err)
+		return firstBook, err
+	}
+	// return parsed.Docs[0], nil
+	return firstBook, nil
+}
+
+
+func searchOpenLibraryForOLID (olId string) (resources.BookDataOL, error) {
+	var firstBook resources.BookDataOL
+	fmt.Println(generateOLIDSearchURL(olId))
+	resp, err := http.Get(generateOLIDSearchURL(olId))
+	if err != nil {
+		return firstBook, err
+	}
+
+	//We Read the response body on the line below.
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		log.Error(err)
+		return firstBook, err
+	}
+
+	firstBook, err = parseOLServerResponse(body)
+	if err != nil {
+		log.Error(err)
+		return firstBook, err
+	}
+	// return parsed.Docs[0], nil
+	return firstBook, nil
+}
+
+
+func parseOLServerResponse (body []byte) (resources.BookDataOL, error) {
+	var firstBook resources.BookDataOL
+
 	sb := string(body)
-	fmt.Println(sb)
 	var parsed resources.OpenLibraryEditionResponse
-	err = StringToStruct(sb, &parsed)
+	err := StringToStruct(sb, &parsed)
 	if err != nil {return firstBook, err}
 
 	if len(parsed.Docs) < 1 {
-		return firstBook, errors.New("No books found for search " + search)
+		return firstBook, errors.New("No books found sorry")
 	}
-
 	firstBook = convertOpenLibaryEditionToBook(parsed.Docs[0])
-	// return parsed.Docs[0], nil
+	fmt.Println(firstBook)
 	return firstBook, nil
 }
 
@@ -103,6 +146,7 @@ func convertOpenLibaryEditionToBook(res resources.OpenLibraryEdition) resources.
 	if len(res.EditionKey) > 0 {
 		parsedBook.OpenLibraryKey = res.EditionKey[0]
 	}
+	parsedBook.OlID = res.OlID
 	parsedBook.CoverEdition = res.CoverEditionKey
 	return parsedBook
 }
@@ -193,7 +237,7 @@ func saveCoverImage(stream io.Reader, filepath string) error {
 
 func UploadBookFromOpenLibrary (olId string) (resources.BookDataOL, error) {
 	var book resources.BookDataOL
-	book, err := queryOpenLibraryForFirstBook(olId)
+	book, err := searchOpenLibraryForOLID(olId)
 	fmt.Println(err, book)
 	if err != nil {return book, nil}
 

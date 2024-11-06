@@ -13,4 +13,5 @@ type OpenLibraryEdition struct {
 	EditionKey []string `json:"edition_key"`
 	NumberOfPages int `json:"number_of_pages"`
 	CoverEditionKey string `json:"cover_edition_key"`
+	OlID string `json:"key"`
 }

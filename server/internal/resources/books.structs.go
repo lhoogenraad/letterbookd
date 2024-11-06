@@ -28,4 +28,5 @@ type BookDataOL struct {
 	OnUserReadlist bool
 	OpenLibraryKey string
 	CoverEdition string
+	OlID string
 }

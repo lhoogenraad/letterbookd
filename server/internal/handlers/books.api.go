@@ -122,11 +122,11 @@ func SearchOpenLibrary(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	var book resources.BookDataOL
-	book, err := utils.SearchOpenLibrary("20th century american drama")
+	book, err := utils.SearchOpenLibrary("Batman")
 
 	if err != nil {
 		log.Error(err)
-		api.InternalErrorHandler(w)
+		api.CustomErrorHandler(w, 500, fmt.Sprint(err))
 		return
 	}
 	err = json.NewEncoder(w).Encode(book)
@@ -143,7 +143,7 @@ func ConfirmOpenLibraryBookUpload(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		log.Error(err)
-		api.InternalErrorHandler(w)
+		api.CustomErrorHandler(w, 500, fmt.Sprint(err))
 		return
 	}
 	err = json.NewEncoder(w).Encode("Successfully uploaded " + book.Title)
