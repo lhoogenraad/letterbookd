@@ -17,7 +17,7 @@ var OPEN_LIBRARY_EDITION_URL = "https://openlibrary.org/search.json?q="
 var OPEN_LIBRARY_COVER_URL = "https://covers.openlibrary.org/b/olid/"
 
 func generateEditionSearchURL (searchValue string) string {
-	url := OPEN_LIBRARY_EDITION_URL + searchValue + ""
+	url := OPEN_LIBRARY_EDITION_URL + searchValue + "&limit=1"
 	url = strings.ReplaceAll(url, " ", "+")
 	return url
 }
@@ -82,7 +82,7 @@ func queryOpenLibraryForFirstBook (search string) (resources.BookDataOL, error) 
 		return firstBook, errors.New("No books found for search " + search)
 	}
 
-	firstBook = convertOpenLibaryEditionToBook(parsed.Docs[1])
+	firstBook = convertOpenLibaryEditionToBook(parsed.Docs[0])
 	// return parsed.Docs[0], nil
 	return firstBook, nil
 }
