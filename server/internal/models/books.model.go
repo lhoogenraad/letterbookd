@@ -14,18 +14,20 @@ import (
 func GetBooks(userId int, page int, pageSize int) ([]resources.BookData, error) {
 	var queryString string = `
 	SELECT 
-		books.id,
-		books.name, 
-		CONCAT(authors.first_name, ' ', authors.last_name) as author_name,
-		books.published_date, books.num_pages, IFNULL(books.cover_url, ''),
-		IFNULL(books.synopsis, 'No synopsis.'),
-		read_list_items.id IS NOT NULL
+	books.id,
+	books.name, 
+	CONCAT(authors.first_name, ' ', authors.last_name) as author_name,
+	books.published_date, 
+	IFNULL(books.num_pages, 0),
+	IFNULL(books.cover_url, ''),
+	IFNULL(books.synopsis, 'No synopsis.'),
+	read_list_items.id IS NOT NULL
 	FROM books
 	JOIN authors
-		ON books.author_id=authors.id
+	ON books.author_id=authors.id
 	LEFT JOIN read_list_items
-		ON read_list_items.book_id = books.id
-		AND read_list_items.user_id = ?
+	ON read_list_items.book_id = books.id
+	AND read_list_items.user_id = ?
 	WHERE cover_url IS NOT NULL
 	AND cover_url != ''
 	LIMIT ?
@@ -55,24 +57,30 @@ func GetBooks(userId int, page int, pageSize int) ([]resources.BookData, error) 
 func GetBooksWithFilter(userId int, page int, pageSize int, filterString string) ([]resources.BookData, error) {
 	var queryString string = `
 	SELECT 
-		books.id,
-		books.name, 
-		CONCAT(authors.first_name, ' ', authors.last_name) as author_name,
-		books.published_date, books.num_pages, IFNULL(books.cover_url, ''),
-		IFNULL(books.synopsis, 'No synopsis.'),
-		read_list_items.id IS NOT NULL
+	books.id,
+	books.name, 
+	CONCAT(authors.first_name, ' ', authors.last_name) as author_name,
+	books.published_date, 
+	IFNULL(books.num_pages, 0),
+	IFNULL(books.cover_url, ''),
+	IFNULL(books.synopsis, 'No synopsis.'),
+	read_list_items.id IS NOT NULL
 	FROM books
 	JOIN authors
-		ON books.author_id=authors.id
+	ON books.author_id=authors.id
 	LEFT JOIN read_list_items
-		ON read_list_items.book_id = books.id
-		AND read_list_items.user_id = ?
+	ON read_list_items.book_id = books.id
+	AND read_list_items.user_id = ?
 	WHERE 
-	   books.name LIKE ?
-	OR CONCAT(authors.first_name, ' ', authors.last_name) LIKE ?
-	OR books.synopsis LIKE ?
-	AND cover_url IS NOT NULL
-	AND cover_url != ''
+	(
+		books.name LIKE ?
+		OR CONCAT(authors.first_name, ' ', authors.last_name) LIKE ?
+		OR books.synopsis LIKE ?
+	)
+	AND (
+		cover_url IS NOT NULL
+		OR cover_url != ''
+	)
 	LIMIT ?
 	OFFSET ?
 	;`
@@ -80,8 +88,8 @@ func GetBooksWithFilter(userId int, page int, pageSize int, filterString string)
 	offset := utils.CalculateOffset(page, pageSize)
 	rows, err := tools.DB.Query(
 		queryString, 
-		filter, filter, filter,
 		userId, 
+		filter, filter, filter,
 		pageSize, 
 		offset,
 	)
@@ -118,13 +126,13 @@ func GetBooksCount() (int, error) {
 
 func GetBooksCountWithFilter(filterString string) (int, error) {
 	var queryString string = `
-		SELECT COUNT(books.id) FROM books
-		JOIN authors
-			ON books.author_id=authors.id
-		WHERE 
-		   books.name LIKE ?
-		OR CONCAT(authors.first_name, ' ', authors.last_name) LIKE ?
-		OR books.synopsis LIKE ?`
+	SELECT COUNT(books.id) FROM books
+	JOIN authors
+	ON books.author_id=authors.id
+	WHERE 
+	books.name LIKE ?
+	OR CONCAT(authors.first_name, ' ', authors.last_name) LIKE ?
+	OR books.synopsis LIKE ?`
 
 	filter := "%" + filterString + "%"
 
@@ -153,11 +161,13 @@ func readBookRows (rows *sql.Rows) ([]resources.BookData, error) {
 			&book.Synopsis,
 			&book.OnUserReadlist,
 		); err != nil {
+			fmt.Println("Error reading a book:", err)
 			return books, err
 		}
 		var err error
 		book.Published, err = time.Parse("2006-01-02", date)
 		if err != nil {
+			fmt.Println("Error parsing book publish date:", date, err)
 			return books, err
 		}
 		books = append(books, book)
@@ -169,20 +179,20 @@ func readBookRows (rows *sql.Rows) ([]resources.BookData, error) {
 func GetSingleBook(bookId int, userId int) (resources.BookData, error, int) {
 	var queryString string = `
 	SELECT 
-		books.id,
-		books.name, 
-		CONCAT(authors.first_name, ' ', authors.last_name) as author_name,
-		books.published_date, 
-		books.num_pages, 
-		IFNULL(books.cover_url, ''),
-		IFNULL(books.synopsis, 'No synopsis.'),
-		read_list_items.id IS NOT NULL
+	books.id,
+	books.name, 
+	CONCAT(authors.first_name, ' ', authors.last_name) as author_name,
+	books.published_date, 
+	books.num_pages, 
+	IFNULL(books.cover_url, ''),
+	IFNULL(books.synopsis, 'No synopsis.'),
+	read_list_items.id IS NOT NULL
 	FROM books
 	JOIN authors
-		ON books.author_id=authors.id
+	ON books.author_id=authors.id
 	LEFT JOIN read_list_items
-		ON read_list_items.book_id = books.id
-		AND read_list_items.user_id = ?
+	ON read_list_items.book_id = books.id
+	AND read_list_items.user_id = ?
 	WHERE books.id = ?;`
 
 	row := tools.DB.QueryRow(queryString, userId, bookId)
@@ -201,8 +211,13 @@ func GetSingleBook(bookId int, userId int) (resources.BookData, error, int) {
 	); err {
 	case sql.ErrNoRows:
 		return book, errors.New(`Could not find book`), 404
+	default:
+		if err != nil{
+			fmt.Println("Error reading in book:", err)
+			return book, errors.New(`Error retrieving book`), 500
+		}
 	}
-	fmt.Println(`Retrieved book: `, book.Title)
+
 	var err error
 	book.Published, err = time.Parse("2006-01-02", date)
 	if err != nil {
@@ -295,9 +310,9 @@ func UploadBook (book resources.BookDataOL) error {
 	var baseErr error = errors.New("Sorry, something went wrong uploading " + book.Title)
 
 	insertQuery := `
-		INSERT INTO books
-		(name, author_id, published_date, synopsis, ol_id)
-		VALUES (?, ?, ?, ?, ?)
+	INSERT INTO books
+	(name, author_id, published_date, synopsis, ol_id, cover_url)
+	VALUES (?, ?, ?, ?, ?, ?)
 	`
 
 	_, err := tools.DB.Exec(
@@ -307,12 +322,13 @@ func UploadBook (book resources.BookDataOL) error {
 		book.Published.Format("2006-01-02"),
 		book.Synopsis,
 		book.OlID,
+		book.CoverURL,
 	)
 
 	if err != nil {
 		fmt.Println("Failed to save book:", err)
 		return baseErr
 	}
-	
+
 	return nil
 }

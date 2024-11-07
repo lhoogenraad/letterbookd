@@ -201,19 +201,15 @@ func saveCoverImage(stream io.Reader, filepath string) error {
 func UploadBookFromOpenLibrary (olId string) (resources.BookDataOL, error) {
 	var book resources.BookDataOL
 	if olIdExists(olId) {return book, errors.New("It appears we already have this book in letterbookd") }
-	fmt.Println("step 1")
 	book, err := searchOpenLibraryForOLID(olId)
 	if err != nil {return book, err}
 
-	fmt.Println("step 2")
 	book.AuthorId, err = GetAuthorId(book.AuthorOLId)
 	if err != nil {return book, err}
 
-	fmt.Println("step 3")
 	err = models.UploadBook(book)
 	if err != nil {return book, err}
 
-	fmt.Println("step 4")
 	return book, nil
 }
 
