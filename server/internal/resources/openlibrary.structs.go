@@ -15,4 +15,9 @@ type OpenLibraryEdition struct {
 	Description string `json:"description"`
 	CoverEditionKey string `json:"cover_edition_key"`
 	OlID string `json:"key"`
+	Authors []struct {
+		Author struct {
+			Key string `json:"key"`
+		}
+	}
 }

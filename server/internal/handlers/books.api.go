@@ -10,6 +10,7 @@ import (
 	"server/internal/models"
 	"server/internal/resources"
 	"server/internal/utils"
+	"server/internal/utils/openlibrary"
 	"strconv"
 
 	log "github.com/sirupsen/logrus"
@@ -122,7 +123,7 @@ func SearchOpenLibrary(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	var book resources.BookDataOL
-	book, err := utils.SearchOpenLibrary("Batman")
+	book, err := openlibrary.SearchOpenLibrary("Batman")
 
 	if err != nil {
 		log.Error(err)
@@ -139,7 +140,7 @@ func ConfirmOpenLibraryBookUpload(w http.ResponseWriter, r *http.Request) {
 	olId := utils.GetParam(r, "olId")
 
 	var book resources.BookDataOL
-	book, err := utils.UploadBookFromOpenLibrary(olId)
+	book, err := openlibrary.UploadBookFromOpenLibrary(olId)
 
 	if err != nil {
 		log.Error(err)

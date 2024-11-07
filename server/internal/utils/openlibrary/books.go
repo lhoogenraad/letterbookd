@@ -1,4 +1,4 @@
-package utils
+package openlibrary
 
 import (
 	"errors"
@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"os"
 	"server/internal/resources"
+	"server/internal/utils"
 	"strings"
-	"time"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -58,7 +58,7 @@ func SearchOpenLibrary (search string) (resources.BookDataOL, error) {
 	if err != nil {return book, err}
 
 	book.CoverURL = path
-	err = SaveBook(book)
+	// err = utils.SaveBook(book)
 	if err != nil {return book, err}
 
 	return book, nil
@@ -118,7 +118,7 @@ func parseOLServerResponse (body []byte) (resources.BookDataOL, error) {
 
 	sb := string(body)
 	var parsed resources.OpenLibraryEditionResponse
-	err := StringToStruct(sb, &parsed)
+	err := utils.StringToStruct(sb, &parsed)
 	if err != nil {return firstBook, err}
 
 	if len(parsed.Docs) < 1 {
@@ -133,7 +133,7 @@ func parseOLWorksServerResponse (body []byte) (resources.BookDataOL, error) {
 
 	sb := string(body)
 	var parsed resources.OpenLibraryEdition
-	err := StringToStruct(sb, &parsed)
+	err := utils.StringToStruct(sb, &parsed)
 	if err != nil {return book, err}
 
 	book = convertOpenLibaryEditionToBook(parsed)
@@ -143,12 +143,16 @@ func parseOLWorksServerResponse (body []byte) (resources.BookDataOL, error) {
 func convertOpenLibaryEditionToBook(res resources.OpenLibraryEdition) resources.BookDataOL {
 	var parsedBook resources.BookDataOL
 	parsedBook.Title = res.Title
+	fmt.Println("res.Authors", res.Authors)
 	if len(res.AuthorKey) > 0 {
 		parsedBook.Author = res.Author_Name[0]
 		parsedBook.AuthorOLId = res.AuthorKey[0]
+	} else if len(res.Authors) > 0 {
+		authorIdPathSplit := strings.Split(res.Authors[0].Author.Key, "/")
+		parsedBook.AuthorOLId = authorIdPathSplit[len(authorIdPathSplit)-1]
 	}
 	if len(res.PublishDate) > 0{
-		pub, err := parseEditionPublishedDateString(res.PublishDate[0])
+		pub, err := utils.ParseStringToTime(res.PublishDate[0])
 		if err != nil {
 			fmt.Println("We messed up the parsing", res.PublishDate[0])
 		} else { parsedBook.Published = pub }
@@ -161,76 +165,6 @@ func convertOpenLibaryEditionToBook(res resources.OpenLibraryEdition) resources.
 	parsedBook.CoverEdition = res.CoverEditionKey
 	parsedBook.Synopsis = res.Description
 	return parsedBook
-}
-
-func parseEditionPublishedDateString(dateString string)  ( time.Time, error ) {
-	var format string
-	var date time.Time
-
-	// Commonly the Pub dates are just the year
-	if len(dateString) == 4 {
-		format = "2006"
-	} else {
-		format = "January 02, 2006"
-	}
-
-	date, err := time.Parse(format, dateString)
-
-	if err != nil {
-		format = "January 2, 2006"
-		date, err = time.Parse(format, dateString)
-		if err == nil {return date, nil}
-	}
-
-	if err != nil {
-		format = "January 2006"
-		date, err = time.Parse(format, dateString)
-		if err == nil {return date, nil}
-	}
-
-	if err != nil {
-		format = "Jan 2, 2006"
-		date, err = time.Parse(format, dateString)
-		if err == nil {return date, nil}
-	}
-
-	if err != nil {
-		format = "Jan 02, 2006"
-		date, err = time.Parse(format, dateString)
-		if err == nil {return date, nil}
-	}
-
-	if err != nil {
-		format = "2006-01-02"
-		date, err = time.Parse(format, dateString)
-		if err == nil {return date, nil}
-	}
-
-	if err != nil {
-		format = "2006-Jan-02"
-		date, err = time.Parse(format, dateString)
-		if err == nil {return date, nil}
-	}
-
-	if err != nil {
-		format = "2006-January-02"
-		date, err = time.Parse(format, dateString)
-		if err == nil {return date, nil}
-	}
-
-	if err != nil {
-		format = "02 Jan 2006"
-		date, err = time.Parse(format, dateString)
-		if err == nil {return date, nil}
-	}
-
-	if err != nil {
-		format = "2 Jan 2006"
-		date, err = time.Parse(format, dateString)
-		if err == nil {return date, nil}
-	}
-
-	return date, err
 }
 
 
@@ -250,7 +184,6 @@ func saveCoverImage(stream io.Reader, filepath string) error {
 func UploadBookFromOpenLibrary (olId string) (resources.BookDataOL, error) {
 	var book resources.BookDataOL
 	book, err := searchOpenLibraryForOLID(olId)
-	fmt.Println(book)
 	if err != nil {return book, nil}
 
 	fmt.Println("Book:", book)
@@ -258,9 +191,3 @@ func UploadBookFromOpenLibrary (olId string) (resources.BookDataOL, error) {
 }
 
 
-func retrieveAuthorFromOL (authorId string) resources.Author {
-	var author resources.Author
-	author.FirstName = "huh"
-
-	return author
-}
