@@ -11,10 +11,18 @@ import (
 
 var OPEN_LIBRARY_AUTHOR_SEARCH_URL = "https://openlibrary.org/authors/"
 
-func RetrieveAuthorFromOL (authorId string) (resources.Author, error) {
+func GetAuthorId (authorOlId string) (resources.Author, error) {
 	var author resources.Author
 
-	resp, err := http.Get(getAuthorSearchURL(authorId))
+	author, err := getAuthorFromOL(authorOlId)
+	if err != nil {return author, err}
+
+	return author, nil
+}
+
+func getAuthorFromOL (authorOlId string) (resources.Author, error) {
+	var author resources.Author
+	resp, err := http.Get(getAuthorSearchURL(authorOlId))
 	if err != nil {return author, err}
 
 	body, err := io.ReadAll(resp.Body)
@@ -26,12 +34,11 @@ func RetrieveAuthorFromOL (authorId string) (resources.Author, error) {
 	if err != nil {return author, err}
 
 	author = convertAuthorOLToAuthor(parsedAuthor)
-
-	return author, nil
+	return author, err
 }
 
-func getAuthorSearchURL (authorId string) string {
-	return OPEN_LIBRARY_AUTHOR_SEARCH_URL + authorId + ".json"
+func getAuthorSearchURL (authorOlId string) string {
+	return OPEN_LIBRARY_AUTHOR_SEARCH_URL + authorOlId + ".json"
 }
 
 func convertAuthorOLToAuthor(authorOl resources.AuthorOL) resources.Author {
