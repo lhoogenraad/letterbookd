@@ -38,7 +38,9 @@ CREATE TABLE books (
 	num_pages int,
 	cover_url varchar(255),
 	synopsis text DEFAULT 'No synopsis available.',
+	ol_id varchar(100),
 
+	CONSTRAINT ol_id_unique UNIQUE (ol_id),
 	FOREIGN KEY (author_id) REFERENCES authors(id)
 );
 

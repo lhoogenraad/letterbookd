@@ -289,3 +289,30 @@ func GetBookReadlistOccurences(bookId int, output chan <- int) (int, error) {
 	output <- numOccurences
 	return numOccurences, nil
 }
+
+
+func UploadBook (book resources.BookDataOL) error {
+	var baseErr error = errors.New("Sorry, something went wrong uploading " + book.Title)
+
+	insertQuery := `
+		INSERT INTO books
+		(name, author_id, published_date, synopsis, ol_id)
+		VALUES (?, ?, ?, ?, ?)
+	`
+
+	_, err := tools.DB.Exec(
+		insertQuery,
+		book.Title,
+		book.AuthorId,
+		book.Published.Format("2006-01-02"),
+		book.Synopsis,
+		book.OlID,
+	)
+
+	if err != nil {
+		fmt.Println("Failed to save book:", err)
+		return baseErr
+	}
+	
+	return nil
+}

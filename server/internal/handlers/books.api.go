@@ -122,8 +122,9 @@ func GetSingleBook (w http.ResponseWriter, r *http.Request) {
 func SearchOpenLibrary(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
+	filter := utils.GetUrlQuery(r, "search")
 	var book resources.BookDataOL
-	book, err := openlibrary.SearchOpenLibrary("Batman")
+	book, err := openlibrary.SearchOpenLibrary(filter)
 
 	if err != nil {
 		log.Error(err)

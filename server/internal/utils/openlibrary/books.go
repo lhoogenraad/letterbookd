@@ -1,13 +1,16 @@
 package openlibrary
 
 import (
+	"database/sql"
 	"errors"
 	"fmt"
 	"io"
 	"net/http"
 	"os"
 	"server/internal/resources"
+	"server/internal/tools"
 	"server/internal/utils"
+	"server/internal/models"
 	"strings"
 
 	log "github.com/sirupsen/logrus"
@@ -34,7 +37,7 @@ func generateOLIDSearchURL (olId string) string {
 	return url
 }
 
-func retrieveAndSaveCoverImage(olCoverId string) (string, error){
+func retrieveCoverImage(olCoverId string, save bool) (string, error){
 	if olCoverId == "" {return "", nil}
 	path := "/home/leon/Documents/letterbookd/client/public/covers/" + olCoverId + ".jpg"
 	fmt.Printf("Uploading a cover url!\nolCoverId: %s\tSave Path: %s\n", olCoverId, path)
@@ -43,8 +46,10 @@ func retrieveAndSaveCoverImage(olCoverId string) (string, error){
 	if err != nil {return path, err}
 	body := resp.Body
 
-	err = saveCoverImage(body, path)
-	if err != nil {return path, err}
+	if save {
+		err = saveCoverImage(body, path)
+		if err != nil {return path, err}
+	}
 
 	return "covers/" + olCoverId + ".jpg", nil
 }
@@ -54,7 +59,7 @@ func SearchOpenLibrary (search string) (resources.BookDataOL, error) {
 	book, err := queryOpenLibraryForFirstBook(search)
 	if err != nil {return book, err}
 
-	path, err := retrieveAndSaveCoverImage(book.CoverEdition)
+	path, err := retrieveCoverImage(book.CoverEdition, false)
 	if err != nil {return book, err}
 
 	book.CoverURL = path
@@ -104,6 +109,7 @@ func searchOpenLibraryForOLID (olId string) (resources.BookDataOL, error) {
 	}
 
 	firstBook, err = parseOLWorksServerResponse(body)
+	firstBook.CoverURL, err = retrieveCoverImage(firstBook.CoverEdition, true)
 	if err != nil {
 		log.Error(err)
 		return firstBook, err
@@ -164,9 +170,16 @@ func convertOpenLibaryEditionToBook(res resources.OpenLibraryEdition) resources.
 	if len(res.EditionKey) > 0 {
 		parsedBook.OpenLibraryKey = res.EditionKey[0]
 	}
+
 	splitWorkID := strings.Split(res.OlID, "/")
 	parsedBook.OlID = splitWorkID[len(splitWorkID)-1]
-	parsedBook.CoverEdition = res.CoverEditionKey
+
+	if res.Cover_Edition.Key != "" {
+		splitCoverEditionKey := strings.Split(res.Cover_Edition.Key, "/")
+		parsedBook.CoverEdition = splitCoverEditionKey[ len(splitCoverEditionKey)-1 ]
+	} else {
+		parsedBook.CoverEdition = res.CoverEditionKey
+	}
 	parsedBook.Synopsis = res.Description
 	return parsedBook
 }
@@ -187,15 +200,36 @@ func saveCoverImage(stream io.Reader, filepath string) error {
 
 func UploadBookFromOpenLibrary (olId string) (resources.BookDataOL, error) {
 	var book resources.BookDataOL
+	if olIdExists(olId) {return book, errors.New("It appears we already have this book in letterbookd") }
+	fmt.Println("step 1")
 	book, err := searchOpenLibraryForOLID(olId)
 	if err != nil {return book, err}
 
-	authorId, err := GetAuthorId(book.AuthorOLId)
+	fmt.Println("step 2")
+	book.AuthorId, err = GetAuthorId(book.AuthorOLId)
 	if err != nil {return book, err}
-	fmt.Println("author Id:", authorId)
 
-	// fmt.Println("Book:", book)
+	fmt.Println("step 3")
+	err = models.UploadBook(book)
+	if err != nil {return book, err}
+
+	fmt.Println("step 4")
 	return book, nil
 }
 
 
+/**
+Checks if we currently have a book in our database with a matching
+open library ID
+*/
+func olIdExists (olId string) bool {
+	query := `SELECT id FROM books WHERE ol_id LIKE ?`
+	filter := "%" + olId + "%"
+	
+	var id int
+	err := tools.DB.QueryRow(query, filter).Scan(&id)
+
+	if err == sql.ErrNoRows {return false}
+
+	return true
+}
