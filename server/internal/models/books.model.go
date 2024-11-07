@@ -311,7 +311,7 @@ func UploadBook (book resources.BookDataOL) error {
 
 	insertQuery := `
 	INSERT INTO books
-	(name, author_id, published_date, synopsis, ol_id, cover_url)
+	(name, author_id, published_date, synopsis, ol_id, cover_url, num_pages)
 	VALUES (?, ?, ?, ?, ?, ?)
 	`
 
@@ -323,6 +323,7 @@ func UploadBook (book resources.BookDataOL) error {
 		book.Synopsis,
 		book.OlID,
 		book.CoverURL,
+		book.NumPages,
 	)
 
 	if err != nil {
