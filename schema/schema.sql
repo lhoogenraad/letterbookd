@@ -2,7 +2,8 @@ CREATE TABLE authors (
 	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	first_name varchar(255) NOT NULL,
 	last_name varchar(255),
-	date_of_birth date
+	date_of_birth date,
+	ol_id varchar(100)
 );
 
 
@@ -37,7 +38,9 @@ CREATE TABLE books (
 	num_pages int,
 	cover_url varchar(255),
 	synopsis text DEFAULT 'No synopsis available.',
+	ol_id varchar(100),
 
+	CONSTRAINT ol_id_unique UNIQUE (ol_id),
 	FOREIGN KEY (author_id) REFERENCES authors(id)
 );
 

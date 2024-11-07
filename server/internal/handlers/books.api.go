@@ -10,6 +10,7 @@ import (
 	"server/internal/models"
 	"server/internal/resources"
 	"server/internal/utils"
+	"server/internal/utils/openlibrary"
 	"strconv"
 
 	log "github.com/sirupsen/logrus"
@@ -116,15 +117,35 @@ func GetSingleBook (w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+
 func SearchOpenLibrary(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
+	filter := utils.GetUrlQuery(r, "search")
 	var book resources.BookDataOL
-	book, err := utils.SearchOpenLibrary("20th century american drama")
+	book, err := openlibrary.SearchOpenLibrary(filter)
 
 	if err != nil {
 		log.Error(err)
-		api.InternalErrorHandler(w)
+		api.CustomErrorHandler(w, 500, fmt.Sprint(err))
+		return
+	}
+	err = json.NewEncoder(w).Encode(book)
+}
+
+
+func ConfirmOpenLibraryBookUpload(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	olId := utils.GetParam(r, "olId")
+
+	var book resources.BookDataOL
+	book, err := openlibrary.UploadBookFromOpenLibrary(olId)
+
+	if err != nil {
+		log.Error(err)
+		api.CustomErrorHandler(w, 500, fmt.Sprint(err))
 		return
 	}
 	err = json.NewEncoder(w).Encode(book)
