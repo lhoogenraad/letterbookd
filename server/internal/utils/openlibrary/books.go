@@ -143,7 +143,7 @@ func parseOLWorksServerResponse (body []byte) (resources.BookDataOL, error) {
 func convertOpenLibaryEditionToBook(res resources.OpenLibraryEdition) resources.BookDataOL {
 	var parsedBook resources.BookDataOL
 	parsedBook.Title = res.Title
-	fmt.Println("res.Authors", res.Authors)
+	// Parse author ID
 	if len(res.AuthorKey) > 0 {
 		parsedBook.Author = res.Author_Name[0]
 		parsedBook.AuthorOLId = res.AuthorKey[0]
@@ -151,12 +151,16 @@ func convertOpenLibaryEditionToBook(res resources.OpenLibraryEdition) resources.
 		authorIdPathSplit := strings.Split(res.Authors[0].Author.Key, "/")
 		parsedBook.AuthorOLId = authorIdPathSplit[len(authorIdPathSplit)-1]
 	}
+
+	// Parse publish date
 	if len(res.PublishDate) > 0{
 		pub, err := utils.ParseStringToTime(res.PublishDate[0])
 		if err != nil {
 			fmt.Println("We messed up the parsing", res.PublishDate[0])
 		} else { parsedBook.Published = pub }
 	}
+
+	// Grab first edition key available
 	if len(res.EditionKey) > 0 {
 		parsedBook.OpenLibraryKey = res.EditionKey[0]
 	}
@@ -184,9 +188,13 @@ func saveCoverImage(stream io.Reader, filepath string) error {
 func UploadBookFromOpenLibrary (olId string) (resources.BookDataOL, error) {
 	var book resources.BookDataOL
 	book, err := searchOpenLibraryForOLID(olId)
-	if err != nil {return book, nil}
+	if err != nil {return book, err}
 
-	fmt.Println("Book:", book)
+	author, err := RetrieveAuthorFromOL(book.AuthorOLId)
+	if err != nil {return book, err}
+	fmt.Println("End author:", author)
+
+	// fmt.Println("Book:", book)
 	return book, nil
 }
 

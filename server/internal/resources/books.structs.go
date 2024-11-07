@@ -8,7 +8,6 @@ type BookData struct {
 	Id int
 	Title string
 	Author string
-	AuthorId int
 	Published time.Time
 	NumPages int32
 	CoverURL string
