@@ -3,6 +3,7 @@ package resources
 import "time"
 
 type Author struct {
+	Id int
 	FirstName string
 	LastName string
 	DateOfBirth time.Time

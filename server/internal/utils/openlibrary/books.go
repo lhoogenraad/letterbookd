@@ -190,9 +190,9 @@ func UploadBookFromOpenLibrary (olId string) (resources.BookDataOL, error) {
 	book, err := searchOpenLibraryForOLID(olId)
 	if err != nil {return book, err}
 
-	author, err := GetAuthorId(book.AuthorOLId)
+	authorId, err := GetAuthorId(book.AuthorOLId)
 	if err != nil {return book, err}
-	fmt.Println("End author:", author)
+	fmt.Println("author Id:", authorId)
 
 	// fmt.Println("Book:", book)
 	return book, nil
