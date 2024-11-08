@@ -9,13 +9,20 @@
 
 
 .books-filters-container {
-	width: 40%;
+	width: 70%;
 	padding: 1rem;
 	min-width: 15rem;
 
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
+}
+
+
+.books-search-container {
+	display: flex;
+	flex-direction: row;
+	gap: 1.3rem;
 }
 
 
