@@ -138,6 +138,7 @@ func parseOLWorksServerResponse (body []byte) (resources.BookDataOL, error) {
 	var book resources.BookDataOL
 
 	sb := string(body)
+	fmt.Println(sb)
 	var parsed resources.OpenLibraryEdition
 	err := utils.StringToStruct(sb, &parsed)
 	if err != nil {return book, err}
