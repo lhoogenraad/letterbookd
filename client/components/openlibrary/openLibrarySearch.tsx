@@ -3,8 +3,10 @@
 import { Button, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
+import './openLibrarySearch.css';
 
-export default function OpenLibrarySearch({ submitSearch, loading }: { submitSearch: Function, loading: boolean }) {
+
+export default function OpenLibrarySearchForm({ submitSearch, loading }: { submitSearch: Function, loading: boolean }) {
 	const form = useForm({
 		mode: 'uncontrolled',
 		initialValues: {
@@ -20,8 +22,8 @@ export default function OpenLibrarySearch({ submitSearch, loading }: { submitSea
 	}
 
 	return (
-		<div>
-			<form onSubmit={form.onSubmit((vals: any) => formSubmit(vals))}>
+		<div className="open-library-form-container">
+			<form className="open-library-form" onSubmit={form.onSubmit((vals: any) => formSubmit(vals))}>
 				<TextInput
 					label="Book title"
 					placeholder="I, claudius..."
@@ -40,7 +42,9 @@ export default function OpenLibrarySearch({ submitSearch, loading }: { submitSea
 					key={form.key("publisher")}
 					{...form.getInputProps("publisher")}
 				/>
-				<Button loading={loading} disabled={loading} type="submit">Submit</Button>
+				<div className="submit-btn">
+					<Button loading={loading} disabled={loading} type="submit">Submit</Button>
+				</div>
 			</form>
 		</div>
 	)

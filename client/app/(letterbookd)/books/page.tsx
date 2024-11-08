@@ -9,7 +9,7 @@ import { useDisclosure } from '@mantine/hooks';
 import './books.css';
 import { IconSearch } from '@tabler/icons-react';
 import Link from 'next/link';
-import OpenLibrarySearch from 'components/openlibrary/openLibrarySearch';
+import OpenLibrary from 'components/openlibrary/openLibrary';
 
 export default function Books() {
 	const PAGE_SIZE = 50;
@@ -156,7 +156,7 @@ export default function Books() {
 				size="85%"
 				transitionProps={{ transition: 'slide-down' }}
 			>
-				<OpenLibrarySearch
+				<OpenLibrary
 					submitSearch={(vals: any) => console.log(vals)}
 					loading={loading}
 				/>

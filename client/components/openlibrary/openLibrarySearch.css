@@ -1,0 +1,9 @@
+.open-library-form {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+}
+
+.submit-btn {
+	margin: 0 auto;
+}
