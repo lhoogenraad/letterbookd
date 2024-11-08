@@ -21,7 +21,7 @@ export default function OpenLibrarySearch({ submitSearch, loading }: { submitSea
 
 	return (
 		<div>
-			<form onSubmit={formSubmit}>
+			<form onSubmit={form.onSubmit((vals: any) => formSubmit(vals))}>
 				<TextInput
 					label="Book title"
 					placeholder="I, claudius..."

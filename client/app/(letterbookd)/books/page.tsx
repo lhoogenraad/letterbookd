@@ -4,10 +4,12 @@ import api from 'util/api/api';
 import notify from 'util/notify/notify';
 import { useState, useEffect } from 'react';
 import BookTile from './(bookComponents)/bookTile/bookTile';
-import { Input, Select, Pagination } from '@mantine/core';
+import { Input, Select, Pagination, Modal } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import './books.css';
 import {IconSearch} from '@tabler/icons-react';
 import Link from 'next/link';
+import OpenLibrarySearch from 'components/openlibrary/openLibrarySearch';
 
 export default function Books() {
 	const PAGE_SIZE = 50;
@@ -16,6 +18,7 @@ export default function Books() {
 	const [loading, setLoading] = useState(false);
 	const [searchText, setSearchText] = useState('');
 	const [currPage, setCurrPage] = useState(1);
+	const [opened, { open, close }] = useDisclosure(true);
 
 	const getBooksCount = async () => {
 		await api.books.getBooksCount(searchText)
@@ -133,6 +136,20 @@ export default function Books() {
 					}}
 				/>
 			</div>
+
+			<Modal
+				opened={opened}
+				onClose={close}
+				title="Add book"
+				centered
+				size="85%"
+			transitionProps={{ transition: 'slide-down' }}
+			>
+				<OpenLibrarySearch 
+					submitSearch={(vals: any) => console.log(vals)}
+					loading={loading}
+				/>
+			</Modal>
 		</div>
 	)
 };
