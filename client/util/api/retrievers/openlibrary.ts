@@ -6,11 +6,11 @@ import api from '../axios';
 const searchForBookOL = async ({ title, author, publisher }) => {
 	const url = buildSearchOLURL({ title, author, publisher })
 	console.log(url)
-	// return await api.get(url).then((res) => res);
+	return await api.get(url).then((res) => res);
 };
 
 const buildSearchOLURL = ({ title, author, publisher }) => {
-	let url = `/books/search/open-lbrary`
+	let url = `/books/search/open-library`
 	let f = '?'
 	
 	if (title) {
