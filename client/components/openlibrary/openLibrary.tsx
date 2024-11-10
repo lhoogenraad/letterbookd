@@ -1,6 +1,7 @@
 "use client"
 
 import OpenLibrarySearchForm from "./openLibrarySearch";
+import OpenLibraryBook from "./openLibraryBook";
 import api from "../../util/api/api";
 import notify from 'util/notify/notify';
 import { useState } from "react";
@@ -8,12 +9,14 @@ import { useState } from "react";
 export default function OpenLibrary(){
 	const [loading, setLoading] = useState(false);
 	const [searchSuccess, setSearchSuccess] = useState(false);
+	const [olBook, setOLBook] = useState({});
 
-	const submit = async (values:any) => {
+	const submitSearch = async (values:any) => {
 		setLoading(true);
 		try {
 			const res = await api.openlibrary.searchForBookOL(values);
 			console.log(res.data);
+			setOLBook(res.data)
 			setSearchSuccess(true);
 		} catch (err) {
 			 notify.error({message: err.response?.data?.Message ?? err.message})
@@ -22,9 +25,13 @@ export default function OpenLibrary(){
 		}
 	}
 
+	const submitAdd = async (id: string) => {
+		console.log(id)
+	}
+
 	if (searchSuccess) {
-		return <div> great success </div>
+		return <OpenLibraryBook submitAdd={submitAdd} loading={loading} olBook={olBook} />
 	} else {
-		return <OpenLibrarySearchForm submitSearch={submit} loading={loading} />
+		return <OpenLibrarySearchForm submitSearch={submitSearch} loading={loading} />
 	}
 }
