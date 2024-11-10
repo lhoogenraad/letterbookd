@@ -16,25 +16,39 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-var OPEN_LIBRARY_EDITION_URL = "https://openlibrary.org/search.json?q="
+var OPEN_LIBRARY_EDITION_URL = "https://openlibrary.org/search.json?"
 var OPEN_LIBRARY_COVER_URL = "https://covers.openlibrary.org/b/olid/"
 var OPEN_LIBRARY_OLID_SEARCH_URL = "https://openlibrary.org/works/"
 
-func generateEditionSearchURL (searchValue string) string {
-	url := OPEN_LIBRARY_EDITION_URL + searchValue + "&limit=1"
-	url = strings.ReplaceAll(url, " ", "+")
-	return url
+func generateEditionSearchURL (title string, author string, publisher string) string {
+	req, err := http.NewRequest("GET", OPEN_LIBRARY_EDITION_URL, nil)
+	if err != nil {log.Print(err)}
+	
+	filter := req.URL.Query()
+	if title != "" {
+		filter.Add("title", title)
+	}
+
+	if author != "" {
+		filter.Add("author", author)
+	}
+
+	if publisher != "" {
+		filter.Add("publisher", publisher)
+	}
+    req.URL.RawQuery = filter.Encode()
+
+	return req.URL.String()
 }
 
 func generateCoverSearchURL (coverString string) string {
-	url := OPEN_LIBRARY_COVER_URL + coverString + "-L.jpg"
-	url = strings.ReplaceAll(url, " ", "+")
-	return url
+	searchURL := OPEN_LIBRARY_COVER_URL + coverString + "-L.jpg"
+	return searchURL
 }
 
 func generateOLIDSearchURL (olId string) string {
-	url := OPEN_LIBRARY_OLID_SEARCH_URL + olId + ".json"
-	return url
+	searchURL := OPEN_LIBRARY_OLID_SEARCH_URL + olId + ".json"
+	return searchURL
 }
 
 func retrieveCoverImage(olCoverId string, save bool) (string, error){
@@ -54,25 +68,25 @@ func retrieveCoverImage(olCoverId string, save bool) (string, error){
 	return "covers/" + olCoverId + ".jpg", nil
 }
 
-func SearchOpenLibrary (search string) (resources.BookDataOL, error) {
+func SearchOpenLibrary (title string, author string, publisher string) (resources.BookDataOL, error) {
 	var book resources.BookDataOL
-	book, err := queryOpenLibraryForFirstBook(search)
+	book, err := queryOpenLibraryForEditions(title, author, publisher)
 	if err != nil {return book, err}
 
 	path, err := retrieveCoverImage(book.CoverEdition, false)
 	if err != nil {return book, err}
 
 	book.CoverURL = path
-	// err = utils.SaveBook(book)
-	if err != nil {return book, err}
 
 	return book, nil
 }
 
 
-func queryOpenLibraryForFirstBook (search string) (resources.BookDataOL, error) {
+func queryOpenLibraryForEditions (title string, author string, publisher string) (resources.BookDataOL, error) {
 	var firstBook resources.BookDataOL
-	resp, err := http.Get(generateEditionSearchURL(search))
+	fmt.Println(title, author, publisher)
+	fmt.Println(generateEditionSearchURL(title, author, publisher))
+	resp, err := http.Get(generateEditionSearchURL(title, author, publisher))
 	if err != nil {
 		return firstBook, err
 	}
@@ -222,7 +236,7 @@ open library ID
 func olIdExists (olId string) bool {
 	query := `SELECT id FROM books WHERE ol_id LIKE ?`
 	filter := "%" + olId + "%"
-	
+
 	var id int
 	err := tools.DB.QueryRow(query, filter).Scan(&id)
 
