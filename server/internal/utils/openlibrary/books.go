@@ -54,13 +54,13 @@ func generateOLIDSearchURL (olId string) string {
 func retrieveCoverImage(olCoverId string, save bool) (string, error){
 	if olCoverId == "" {return "", nil}
 	path := "/home/leon/Documents/letterbookd/client/public/covers/" + olCoverId + ".jpg"
-	fmt.Printf("Uploading a cover url!\nolCoverId: %s\tSave Path: %s\n", olCoverId, path)
 	url := generateCoverSearchURL(olCoverId)
 	resp, err := http.Get(url)
 	if err != nil {return path, err}
 	body := resp.Body
 
 	if save {
+		fmt.Printf("Uploading a cover url!\nolCoverId: %s\tSave Path: %s\n", olCoverId, path)
 		err = saveCoverImage(body, path)
 		if err != nil {return path, err}
 	}
