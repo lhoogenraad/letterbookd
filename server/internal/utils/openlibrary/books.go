@@ -65,7 +65,7 @@ func retrieveCoverImage(olCoverId string, save bool) (string, error){
 		if err != nil {return path, err}
 	}
 
-	return "covers/" + olCoverId + ".jpg", nil
+	return url, nil
 }
 
 func SearchOpenLibrary (title string, author string, publisher string) (resources.BookDataOL, error) {
@@ -77,7 +77,7 @@ func SearchOpenLibrary (title string, author string, publisher string) (resource
 	if err != nil {return book, err}
 
 	book.CoverURL = path
-
+	fmt.Println(book.CoverURL)
 	return book, nil
 }
 

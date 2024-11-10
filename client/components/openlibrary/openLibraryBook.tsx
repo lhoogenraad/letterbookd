@@ -33,6 +33,7 @@ export default function OpenLibraryBook({ olBook, submitAdd, loading }) {
 				<Image
 					src={olBook.CoverURL}
 					h='300'
+					loading="eager"
 					w='200'
 					fallbackSrc="https://placehold.co/600x400?text=Placeholder"
 				/>
