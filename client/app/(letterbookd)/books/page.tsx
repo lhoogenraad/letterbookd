@@ -4,10 +4,12 @@ import api from 'util/api/api';
 import notify from 'util/notify/notify';
 import { useState, useEffect } from 'react';
 import BookTile from './(bookComponents)/bookTile/bookTile';
-import { Input, Select, Pagination } from '@mantine/core';
+import { Input, Select, Pagination, Modal, Button } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import './books.css';
-import {IconSearch} from '@tabler/icons-react';
+import { IconSearch } from '@tabler/icons-react';
 import Link from 'next/link';
+import OpenLibrary from 'components/openlibrary/openLibrary';
 
 export default function Books() {
 	const PAGE_SIZE = 50;
@@ -16,11 +18,12 @@ export default function Books() {
 	const [loading, setLoading] = useState(false);
 	const [searchText, setSearchText] = useState('');
 	const [currPage, setCurrPage] = useState(1);
+	const [opened, { open, close }] = useDisclosure(false);
 
 	const getBooksCount = async () => {
 		await api.books.getBooksCount(searchText)
-		.then((res) => setPagCount(res.data / PAGE_SIZE))
-		.catch((err) => console.error(err))
+			.then((res) => setPagCount(res.data / PAGE_SIZE))
+			.catch((err) => console.error(err))
 	};
 
 	const getBooksList = async (page: number, pageSize: number) => {
@@ -49,31 +52,42 @@ export default function Books() {
 	const filterJSX = (
 		<div>
 			<div className="books-filters-container">
-				<Input
-					variant='filled'
-					className='books-filters-search'
-					placeholder='Search books...'
-					value={searchText}
-					rightSectionPointerEvents="all"
-					rightSection = {
-						<IconSearch 
-							className="search-button"
-							aria-label='Search'
-							color="#e64831"
-							onClick = {() => init()}
-							style={{ 
-								display: searchText ? undefined : 'none',
-								color: "red"
-							}}
-						/>
-					}
-					onChange={(ev) => {
-						return setSearchText(ev.currentTarget.value);
-					}}
-				></Input>
+				<div className="books-search-container">
+					<Input
+						variant='filled'
+						className='books-filters-search'
+						placeholder='Search books...'
+						value={searchText}
+						rightSectionPointerEvents="all"
+						rightSection={
+							<IconSearch
+								className="search-button"
+								aria-label='Search'
+								color="#e64831"
+								onClick={() => init()}
+								style={{
+									display: searchText ? undefined : 'none',
+									color: "red"
+								}}
+							/>
+						}
+						onChange={(ev) => {
+							return setSearchText(ev.currentTarget.value);
+						}}
+					/>
+
+					<Button
+						style={{ fontSize: "0.6rem", maxWidth: "12rem" }}
+						color="secondary.0"
+						onClick={open}
+						variant="subtle"
+					>
+						Can't find your book?
+					</Button>
+				</div>
 
 				<div className='books-filters-select-container'>
-					<Select 
+					<Select
 						clearable
 						disabled
 						label='Genre'
@@ -113,10 +127,10 @@ export default function Books() {
 
 			<div className="books-list-container">
 				{books.map((book: any, index: number) => (
-					<Link href={{pathname: `/books/${book.Id}`}}>
-					<div className="book-tile" key={index}>
-						<BookTile book={book} />
-					</div>
+					<Link href={{ pathname: `/books/${book.Id}` }}>
+						<div className="book-tile" key={index}>
+							<BookTile book={book} />
+						</div>
 					</Link>
 				))}
 			</div>
@@ -133,6 +147,17 @@ export default function Books() {
 					}}
 				/>
 			</div>
+
+			<Modal
+				opened={opened}
+				onClose={close}
+				title="Add book"
+				centered
+				size="50%"
+				transitionProps={{ transition: 'slide-down' }}
+			>
+				<OpenLibrary close={close}/>
+			</Modal>
 		</div>
 	)
 };
