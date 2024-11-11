@@ -77,15 +77,12 @@ func SearchOpenLibrary (title string, author string, publisher string) (resource
 	if err != nil {return book, err}
 
 	book.CoverURL = path
-	fmt.Println(book.CoverURL)
 	return book, nil
 }
 
 
 func queryOpenLibraryForEditions (title string, author string, publisher string) (resources.BookDataOL, error) {
 	var firstBook resources.BookDataOL
-	fmt.Println(title, author, publisher)
-	fmt.Println(generateEditionSearchURL(title, author, publisher))
 	resp, err := http.Get(generateEditionSearchURL(title, author, publisher))
 	if err != nil {
 		return firstBook, err
@@ -195,7 +192,8 @@ func convertOpenLibaryEditionToBook(res resources.OpenLibraryEdition) resources.
 	} else {
 		parsedBook.CoverEdition = res.CoverEditionKey
 	}
-	parsedBook.Synopsis = res.Description
+	parsedBook.Synopsis = res.Description.Value
+	fmt.Println("Parsed Book:", parsedBook)
 	return parsedBook
 }
 

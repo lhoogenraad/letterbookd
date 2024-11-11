@@ -6,7 +6,7 @@ import api from "../../util/api/api";
 import notify from 'util/notify/notify';
 import { useState } from "react";
 
-export default function OpenLibrary(){
+export default function OpenLibrary({close}){
 	const [loading, setLoading] = useState(false);
 	const [searchSuccess, setSearchSuccess] = useState(false);
 	const [olBook, setOLBook] = useState({});
@@ -26,7 +26,16 @@ export default function OpenLibrary(){
 	}
 
 	const submitAdd = async (id: string) => {
-		console.log(id)
+		setLoading(true);
+		try {
+			const res = await api.openlibrary.attemptToAddBookFromOL({ id });
+			notify.info({message: "Successfully added " + res.data.Title});
+			close();
+		} catch (err) {
+			 notify.error({message: err.response?.data?.Message ?? err.message})
+		} finally {
+			setLoading(false);
+		}
 	}
 
 	if (searchSuccess) {

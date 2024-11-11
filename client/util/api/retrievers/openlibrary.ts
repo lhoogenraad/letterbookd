@@ -31,6 +31,11 @@ const buildSearchOLURL = ({ title, author, publisher }) => {
 	return url
 }
 
+const attemptToAddBookFromOL = async ({id}) => {
+	return await api.post("/books/search/open-library/" + id).then((res) => res);
+}
+
 export default {
 	searchForBookOL,
+	attemptToAddBookFromOL,
 }

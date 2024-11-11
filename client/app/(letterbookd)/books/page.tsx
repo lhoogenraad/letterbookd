@@ -18,7 +18,7 @@ export default function Books() {
 	const [loading, setLoading] = useState(false);
 	const [searchText, setSearchText] = useState('');
 	const [currPage, setCurrPage] = useState(1);
-	const [opened, { open, close }] = useDisclosure(true);
+	const [opened, { open, close }] = useDisclosure(false);
 
 	const getBooksCount = async () => {
 		await api.books.getBooksCount(searchText)
@@ -153,13 +153,10 @@ export default function Books() {
 				onClose={close}
 				title="Add book"
 				centered
-				size="85%"
+				size="50%"
 				transitionProps={{ transition: 'slide-down' }}
 			>
-				<OpenLibrary
-					submitSearch={(vals: any) => console.log(vals)}
-					loading={loading}
-				/>
+				<OpenLibrary close={close}/>
 			</Modal>
 		</div>
 	)

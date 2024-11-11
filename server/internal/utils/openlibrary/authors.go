@@ -14,23 +14,28 @@ var OPEN_LIBRARY_AUTHOR_SEARCH_URL = "https://openlibrary.org/authors/"
 
 func GetAuthorId (authorOlId string) (int, error) {
 	var author resources.Author
-
+	fmt.Println(1)
 	// Check if author already exists based on given author Open lib ID key
 	author, exists, _ := getAuthorFromDB(authorOlId)
 	if exists == true {	return author.Id, nil } 
 
+	fmt.Println(2)
 	author, err := getAuthorFromOL(authorOlId)
 	if err != nil {return author.Id, err}
 
+	fmt.Println(3)
 	// Insert author and retrive it's ID
 	err = saveAuthor(author, authorOlId)
 	if err != nil {return author.Id, err}
+	fmt.Println(4)
 	author, _, err = getAuthorFromDB(authorOlId)
 	if err != nil {return author.Id, err}
+	fmt.Println(5)
 	return author.Id, nil
 }
 
 func getAuthorFromDB(authorOlId string) (resources.Author, bool, error) {
+	fmt.Println("Author ID:", authorOlId)
 	var author resources.Author
 	query := `SELECT id FROM authors WHERE ol_id LIKE ?`
 	filter := "%" + authorOlId + "%"
