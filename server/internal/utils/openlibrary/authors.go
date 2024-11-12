@@ -14,6 +14,7 @@ var OPEN_LIBRARY_AUTHOR_SEARCH_URL = "https://openlibrary.org/authors/"
 
 func GetAuthorId (authorOlId string) (int, error) {
 	var author resources.Author
+	fmt.Println(authorOlId)
 	fmt.Println(1)
 	// Check if author already exists based on given author Open lib ID key
 	author, exists, _ := getAuthorFromDB(authorOlId)

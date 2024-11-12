@@ -15,6 +15,7 @@ type OpenLibraryEdition struct {
 	Description struct {
 		Value string `json:"value"`
 	}
+	Covers []int `json:"covers"`
 	CoverEditionKey string `json:"cover_edition_key"`
 	Cover_Edition struct {
 		Key string `json:"key"`
