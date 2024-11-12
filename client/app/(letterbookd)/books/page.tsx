@@ -43,6 +43,10 @@ export default function Books() {
 		await getBooksList(1, PAGE_SIZE);
 	}
 
+	const searchFilterInput = (event: any) => {
+		console.log(event.key)
+		if (event.key === "Enter") init();
+	}
 
 	useEffect(() => {
 		init();
@@ -54,11 +58,13 @@ export default function Books() {
 			<div className="books-filters-container">
 				<div className="books-search-container">
 					<Input
+						disabled={loading}
 						variant='filled'
 						className='books-filters-search'
 						placeholder='Search books...'
 						value={searchText}
 						rightSectionPointerEvents="all"
+						onKeyDown={searchFilterInput}
 						rightSection={
 							<IconSearch
 								className="search-button"

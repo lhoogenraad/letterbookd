@@ -7,10 +7,11 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"server/internal/models"
 	"server/internal/resources"
 	"server/internal/tools"
 	"server/internal/utils"
-	"server/internal/models"
+	"strconv"
 	"strings"
 
 	log "github.com/sirupsen/logrus"
@@ -65,7 +66,11 @@ func retrieveCoverImage(olCoverId string, save bool) (string, error){
 		if err != nil {return path, err}
 	}
 
-	return url, nil
+	if save {
+		return "covers/" + olCoverId + ".jpg", nil
+	} else {
+		return url, nil
+	}
 }
 
 func SearchOpenLibrary (title string, author string, publisher string) (resources.BookDataOL, error) {
@@ -120,6 +125,8 @@ func searchOpenLibraryForOLID (olId string) (resources.BookDataOL, error) {
 	}
 
 	firstBook, err = parseOLWorksServerResponse(body)
+	if err != nil {return firstBook, err}
+
 	firstBook.CoverURL, err = retrieveCoverImage(firstBook.CoverEdition, true)
 	if err != nil {
 		log.Error(err)
@@ -161,15 +168,23 @@ func parseOLWorksServerResponse (body []byte) (resources.BookDataOL, error) {
 func convertOpenLibaryEditionToBook(res resources.OpenLibraryEdition) resources.BookDataOL {
 	var parsedBook resources.BookDataOL
 	parsedBook.Title = res.Title
+	fmt.Println("1")
+	fmt.Println(res)
+	fmt.Println(res.AuthorKey, res.Authors)
 	// Parse author ID
 	if len(res.AuthorKey) > 0 {
+		fmt.Println("none")
 		parsedBook.Author = res.Author_Name[0]
 		parsedBook.AuthorOLId = res.AuthorKey[0]
 	} else if len(res.Authors) > 0 {
+		fmt.Println("a")
 		authorIdPathSplit := strings.Split(res.Authors[0].Author.Key, "/")
+		fmt.Println("b")
 		parsedBook.AuthorOLId = authorIdPathSplit[len(authorIdPathSplit)-1]
-	}
+		fmt.Println("c")
+	} 
 
+	fmt.Println("2")
 	// Parse publish date
 	if len(res.PublishDate) > 0{
 		pub, err := utils.ParseStringToTime(res.PublishDate[0])
@@ -178,15 +193,19 @@ func convertOpenLibaryEditionToBook(res resources.OpenLibraryEdition) resources.
 		} else { parsedBook.Published = pub }
 	}
 
+	fmt.Println("3")
 	// Grab first edition key available
 	if len(res.EditionKey) > 0 {
 		parsedBook.OpenLibraryKey = res.EditionKey[0]
 	}
 
+	fmt.Println("4")
 	splitWorkID := strings.Split(res.OlID, "/")
 	parsedBook.OlID = splitWorkID[len(splitWorkID)-1]
-
-	if res.Cover_Edition.Key != "" {
+	fmt.Println("res.Covers:", res.Covers)
+	if len(res.Covers) > 0 {
+		parsedBook.CoverEdition = "OL" + strconv.Itoa(res.Covers[0]) + "M"
+	}else if res.Cover_Edition.Key != "" {
 		splitCoverEditionKey := strings.Split(res.Cover_Edition.Key, "/")
 		parsedBook.CoverEdition = splitCoverEditionKey[ len(splitCoverEditionKey)-1 ]
 	} else {
@@ -217,9 +236,11 @@ func UploadBookFromOpenLibrary (olId string) (resources.BookDataOL, error) {
 	book, err := searchOpenLibraryForOLID(olId)
 	if err != nil {return book, err}
 
+	fmt.Println("Hello?")
 	book.AuthorId, err = GetAuthorId(book.AuthorOLId)
 	if err != nil {return book, err}
 
+	fmt.Println("Parsed book:", book)
 	err = models.UploadBook(book)
 	if err != nil {return book, err}
 
