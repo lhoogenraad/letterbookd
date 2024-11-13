@@ -7,8 +7,8 @@ const info = ({message, title="Notification"}) => {
 		title,
 		color: 'blue',
 		style: {
-			backgroundColor: 'whitesmoke',
-			color: 'black',
+			backgroundColor: 'primary.0',
+			color: 'text.0',
 			width: '100%',
 		}
 	})
@@ -21,8 +21,8 @@ const error = ({message="Unexpected error occured", title="Error"}) => {
 		title,
 		color: 'red',
 		style: {
-			backgroundColor: 'whitesmoke',
-			color: 'black',
+			backgroundColor: 'primary.0',
+			color: 'text.0',
 			width: '100%',
 		}
 	})

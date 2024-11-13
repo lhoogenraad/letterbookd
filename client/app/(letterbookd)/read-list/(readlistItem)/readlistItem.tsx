@@ -68,7 +68,7 @@ export default function ReadListItem({ item, removeItem }) {
 						:
 						null
 				}
-				<Button variant='subtle' color="secondary.0" onClick={setDeleteReadlistItemModal.open}>Remove book</Button>
+				<Button variant='subtle' color="red" onClick={setDeleteReadlistItemModal.open}>Remove book</Button>
 				</div>
 
 				<Modal
