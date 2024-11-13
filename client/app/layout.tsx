@@ -24,6 +24,18 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
 				"#121212",
 				"#121212",
 			],
+			'elevate': [
+				'rgba(90, 90, 90, 0.165)',
+				'rgba(80, 80, 80, 0.165)',
+				'rgba(70, 70, 70, 0.165)',
+				'rgba(60, 60, 60, 0.165)',
+				'rgba(50, 50, 50, 0.165)',
+				'rgba(40, 40, 40, 0.165)',
+				'rgba(30, 30, 30, 0.165)',
+				'rgba(20, 20, 20, 0.165)',
+				'rgba(10, 10, 10, 0.165)',
+				'rgba(5, 5, 5, 0.165)',
+			],
 			'secondary': [
 				"#f6f6f3",
 				"#eaeae8",

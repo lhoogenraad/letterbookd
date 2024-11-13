@@ -3,8 +3,8 @@
 	max-width: 750px;
 	margin: 20vh auto;
 	padding: 4rem;
-	box-shadow: var(--mantine-color-primary-6) 0px 3px 8px;
-	background-color: var(--mantine-color-primary-8);
+	box-shadow: var(--mantine-color-elevate-3) 0px 0px 20px;
+	background-color: var(--mantine-color-elevate-0);
 	color: var(--mantine-color-text-0);
 }
 
