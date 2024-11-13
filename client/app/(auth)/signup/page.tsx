@@ -100,7 +100,7 @@ function Signup() {
 				</Group>
 				{loading}
 				<Group justify="flex-end" mt="md">
-					<Button loading={loading} loaderProps={{ type: 'bars' }} type="submit">Sign up</Button>
+					<Button color="secondary.8" loading={loading} loaderProps={{ type: 'bars' }} type="submit">Sign up</Button>
 				</Group>
 
 				<div className='switch-page-text'>

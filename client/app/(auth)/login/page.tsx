@@ -74,7 +74,7 @@ function LoginPage() {
 				/>
 
 				<Group justify="flex-end" mt="md">
-					<Button loading={loading} type="submit">Login</Button>
+					<Button color="secondary.8" loaderProps={{ type: 'bars' }} loading={loading} type="submit">Login</Button>
 				</Group>
 
 				<div className='switch-page-text'>
