@@ -25,16 +25,16 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
 				"#183540"
 			],
 			'secondary': [
-				"#e64831",
-				"#ffd7d2",
-				"#f7afa5",
-				"#ef8375",
-				"#e95e4c",
-				"#e64631",
-				"#e53923",
-				"#cc2b17",
-				"#b62412",
-				"#a0190c"
+				"#f6f6f3",
+				"#eaeae8",
+				"#d3d4cd",
+				"#babdae",
+				"#a5a993",
+				"#989d82",
+				"#919778",
+				"#7d8366",
+				"#6f7459",
+				"#5e6447"
 			],
 			'tertiary': [
 				"#874f41",
@@ -65,12 +65,12 @@ export default function RootLayout({ children, }: { children: React.ReactNode })
 
 	return (
 		<html lang="en">
-			<body className='body'>
-				<MantineProvider theme={theme} defaultColorScheme="dark">
-					<Notifications position="top-center" limit={5} />
-					{children}
-				</MantineProvider>
-			</body>
+		<body className='body'>
+		<MantineProvider theme={theme} defaultColorScheme="dark">
+		<Notifications position="top-center" limit={5} />
+		{children}
+		</MantineProvider>
+		</body>
 		</html>
 	)
 }

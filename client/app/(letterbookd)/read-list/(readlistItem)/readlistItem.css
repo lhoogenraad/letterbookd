@@ -3,7 +3,7 @@
 	padding: 1rem;
 	border-top-left-radius: 15px;
 	border-bottom-right-radius: 15px;
-	background-color: var(--mantine-color-primary-8);
+	background-color: var(--mantine-color-secondary-9);
 }
 
 .readlist-item-header-container{
@@ -32,7 +32,7 @@
 }
 
 .readlist-status:hover{
-	background-color: #eee;
+	background-color: var(--mantine-color-primary-0);
 	transition: 0.3s;
 }
 
@@ -44,8 +44,13 @@
 }
 
 .title:hover{
-	color: white;
-	background-color: black;
+	background-color: var(--mantine-color-secondary-8);
+	transition: 0.1s;
+}
+
+.title:active{
+	background-color: var(--mantine-color-secondary-6);
+	color: var(--mantine-color-tertiary-7);
 	transition: 0.1s;
 }
 
