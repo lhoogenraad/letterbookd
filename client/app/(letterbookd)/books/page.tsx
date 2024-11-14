@@ -133,7 +133,10 @@ export default function Books() {
 
 			<div className="books-list-container">
 				{books.map((book: any, index: number) => (
-					<Link href={{ pathname: `/books/${book.Id}` }}>
+					<Link 
+						href={{ pathname: `/books/${book.Id}` }}
+						style={{textDecoration: "inherit", color: "inherit"}}
+					>
 						<div className="book-tile" key={index}>
 							<BookTile book={book} />
 						</div>
