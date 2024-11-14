@@ -8,6 +8,7 @@ type ReadListItem struct {
 	BookSynopsis string
 	Status string
 	UserReviewed bool
+	CoverURL string
 }
 
 type ReadListModReq struct {
