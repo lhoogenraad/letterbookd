@@ -19,7 +19,8 @@ func GetReadListItems(userId int) ([]resources.ReadListItem, error) {
 		books.name,
 		IFNULL(books.synopsis, ''),
 		read_list_items.status,
-		reviews.id IS NOT NULL
+		reviews.id IS NOT NULL,
+		IFNULL(books.cover_url, '')
 		FROM read_list_items
 		JOIN books
 			ON books.id = read_list_items.book_id
@@ -47,6 +48,7 @@ func GetReadListItems(userId int) ([]resources.ReadListItem, error) {
 			&item.BookSynopsis,
 			&item.Status,
 			&item.UserReviewed,
+			&item.CoverURL,
 		); err != nil {
 			return readListItems, err
 		}
