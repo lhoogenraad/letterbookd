@@ -2,7 +2,8 @@
 	padding: 1.5rem;
 
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
+	gap: 1rem;
 
 	white-space: nowrap;
 	overflow: hidden;

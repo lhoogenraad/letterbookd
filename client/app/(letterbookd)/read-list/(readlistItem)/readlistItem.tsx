@@ -29,7 +29,7 @@ export default function ReadListItem({ item, removeItem }) {
 	}
 
 	return (
-		<div className="book-tile-container">
+		<div className="readlist-item-container">
 			<div className="readlist-item-header-container">
 				<div className="img">
 					<Image
