@@ -46,11 +46,16 @@
 	margin: 5px 0;
 }
 
-.book-tile-author {
-	font-weight: light;
-	font-size: 0.9rem;
+.author-date-container {
+	display: flex;
+	font-size: 0.8rem;
+	flex-direction: row;
+	gap: 1rem;
+	margin: 10px 0;
 }
 
-.book-tile-published {
-	font-size: 0.9rem;
+.book-tile-synopsis {
+	width: 80%;
+	text-wrap: wrap;
+	font-size: 1rem;
 }
