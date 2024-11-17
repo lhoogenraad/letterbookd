@@ -1,11 +1,9 @@
 .book-tile-container {
-	padding: 0.5rem;
+	padding: 1.5rem;
 
 	display: flex;
 	flex-direction: column;
-	gap: 5px;
 
-	text-align: center;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -38,18 +36,15 @@
 }
 
 
-.book-tile-img {
-	margin: auto;
-}
-
 .book-tile-title {
 	font-weight: bold;
-	font-size: 1.2rem;
+	font-size: 1.0rem;
+	margin: 5px 0;
 }
 
 .book-tile-author {
 	font-weight: light;
-	font-size: 0.9rem;
+	font-size: 0.7rem;
 }
 
 .book-tile-published {
