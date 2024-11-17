@@ -34,7 +34,7 @@ export default function ReadListItem({ item, removeItem }) {
 				<div className="img">
 					<Image
 						src={"http://localhost:3000/" + item.CoverURL}
-						h='6rem'
+						w='8rem'
 						radius="md"
 						fallbackSrc="https://placehold.co/600x400?text=Placeholder"
 					/>

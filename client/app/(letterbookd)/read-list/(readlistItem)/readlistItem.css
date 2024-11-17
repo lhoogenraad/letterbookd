@@ -1,5 +1,4 @@
 .readlist-item-container{
-	max-height: 250px;
 	border-top-left-radius: 15px;
 	border-bottom-right-radius: 15px;
 	background-color: var(--mantine-color-secondary-9);
