@@ -1,11 +1,10 @@
 .book-tile-container {
-	padding: 0.5rem;
+	padding: 1.5rem;
 
 	display: flex;
-	flex-direction: column;
-	gap: 5px;
+	flex-direction: row;
+	gap: 1rem;
 
-	text-align: center;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -23,35 +22,40 @@
 
 }
 
-.book-tile-container:hover {
+.select-cursor:hover {
 	/* box-shadow: var(--mantine-color-tertiary-1) 0px 3px 5px 1px, var(--mantine-color-tertiary-1) 0px 3px 7px 3px; */
 	transition: 0.2s;
-	cursor: pointer;
 	background-color: var(--mantine-color-elevate-2);
 	box-shadow: var(--mantine-color-elevate-0) 0px 0px 15px;
 }
 
-.book-tile-container:active {
+.select-cursor:active {
 	box-shadow: var(--mantine-color-tertiary-5) 0px 3px 12px -2px,  var(--mantine-color-secondary-0) 0px 3px 7px -3px;
 	border: 1px solid var(--mantine-color-tertiary-5);
 	transition: 0.2s;
 }
 
-
-.book-tile-img {
-	margin: auto;
+.select-cursor {
+	cursor: pointer;
 }
+
 
 .book-tile-title {
 	font-weight: bold;
 	font-size: 1.2rem;
+	margin: 5px 0;
 }
 
-.book-tile-author {
-	font-weight: light;
-	font-size: 0.9rem;
+.author-date-container {
+	display: flex;
+	font-size: 0.8rem;
+	flex-direction: row;
+	gap: 1rem;
+	margin: 10px 0;
 }
 
-.book-tile-published {
-	font-size: 0.7rem;
+.book-tile-synopsis {
+	width: 80%;
+	text-wrap: wrap;
+	font-size: 1rem;
 }
