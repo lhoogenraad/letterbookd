@@ -1,6 +1,7 @@
 "use client";
 
 import './readlistItem.css';
+import '../../books/(bookComponents)/bookTile/bookTile.css';
 import { Image, Select, Loader, Modal, Button } from '@mantine/core';
 import Link from 'next/link';
 import api from 'util/api/api';
@@ -28,7 +29,7 @@ export default function ReadListItem({ item, removeItem }) {
 	}
 
 	return (
-		<div className="readlist-item-container">
+		<div className="book-tile-container">
 			<div className="readlist-item-header-container">
 				<div className="img">
 					<Image

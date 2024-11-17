@@ -3,7 +3,7 @@ import { Card, Image } from '@mantine/core';
 
 export default function BookTile({book}) {
 	return (
-		<Card className="book-tile-container">
+		<Card className="book-tile-container select-cursor">
 			<Image 
 				className='book-tile-img'
 				src={book.CoverURL}
