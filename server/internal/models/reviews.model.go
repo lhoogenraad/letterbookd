@@ -77,7 +77,7 @@ func UpdateReview(userId int, reviewId int, req resources.UpdateReviewBody) (err
 	return nil, -1
 }
 
-func GetBookReviews(bookId int) ( []resources.ReviewData, error ) {
+func GetBookReviews(bookId int, userId int) ( []resources.ReviewData, error ) {
 	var selectQueryString string = `
 	SELECT 
 	reviews.id as review_id,
@@ -87,7 +87,7 @@ func GetBookReviews(bookId int) ( []resources.ReviewData, error ) {
 	reviews.rating,
 	COUNT(review_comments.id) as num_comments,
 	COUNT(DISTINCT(review_likes.id)) as num_likes,
-    MAX(CASE WHEN review_likes.user_id = :given_user_id THEN 1 ELSE 0 END) AS has_user_liked
+    MAX(CASE WHEN review_likes.user_id = ? THEN 1 ELSE 0 END) AS has_user_liked
 	FROM reviews
 	JOIN users
 		ON users.id = reviews.user_id
@@ -106,7 +106,8 @@ func GetBookReviews(bookId int) ( []resources.ReviewData, error ) {
 		reviews.rating;
 	`
 
-	rows, err := tools.DB.Query(selectQueryString, bookId)
+	rows, err := tools.DB.Query(selectQueryString, userId, bookId)
+
 
 	if err != nil {
 		log.Error(err)
@@ -126,6 +127,7 @@ func GetBookReviews(bookId int) ( []resources.ReviewData, error ) {
 			&review.Rating,
 			&review.NumComments,
 			&review.NumLikes,
+			&review.LikedBy,
 		)
 
 		if err != nil {

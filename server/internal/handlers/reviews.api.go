@@ -99,6 +99,14 @@ func UpdateReview (w http.ResponseWriter, r *http.Request) {
 func GetBookReviews (w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
+	// Grab user Id from claims
+	claims, ok := utils.GetClaims(r)
+	if !ok {
+		log.Error("Something went wrong grabbing token claim info")
+		api.InternalErrorHandler(w)
+	}
+	userId := int(claims["userid"].(float64))
+
 	bookIdParam := utils.GetParam(r, "bookId")
 	bookId, err := strconv.Atoi(bookIdParam)
 
@@ -107,15 +115,7 @@ func GetBookReviews (w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	reviews, err := models.GetBookReviews(bookId)
-
-	// Grab user Id from claims
-	claims, ok := utils.GetClaims(r)
-	if !ok {
-		log.Error("Something went wrong grabbing token claim info")
-		api.InternalErrorHandler(w)
-	}
-	userId := int(claims["userid"].(float64))
+	reviews, err := models.GetBookReviews(bookId, userId)
 
 	// For each review, check if the owner is the current requester.
 	// If they are, set review.OwnedBy to true!
