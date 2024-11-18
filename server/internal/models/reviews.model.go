@@ -86,7 +86,8 @@ func GetBookReviews(bookId int) ( []resources.ReviewData, error ) {
 	reviews.description,
 	reviews.rating,
 	COUNT(review_comments.id) as num_comments,
-	COUNT(DISTINCT(review_likes.id)) as num_likes
+	COUNT(DISTINCT(review_likes.id)) as num_likes,
+    MAX(CASE WHEN review_likes.user_id = :given_user_id THEN 1 ELSE 0 END) AS has_user_liked
 	FROM reviews
 	JOIN users
 		ON users.id = reviews.user_id
