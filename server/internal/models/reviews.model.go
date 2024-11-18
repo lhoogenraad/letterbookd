@@ -85,13 +85,16 @@ func GetBookReviews(bookId int) ( []resources.ReviewData, error ) {
 	CONCAT( users.first_name, ' ', users.last_name) as user_name,
 	reviews.description,
 	reviews.rating,
-	COUNT(review_comments.id) as num_comments
+	COUNT(review_comments.id) as num_comments,
+	COUNT(review_likes.id) as num_likes
 	FROM reviews
 	JOIN users
 	ON users.id = reviews.user_id
 	LEFT JOIN review_comments
 		ON review_comments.review_id=reviews.id
 		AND review_comments.archived = false
+	LEFT JOIN review_likes
+		ON review_likes.review_id=reviews.id
 	WHERE reviews.book_id = ?
 
 	GROUP BY 
@@ -121,6 +124,7 @@ func GetBookReviews(bookId int) ( []resources.ReviewData, error ) {
 			&review.Description,
 			&review.Rating,
 			&review.NumComments,
+			&review.NumLikes,
 		)
 
 		if err != nil {
