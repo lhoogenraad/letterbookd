@@ -91,6 +91,17 @@ CREATE TABLE review_comments (
 );
 
 
+CREATE TABLE review_likes (
+	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	user_id int NOT NULL,
+	review_id int NOT NULL,
+
+	FOREIGN KEY (user_id) REFERENCES users(id),
+	FOREIGN KEY (review_id) REFERENCES reviews(id)
+);
+
+CREATE INDEX review_likes_review_id_idx ON review_likes (review_id);
+CREATE INDEX review_likes_user_id_idx ON review_likes (user_id);
 
 -- Insert default test data
 INSERT INTO authors
