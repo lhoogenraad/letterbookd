@@ -86,10 +86,10 @@ func GetBookReviews(bookId int) ( []resources.ReviewData, error ) {
 	reviews.description,
 	reviews.rating,
 	COUNT(review_comments.id) as num_comments,
-	COUNT(review_likes.id) as num_likes
+	COUNT(DISTINCT(review_likes.id)) as num_likes
 	FROM reviews
 	JOIN users
-	ON users.id = reviews.user_id
+		ON users.id = reviews.user_id
 	LEFT JOIN review_comments
 		ON review_comments.review_id=reviews.id
 		AND review_comments.archived = false
