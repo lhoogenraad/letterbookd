@@ -97,6 +97,7 @@ CREATE TABLE review_likes (
 	review_id int NOT NULL,
 
 	FOREIGN KEY (user_id) REFERENCES users(id),
+	CONSTRAINT unique_user_and_review_id UNIQUE (user_id, review_id),
 	FOREIGN KEY (review_id) REFERENCES reviews(id)
 );
 
