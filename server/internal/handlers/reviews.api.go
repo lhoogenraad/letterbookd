@@ -181,7 +181,7 @@ func AddReviewLike(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusAccepted) 
-	json.NewEncoder(w).Encode(`Review updated successfully`)
+	json.NewEncoder(w).Encode(`Liked review successfully`)
 }
 
 
@@ -222,5 +222,5 @@ func RemoveReviewLike(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusAccepted) 
-	json.NewEncoder(w).Encode(`Review updated successfully`)
+	json.NewEncoder(w).Encode(`Unliked review successfully`)
 }
