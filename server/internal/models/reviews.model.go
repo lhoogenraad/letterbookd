@@ -21,6 +21,9 @@ func handleCreateReviewErr(err error) (error, int) {
 	} else if strings.Contains(fmt.Sprint(err), "user_book_review_unique") {
 		returnErr = errors.New("Sorry, it seems you already have made a review for this book. You may only leave one review per book.")
 		status = 400
+	} else if strings.Contains(fmt.Sprint(err), "") {
+		returnErr = nil
+		status = 0
 	}
 	return returnErr, status
 }
@@ -76,6 +79,39 @@ func UpdateReview(userId int, reviewId int, req resources.UpdateReviewBody) (err
 
 	return nil, -1
 }
+
+var addLikeQuery string = `
+	INSERT INTO review_likes (user_id, review_id)
+	VALUES (?, ?);
+`
+
+var removeLikeQuery string = `
+	DELETE FROM review_likes 
+	WHERE user_id=? AND review_id=?;
+`
+
+func SetReviewLike(reviewId int, userId int, on bool) (error, int) {
+	var query string
+	if on {
+		query = addLikeQuery
+	} else {
+		query = removeLikeQuery
+	}
+
+	_, err := tools.DB.Exec(
+		query,
+		reviewId,
+		userId,
+	)
+
+	if err != nil {
+		err, code := handleCreateReviewErr(err)
+		return err, code
+	}
+
+	return nil, -1
+}
+
 
 func GetBookReviews(bookId int, userId int) ( []resources.ReviewData, error ) {
 	var selectQueryString string = `

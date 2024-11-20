@@ -95,8 +95,10 @@ CREATE TABLE review_likes (
 	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	user_id int NOT NULL,
 	review_id int NOT NULL,
+	timestamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
 	FOREIGN KEY (user_id) REFERENCES users(id),
+	CONSTRAINT unique_user_and_review_id UNIQUE (user_id, review_id),
 	FOREIGN KEY (review_id) REFERENCES reviews(id)
 );
 

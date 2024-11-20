@@ -56,8 +56,11 @@ func ApiHandler(r *chi.Mux) {
 		router.Post("/books/{bookId}/reviews", CreateReview)
 		router.Put("/reviews/{reviewId}", UpdateReview)
 		router.Get("/books/{bookId}/reviews", GetBookReviews)
-
 		router.Get("/books/{bookId}/reviews/summary", GetBookReviewSummary)
+
+		// Review Likes
+		router.Post("/reviews/{reviewId}/like", AddReviewLike)
+		router.Post("/reviews/{reviewId}/unlike", RemoveReviewLike)
 
 		// Review Comments
 		router.Post("/reviews/{reviewId}/comments", CreateReviewComment)
