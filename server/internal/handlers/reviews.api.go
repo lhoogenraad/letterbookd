@@ -208,3 +208,31 @@ func RemoveReviewLike(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusAccepted) 
 	json.NewEncoder(w).Encode(`Unliked review successfully`)
 }
+
+
+
+func GetPopularReviews(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	claims, ok := utils.GetClaims(r)
+
+	if !ok {
+		log.Error("Something went wrong grabbing token claim info")
+		api.InternalErrorHandler(w)
+	}
+
+	//Convert userId to int
+	userId := int(claims["userid"].(float64))
+
+
+	reviews, err := models.GetPopularReviews(userId)
+
+	if err != nil {
+		api.CustomErrorHandler(w, 500, fmt.Sprint(err))
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusAccepted) 
+	json.NewEncoder(w).Encode(reviews)
+}

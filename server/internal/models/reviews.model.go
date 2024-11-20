@@ -163,6 +163,60 @@ func GetBookReviews(bookId int, userId int) ( []resources.ReviewData, error ) {
 	return reviews, nil
 }
 
+func GetPopularReviews (userId int) ( []resources.ReviewData, error ){
+	var selectQueryString string = `
+	SELECT 
+	reviews.id as review_id,
+	users.id as user_id,
+	CONCAT( users.first_name, ' ', users.last_name) as user_name,
+	reviews.description,
+	reviews.rating,
+	COUNT(review_comments.id) as num_comments,
+	COUNT(DISTINCT(review_likes.id)) as num_likes,
+    MAX(CASE WHEN review_likes.user_id = ? THEN 1 ELSE 0 END) AS has_user_liked
+	FROM reviews
+	JOIN users
+		ON users.id = reviews.user_id
+	LEFT JOIN review_comments
+		ON review_comments.review_id=reviews.id
+		AND review_comments.archived = false
+	LEFT JOIN review_likes
+		ON review_likes.review_id=reviews.id
+
+	WHERE review_likes.timestamp BETWEEN (NOW() - INTERVAL 2 WEEK) AND NOW()
+
+	GROUP BY 
+		reviews.id,
+		users.id,
+		user_name,
+		reviews.description,
+		reviews.rating
+	
+	ORDER BY num_likes DESC
+	LIMIT 10;`
+
+	rows, err := tools.DB.Query(selectQueryString, userId)
+
+
+	if err != nil {
+		log.Error(err)
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	reviews, err := readReviewRows(rows)
+
+	if err != nil {
+		log.Error(err)
+		return nil, err
+	}
+
+	return reviews, nil
+
+}
+
+
 func checkBookExists (bookId int) bool {
 	var getBookQuery string = `
 		SELECT * FROM books
