@@ -2,6 +2,7 @@ package models
 
 import (
 	"server/internal/tools"
+	"database/sql"
 	"server/internal/resources"
 	"strings"
 	"fmt"
@@ -152,24 +153,11 @@ func GetBookReviews(bookId int, userId int) ( []resources.ReviewData, error ) {
 
 	defer rows.Close()
 
-	var reviews []resources.ReviewData
-	for rows.Next() {
-		var review resources.ReviewData
-		err := rows.Scan(
-			&review.Id,
-			&review.UserId,
-			&review.Username,
-			&review.Description,
-			&review.Rating,
-			&review.NumComments,
-			&review.NumLikes,
-			&review.LikedBy,
-		)
+	reviews, err := readReviewRows(rows)
 
-		if err != nil {
-			return nil, err
-		}
-		reviews = append(reviews, review)
+	if err != nil {
+		log.Error(err)
+		return nil, err
 	}
 
 	return reviews, nil
@@ -189,4 +177,28 @@ func checkBookExists (bookId int) bool {
 	}
 
 	return true
+}
+
+
+func readReviewRows (rows *sql.Rows) ([]resources.ReviewData, error) {
+	var reviews []resources.ReviewData
+	for rows.Next() {
+		var review resources.ReviewData
+		err := rows.Scan(
+			&review.Id,
+			&review.UserId,
+			&review.Username,
+			&review.Description,
+			&review.Rating,
+			&review.NumComments,
+			&review.NumLikes,
+			&review.LikedBy,
+		)
+
+		if err != nil {
+			return nil, err
+		}
+		reviews = append(reviews, review)
+	}
+	return reviews, nil
 }
