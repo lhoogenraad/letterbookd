@@ -171,8 +171,8 @@ func GetPopularReviews (userId int) ( []resources.ReviewData, error ){
 	CONCAT( users.first_name, ' ', users.last_name) as user_name,
 	reviews.description,
 	reviews.rating,
-	COUNT(review_comments.id) as num_comments,
-	COUNT(DISTINCT(review_likes.id)) as num_likes,
+	COUNT(DISTINCT(review_comments.id)) as num_comments,
+	IFNULL(COUNT(DISTINCT(review_likes.id)), 0) as num_likes,
     MAX(CASE WHEN review_likes.user_id = ? THEN 1 ELSE 0 END) AS has_user_liked
 	FROM reviews
 	JOIN users
@@ -193,7 +193,7 @@ func GetPopularReviews (userId int) ( []resources.ReviewData, error ){
 		reviews.rating
 	
 	ORDER BY num_likes DESC
-	LIMIT 10;`
+	LIMIT 2;`
 
 	rows, err := tools.DB.Query(selectQueryString, userId)
 
