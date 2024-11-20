@@ -5,6 +5,7 @@ import notify from 'util/notify/notify';
 import { useState, useEffect } from 'react';
 import ReviewComment from './(reviewComments)/reviewComment';
 import AddComment from './(reviewComments)/addComment';
+import ReviewHeart from 'components/reviews/likes/reviewHeart';
 import '../../../(bookComponents)/bookReviewList/review.css';
 import { Rating } from '@mantine/core';
 import './singleReview.css';
@@ -84,6 +85,11 @@ export default function Review({ params }: { bookId: number, reviewId: number })
 					<div className="vertical-seperator">|</div>
 					<Rating readOnly fractions={2} value={review.Rating / 2} className="review-value" />
 					<div className="vertical-seperator">|</div>
+					<ReviewHeart 
+						reviewId={review.Id} 
+						liked={review.LikedBy} 
+						numLikes={review.NumLikes}
+					/>
 				</div>
 				<div className="review-description">{review.Description}</div>
 			</div>

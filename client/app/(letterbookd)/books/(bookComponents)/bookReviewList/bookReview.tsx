@@ -2,6 +2,7 @@ import './review.css';
 import { Rating } from '@mantine/core';
 import { IconMessages } from '@tabler/icons-react';
 import Link from 'next/link';
+import ReviewHeart from 'components/reviews/likes/reviewHeart';
 
 export default function BookReview({ review, bookId }) {
 	return (
@@ -22,6 +23,12 @@ export default function BookReview({ review, bookId }) {
 							{review.NumComments}
 						</div>
 					</Link>
+					<div className="vertical-seperator">|</div>
+					<ReviewHeart 
+						reviewId={review.Id} 
+						liked={review.LikedBy} 
+						numLikes={review.NumLikes}
+					/>
 				</div>
 				<div className="review-description">{review.Description}</div>
 			</div>
