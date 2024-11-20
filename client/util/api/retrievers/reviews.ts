@@ -44,6 +44,11 @@ const putReviewComment = async (reviewId: number, commentId: number, comment: st
 	return await api.put(`/reviews/${reviewId}/comments/${commentId}`, {comment}).then((res) => res);
 }
 
+const setLikeStatus = async (reviewId: number, liked: boolean) => {
+	const status = liked ? "like" : "unlike";
+	return await api.post(`/reviews/${reviewId}/${status}`).then((res) => res);
+}
+
 export default {
 	getBookReviews,
 	getReviewComments,
@@ -52,4 +57,5 @@ export default {
 	submitReviewComment,
 	deleteReviewComment,
 	putReviewComment,
+	setLikeStatus,
 }

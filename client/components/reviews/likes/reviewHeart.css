@@ -1,0 +1,12 @@
+.review-heart {
+	cursor: pointer;
+
+	&:hover{
+		transition: 0.2s;
+	}
+
+	&:active{
+		transition: 0.03s;
+		padding: 2px;
+	}
+}

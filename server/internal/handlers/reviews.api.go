@@ -147,19 +147,11 @@ func GetBookReviews (w http.ResponseWriter, r *http.Request) {
 func AddReviewLike(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	var request resources.UpdateReviewBody
 	claims, ok := utils.GetClaims(r)
 
 	if !ok {
 		log.Error("Something went wrong grabbing token claim info")
 		api.InternalErrorHandler(w)
-	}
-
-	err := json.NewDecoder(r.Body).Decode(&request)
-
-	if err != nil {
-		log.Error(err)
-		api.CustomErrorHandler(w, 400, `Invalid review creation body received`)
 	}
 
 	//Convert userId to int
@@ -188,19 +180,11 @@ func AddReviewLike(w http.ResponseWriter, r *http.Request) {
 func RemoveReviewLike(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	var request resources.UpdateReviewBody
 	claims, ok := utils.GetClaims(r)
 
 	if !ok {
 		log.Error("Something went wrong grabbing token claim info")
 		api.InternalErrorHandler(w)
-	}
-
-	err := json.NewDecoder(r.Body).Decode(&request)
-
-	if err != nil {
-		log.Error(err)
-		api.CustomErrorHandler(w, 400, `Invalid review creation body received`)
 	}
 
 	//Convert userId to int
