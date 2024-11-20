@@ -140,3 +140,87 @@ func GetBookReviews (w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+
+//BROKEN_WINDOW  Add and Remove review like could be modularised fr
+
+func AddReviewLike(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	var request resources.UpdateReviewBody
+	claims, ok := utils.GetClaims(r)
+
+	if !ok {
+		log.Error("Something went wrong grabbing token claim info")
+		api.InternalErrorHandler(w)
+	}
+
+	err := json.NewDecoder(r.Body).Decode(&request)
+
+	if err != nil {
+		log.Error(err)
+		api.CustomErrorHandler(w, 400, `Invalid review creation body received`)
+	}
+
+	//Convert userId to int
+	userId := int(claims["userid"].(float64))
+	reviewIdParam := utils.GetParam(r, "reviewId")
+	reviewId, err := strconv.Atoi(reviewIdParam)
+
+	if err != nil {
+		api.CustomErrorHandler(w, 400, "Invalid review ID was given as a parameter.")
+		return
+	}
+
+	err, code := models.SetReviewLike(userId, reviewId, true)
+
+	if err != nil {
+		api.CustomErrorHandler(w, code, fmt.Sprint(err))
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusAccepted) 
+	json.NewEncoder(w).Encode(`Review updated successfully`)
+}
+
+
+func RemoveReviewLike(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	var request resources.UpdateReviewBody
+	claims, ok := utils.GetClaims(r)
+
+	if !ok {
+		log.Error("Something went wrong grabbing token claim info")
+		api.InternalErrorHandler(w)
+	}
+
+	err := json.NewDecoder(r.Body).Decode(&request)
+
+	if err != nil {
+		log.Error(err)
+		api.CustomErrorHandler(w, 400, `Invalid review creation body received`)
+	}
+
+	//Convert userId to int
+	userId := int(claims["userid"].(float64))
+	reviewIdParam := utils.GetParam(r, "reviewId")
+	reviewId, err := strconv.Atoi(reviewIdParam)
+
+	if err != nil {
+		api.CustomErrorHandler(w, 400, "Invalid review ID was given as a parameter.")
+		return
+	}
+
+	err, code := models.SetReviewLike(userId, reviewId, false)
+
+	if err != nil {
+		api.CustomErrorHandler(w, code, fmt.Sprint(err))
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusAccepted) 
+	json.NewEncoder(w).Encode(`Review updated successfully`)
+}
