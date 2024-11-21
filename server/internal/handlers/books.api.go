@@ -119,6 +119,41 @@ func GetSingleBook (w http.ResponseWriter, r *http.Request) {
 }
 
 
+
+func GetFeaturedBooks (w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	// Grab user Id from claims
+	claims, ok := utils.GetClaims(r)
+	if !ok {
+		log.Error("Something went wrong grabbing token claim info")
+		api.InternalErrorHandler(w)
+	}
+
+	userId := int(claims["userid"].(float64))
+
+	var books []resources.BookData
+	var err error
+
+	page := 10
+	numBooks := 15
+	books, err = models.GetBooks(userId, page, numBooks)
+
+	if err != nil {
+		log.Error(err)
+		api.InternalErrorHandler(w)
+		return
+	}
+
+	err = json.NewEncoder(w).Encode(books)
+
+	if err != nil {
+		log.Error(err)
+		api.InternalErrorHandler(w)
+		return
+	}
+}
+
+
 func SearchOpenLibrary(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
