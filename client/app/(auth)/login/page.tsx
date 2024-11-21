@@ -12,6 +12,7 @@ import notify from 'util/notify/notify';
 import api from 'util/api/api';
 import React from 'react';
 import Link from 'next/link';
+import auth from 'util/auth/token';
 
 
 function LoginPage() {
@@ -39,6 +40,8 @@ function LoginPage() {
 		await api.users.signIn({email, password})
 		.then((res) => {
 			localStorage.setItem("authToken", res.data);
+			auth.saveToken(res.data);
+			console.log("saving token to cookies")
 			router.push("/dashboard");
 		})
 		.catch((err) => {
