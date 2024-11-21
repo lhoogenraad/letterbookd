@@ -42,6 +42,7 @@ func ApiHandler(r *chi.Mux) {
 		// Books
 		router.Get("/books", GetBooks)
 		router.Get("/books/count", GetBooksCount)
+		router.Get("/books/featured", GetFeaturedBooks)
 		router.Get("/books/search/open-library", SearchOpenLibrary)
 		router.Post("/books/search/open-library/{olId}", ConfirmOpenLibraryBookUpload)
 		router.Get("/books/{bookId}", GetSingleBook)
