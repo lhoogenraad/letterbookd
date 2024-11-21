@@ -5,6 +5,10 @@ import '@mantine/notifications/styles.css';
 import '@mantine/core/styles.css';
 import './style.css';
 
+export const metadata = {
+	title: 'letterbookd',
+};
+
 export default function RootLayout({ children, }: { children: React.ReactNode }) {
 	const theme = createTheme({
 		fontFamily: 'Arial, Helvetica, sans-serif',
