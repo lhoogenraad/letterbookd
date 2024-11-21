@@ -17,7 +17,7 @@ func getLineAsJSON (text string) structs.Book {
 	cleaned := strings.Join(textSplit, "{")
 	cleaned = "{" + cleaned
 	json.Unmarshal([]byte(cleaned), &book)
-
+	fmt.Println("Unmarshalled book:", book)
 	return book
 }
 
@@ -96,7 +96,7 @@ func GetValidBooks () ([]structs.Book, error) {
 }
 
 
-func GetAllBooks (limit int) ([]structs.Book, error) {
+func GetAllBooks (limit int, offset int) ([]structs.Book, error) {
 	filepath := `/home/leon/Downloads/ol_dump_editions_2024-09-30.txt`
 	fmt.Println(`Retrieving all books from`, filepath, `up until`, limit)
 	scanner, err := util.GetScanner(filepath)
@@ -106,7 +106,7 @@ func GetAllBooks (limit int) ([]structs.Book, error) {
 		return nil, err
 	}
 
-	i := 0
+	i := offset
 	var books []structs.Book
 	for scanner.Scan() && i < limit{
 		book := getLineAsJSON(scanner.Text())

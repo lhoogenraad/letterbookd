@@ -37,7 +37,7 @@ func ReadAndUpload() error {
 	}
 
 	// Ten milly
-	books, err := books.GetAllBooks(1000*1000*1)
+	books, err := books.GetAllBooks(1000*1000*10, 1000*1000*1)
 
 	if err != nil {
 		return err
