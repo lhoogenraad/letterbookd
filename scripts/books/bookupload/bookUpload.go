@@ -74,8 +74,12 @@ func UpdateBooksSynopses() error{
 		return err
 	}
 
+	million := 1000*1000
+	offset := million * 5
+	amount := million * 5
+
 	// Ten milly
-	books, err := books.GetAllBooks(1000*1000*1, 0)
+	books, err := books.GetAllBooks(amount, offset)
 
 	if err != nil {
 		return err
@@ -83,14 +87,13 @@ func UpdateBooksSynopses() error{
 
 	for i, book := range books {
 		bookId, ok := bookMap[book.Key]
-		if ok {
-			fmt.Println(bookId, book.Description)
-			err = updateBookSynopsis(bookId, book.Description)
+		if ok  && book.Description.Value != ""{
+			err = updateBookSynopsis(bookId, book.Description.Value)
 			if err != nil {
 				fmt.Printf("Error updating %s\t", book.Title)
 				fmt.Println(err)
 			}
-		} 
+		}
 		if i % 100000 == 0{
 			fmt.Printf("%d out of %d books checked. %d to go!\n", i, len(books), len(books) - i)
 		}
