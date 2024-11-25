@@ -1,8 +1,17 @@
 import '@mantine/core/styles.css';
 import api from 'util/api/server/api';
 import './dashboard.style.css';
-import BookList from '../books/(bookComponents)/bookList/bookList';
+import { cookies } from 'next/headers';
+import { decodeJwt } from 'jose';
 
+function getFirstName() {
+	const cookieStore = cookies();
+	const token = cookieStore.get("authToken")?.value;
+	const claims = decodeJwt(token);
+	if (!claims) return;
+
+	return claims.firstName;
+}
 
 async function getBooks() {
 	let books: object[];
@@ -21,7 +30,7 @@ async function getPopularReviews() {
 export default async function Dashboard() {
 	const books = await getBooks();
 	const reviews = await getPopularReviews();
-	const firstName = "First name uhhh";
+	const firstName = getFirstName();
 
 	return (
 		<div className='dashboard-container'>
