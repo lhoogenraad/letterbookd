@@ -1,0 +1,31 @@
+.footer-container {
+	background-color: var(--mantine-color-elevate-4);
+	padding: 0.75rem 0;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+
+.primary-content {
+	font-size: 0.9rem;
+	color: var(--mantine-color-text-0);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+}
+
+.social-links {
+	display: flex;
+	gap: 0.6rem;
+	flex-direction: row;
+}
+
+.copy-button {
+	cursor: pointer;
+}
+
+.secondary-content {
+	font-size: 0.8rem;
+	color: var(--mantine-color-elevate-0);
+}
