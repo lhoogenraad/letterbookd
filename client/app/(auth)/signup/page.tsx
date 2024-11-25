@@ -65,7 +65,7 @@ function Signup() {
 						values.firstName,
 						values.lastName
 					))} >
-				<div className='header'>Sign up to Letterbookd</div>
+				<div className='header'>Sign up to Shelfd</div>
 				<TextInput
 					className='form-input'
 					label="Email"

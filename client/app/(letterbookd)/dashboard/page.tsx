@@ -42,7 +42,7 @@ export default async function Dashboard() {
 					{
 						firstName ?
 							`Welcome back, ${firstName}!` :
-							`Welcome to letterbookd!`
+							`Welcome to Shelfd!`
 					}
 				</h1>
 			</div>

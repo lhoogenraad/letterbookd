@@ -21,7 +21,7 @@ export default function Navbar() {
 				<div className="icon">
 				<IconBook/>
 					<div className="navbar-title">
-							Letterbookd
+							Shelfd
 					</div>
 				</div>
 			</Link>

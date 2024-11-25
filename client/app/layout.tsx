@@ -6,7 +6,7 @@ import '@mantine/core/styles.css';
 import './style.css';
 
 export const metadata = {
-	title: 'letterbookd',
+	title: 'Shelfd',
 };
 
 export default function RootLayout({ children, }: { children: React.ReactNode }) {

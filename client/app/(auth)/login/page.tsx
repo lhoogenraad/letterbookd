@@ -57,7 +57,7 @@ function LoginPage() {
 	return (
 		<div className="container">
 			<form className="form" onSubmit={form.onSubmit(async (values) => await login(values.email, values.password )) } >
-				<div className='header'>Login to Letterbookd</div>
+				<div className='header'>Login to Shelfd</div>
 
 				<TextInput
 					className='form-input'

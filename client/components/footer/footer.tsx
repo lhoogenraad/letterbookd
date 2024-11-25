@@ -30,7 +30,7 @@ export default function Footer() {
 				</div>
 			</div>
 			<div className="secondary-content">
-				©️ Letterbookd
+				©️ Shelfd
 			</div>
 		</div>
 	);
