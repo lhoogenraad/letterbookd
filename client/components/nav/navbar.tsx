@@ -17,12 +17,12 @@ export default function Navbar() {
 
 	return (
 		<div className="navbar-container">
-			<div className="icon">
-			<IconBook/>
-			</div>
 			<Link style={{textDecoration: "inherit", color: "inherit"}}  href="/dashboard">
-				<div className="navbar-title">
-						Letterbookd
+				<div className="icon">
+				<IconBook/>
+					<div className="navbar-title">
+							Letterbookd
+					</div>
 				</div>
 			</Link>
 

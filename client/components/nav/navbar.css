@@ -16,6 +16,26 @@
 	text-decoration: none;
 }
 
+.icon {
+	padding: 0 1rem;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 2rem;
+}
+
+.icon:hover {
+	transition: 0.25s ease-in-out;
+	background-color: var(--mantine-color-secondary-8);
+	border-radius: 1rem;
+}
+
+.icon:active {
+	transition: 0.08s ease-in-out;
+	background-color: var(--mantine-color-elevate-6);
+	border-radius: 0;
+}
+
 .navbar-btns {
 	display: flex;
 	flex-direction: row;
