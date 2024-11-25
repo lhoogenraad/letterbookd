@@ -39,3 +39,5 @@ jspm_packages
 .next/**
 
 /public/covers
+
+.env

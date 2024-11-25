@@ -1,46 +1,39 @@
-"use client"
-
-import { useState, useEffect } from 'react';
-import jwt from 'jsonwebtoken';
 import '@mantine/core/styles.css';
-import notify from 'util/notify/notify';
-import api from 'util/api/api';
+import api from 'util/api/server/api';
 import './dashboard.style.css';
-import BookList from '../books/(bookComponents)/bookList/bookList';
+import { cookies } from 'next/headers';
+import { decodeJwt } from 'jose';
+import BookTile from '../books/(bookComponents)/bookTile/bookTile';
+import BookReview from '../books/(bookComponents)/bookReviewList/bookReview';
+import Link from 'next/link';
+
+function getFirstName() {
+	const cookieStore = cookies();
+	const token = cookieStore.get("authToken")?.value;
+	const claims = decodeJwt(token);
+	if (!claims) return;
+
+	return claims.firstName;
+}
 
 async function getBooks() {
-	let books: object;
-	await api.books.getAllBooks()
+	let books: object[];
+	await api.dashboard.getFeaturedBooks()
 		.then((res) => books = res.data)
 	return books;
 };
 
-export default function Dashboard() {
-	const [books, setBooks] = useState(null);
-	const [loading, setLoading] = useState(true);
-	const [firstName, setFirstName] = useState(undefined);
+async function getPopularReviews() {
+	let reviews: object[];
+	await api.dashboard.getPopularReviews()
+		.then((res) => reviews = res.data)
+	return reviews;
+};
 
-	useEffect(() => {
-		// Get books
-		getBooks()
-			.then((books) => {
-				setBooks(books);
-				setLoading(false);
-			})
-			.catch((err) => notify.error({ message: err?.response?.data?.Message }));
-
-		// Get username
-		const claims = jwt.decode(localStorage.getItem("authToken"))
-		setFirstName(claims?.firstName);
-	}, []);
-
-
-	if (loading) {
-		return <p>Loading...</p>
-	}
-	if (!books) {
-		return <p>No books available</p>
-	}
+export default async function Dashboard() {
+	const books = await getBooks();
+	const reviews = await getPopularReviews();
+	const firstName = getFirstName();
 
 	return (
 		<div className='dashboard-container'>
@@ -53,13 +46,29 @@ export default function Dashboard() {
 					}
 				</h1>
 			</div>
-			<div className='book-list-container'>
-				<div className='carousel-title'>
-					Trending books
-				</div>
-				<BookList books={books} />
+			<div className="dashboard-data-columns">
+			<div className="data-column book-data-column">
+			<h3 className="data-column-title">Here's what we're reading</h3>
+				{
+					books.map((book) => (
+					<Link 
+						href={{ pathname: `/books/${book.Id}` }}
+						style={{textDecoration: "inherit", color: "inherit"}}
+					>
+						<BookTile book={book} />
+					</Link>
+					))
+				}
+			</div>
+			<div className="data-column">
+			<h3 className="data-column-title">Popular reviews this week</h3>
+				{
+					reviews.map((review) => (
+						<BookReview showTitle={true} review={review} bookId={review.BookId} />
+					))
+				}
+			</div>
 			</div>
 		</div>
 	)
 };
-

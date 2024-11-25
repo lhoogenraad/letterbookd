@@ -9,27 +9,30 @@
 	font-weight: normal;
 }
 
-
-.book-list-container {
+.dashboard-data-columns {
 	display: flex;
-	padding: 1rem;
-	border-radius: 5px;
+	flex-direction: row;
+	gap: 3rem;
+	align-items: space-around;
+}
+
+.data-column {
+	display: flex;
 	flex-direction: column;
 	gap: 1rem;
 }
 
-.carousel-title {
-	padding: 1rem 0;
-	text-align: center;
-	width: 100%;
+.book-data-column {
+	width: 60%;
 }
 
-.book-list-item {
-	border: 1px solid brown;
-	padding: 5px 1rem;
-	margin: 0 2rem;
+
+.data-column-title {
+	color: var(--mantine-color-text-3);
+	cursor: default;
 }
 
-.book-list-item:hover{
-	transition: 0.2s;
+.data-column-title:hover{
+	transition: 0.3s ease-in;
+	color: var(--mantine-color-text-4);
 }

@@ -14,6 +14,8 @@ type ReviewData struct {
 	NumComments int
 	NumLikes int
 	LikedBy bool
+	BookId int
+	BookTitle string
 }
 
 type CreateReviewBody struct {
