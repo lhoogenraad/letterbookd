@@ -1,46 +1,27 @@
-"use client"
-
-import { useState, useEffect } from 'react';
-import jwt from 'jsonwebtoken';
 import '@mantine/core/styles.css';
-import notify from 'util/notify/notify';
-import api from 'util/api/api';
+import api from 'util/api/server/api';
 import './dashboard.style.css';
 import BookList from '../books/(bookComponents)/bookList/bookList';
 
+
 async function getBooks() {
-	let books: object;
-	await api.books.getAllBooks()
+	let books: object[];
+	await api.dashboard.getFeaturedBooks()
 		.then((res) => books = res.data)
 	return books;
 };
 
-export default function Dashboard() {
-	const [books, setBooks] = useState(null);
-	const [loading, setLoading] = useState(true);
-	const [firstName, setFirstName] = useState(undefined);
+async function getPopularReviews() {
+	let reviews: object[];
+	await api.dashboard.getPopularReviews()
+		.then((res) => reviews = res.data)
+	return reviews;
+};
 
-	useEffect(() => {
-		// Get books
-		getBooks()
-			.then((books) => {
-				setBooks(books);
-				setLoading(false);
-			})
-			.catch((err) => notify.error({ message: err?.response?.data?.Message }));
-
-		// Get username
-		const claims = jwt.decode(localStorage.getItem("authToken"))
-		setFirstName(claims?.firstName);
-	}, []);
-
-
-	if (loading) {
-		return <p>Loading...</p>
-	}
-	if (!books) {
-		return <p>No books available</p>
-	}
+export default async function Dashboard() {
+	const books = await getBooks();
+	const reviews = await getPopularReviews();
+	const firstName = "First name uhhh";
 
 	return (
 		<div className='dashboard-container'>
@@ -53,13 +34,8 @@ export default function Dashboard() {
 					}
 				</h1>
 			</div>
-			<div className='book-list-container'>
-				<div className='carousel-title'>
-					Trending books
-				</div>
-				<BookList books={books} />
-			</div>
+			{JSON.stringify(reviews)}
+			{JSON.stringify(books)}
 		</div>
 	)
 };
-
