@@ -4,10 +4,14 @@ import { IconMessages } from '@tabler/icons-react';
 import Link from 'next/link';
 import ReviewHeart from 'components/reviews/likes/reviewHeart';
 
-export default function BookReview({ review, bookId }) {
+export default function BookReview({ review, bookId, showTitle}) {
 	return (
 		<div>
-			<div className="review-header">{review.BookTitle ?? 'Review'}</div>
+			{
+				showTitle ? <div className="review-header">{review.BookTitle ?? 'Review'}</div>
+				:
+				<div className="review-header"></div>
+			}
 			<div className="review-container">
 				<div className="review-metadata-container">
 					<div className="review-user">{review.Username}</div>
