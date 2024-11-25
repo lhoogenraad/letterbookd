@@ -124,7 +124,8 @@ func GetBookReviews(bookId int, userId int) ( []resources.ReviewData, error ) {
 	reviews.rating,
 	COUNT(DISTINCT(review_comments.id)) as num_comments,
 	COUNT(DISTINCT(review_likes.id)) as num_likes,
-    MAX(CASE WHEN review_likes.user_id = ? THEN 1 ELSE 0 END) AS has_user_liked
+    MAX(CASE WHEN review_likes.user_id = ? THEN 1 ELSE 0 END) AS has_user_liked,
+	reviews.book_id
 	FROM reviews
 	JOIN users
 		ON users.id = reviews.user_id
@@ -173,7 +174,8 @@ func GetPopularReviews (userId int) ( []resources.ReviewData, error ){
 	reviews.rating,
 	COUNT(DISTINCT(review_comments.id)) as num_comments,
 	IFNULL(COUNT(DISTINCT(review_likes.id)), 0) as num_likes,
-    MAX(CASE WHEN review_likes.user_id = ? THEN 1 ELSE 0 END) AS has_user_liked
+    MAX(CASE WHEN review_likes.user_id = ? THEN 1 ELSE 0 END) AS has_user_liked,
+	reviews.book_id
 	FROM reviews
 	JOIN users
 		ON users.id = reviews.user_id
@@ -193,7 +195,7 @@ func GetPopularReviews (userId int) ( []resources.ReviewData, error ){
 		reviews.rating
 	
 	ORDER BY num_likes DESC
-	LIMIT 2;`
+	LIMIT 10;`
 
 	rows, err := tools.DB.Query(selectQueryString, userId)
 
@@ -247,6 +249,7 @@ func readReviewRows (rows *sql.Rows) ([]resources.ReviewData, error) {
 			&review.NumComments,
 			&review.NumLikes,
 			&review.LikedBy,
+			&review.BookId,
 		)
 
 		if err != nil {

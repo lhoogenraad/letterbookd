@@ -46,6 +46,7 @@ export default async function Dashboard() {
 				</h1>
 			</div>
 			<div>
+			<div className="data-column">
 				{
 					books.map((book) => (
 					<Link 
@@ -56,6 +57,14 @@ export default async function Dashboard() {
 					</Link>
 					))
 				}
+			</div>
+			<div className="data-column">
+				{
+					reviews.map((review) => (
+						<div>{JSON.stringify(review)}</div>
+					))
+				}
+			</div>
 			</div>
 		</div>
 	)
