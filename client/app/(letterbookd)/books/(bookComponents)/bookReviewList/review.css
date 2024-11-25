@@ -1,3 +1,9 @@
+.review-link{
+	color: red;
+	background-color: red;
+	text-decoration: inherit;
+}
+
 .review-container{
 	padding: 0.5rem;
 	border: 1px solid var(--mantine-color-secondary-0);
@@ -14,6 +20,10 @@
 	background-color: black;
 	color: #eee;
 	border-top-left-radius: 15px;
+}
+
+.review-header:hover{
+	color: var(--mantine-color-text-4);
 }
 
 .review-metadata-container{
