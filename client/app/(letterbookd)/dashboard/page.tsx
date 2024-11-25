@@ -4,6 +4,7 @@ import './dashboard.style.css';
 import { cookies } from 'next/headers';
 import { decodeJwt } from 'jose';
 import BookTile from '../books/(bookComponents)/bookTile/bookTile';
+import BookReview from '../books/(bookComponents)/bookReviewList/bookReview';
 import Link from 'next/link';
 
 function getFirstName() {
@@ -45,7 +46,7 @@ export default async function Dashboard() {
 					}
 				</h1>
 			</div>
-			<div>
+			<div className="dashboard-data-columns">
 			<div className="data-column">
 				{
 					books.map((book) => (
@@ -61,7 +62,7 @@ export default async function Dashboard() {
 			<div className="data-column">
 				{
 					reviews.map((review) => (
-						<div>{JSON.stringify(review)}</div>
+						<BookReview review={review} bookId={review.BookId} />
 					))
 				}
 			</div>
