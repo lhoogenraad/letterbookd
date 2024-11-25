@@ -61,7 +61,7 @@ export default async function Dashboard() {
 				}
 			</div>
 			<div className="data-column">
-			<h3 className="data-column-title">Popular reviews</h3>
+			<h3 className="data-column-title">Popular reviews this week</h3>
 				{
 					reviews.map((review) => (
 						<BookReview showTitle={true} review={review} bookId={review.BookId} />
