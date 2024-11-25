@@ -16,6 +16,6 @@ func setupDatabase() error{
 
 func main(){
 	setupDatabase()
-	err := bookupload.ReadAndUpload()
+	err := bookupload.UpdateBooksSynopses()
 	if err != nil {panic(err)}
 }

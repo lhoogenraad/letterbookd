@@ -10,7 +10,9 @@ type Book struct{
 	Authors []struct {
 		Key string `json: "key"`
 	}
-	Description string `json: "description`
+	Description struct {
+		Value string `json:"value"`
+	}
 	Key string `json: "key"`
 	Covers []int `json: "covers"`
 }
