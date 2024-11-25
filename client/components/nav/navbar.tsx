@@ -1,7 +1,7 @@
 "use client"
 
 import "./navbar.css"
-import { IconBook } from '@tabler/icons-react';
+import { IconBooks } from '@tabler/icons-react';
 import LogoutButton from './logoutButton';
 import { Button } from '@mantine/core';
 import Link from 'next/link';
@@ -19,7 +19,7 @@ export default function Navbar() {
 		<div className="navbar-container">
 			<Link style={{textDecoration: "inherit", color: "inherit"}}  href="/dashboard">
 				<div className="icon">
-				<IconBook/>
+				<IconBooks/>
 					<div className="navbar-title">
 							Shelfd
 					</div>
