@@ -3,6 +3,8 @@ import api from 'util/api/server/api';
 import './dashboard.style.css';
 import { cookies } from 'next/headers';
 import { decodeJwt } from 'jose';
+import BookTile from '../books/(bookComponents)/bookTile/bookTile';
+import Link from 'next/link';
 
 function getFirstName() {
 	const cookieStore = cookies();
@@ -43,8 +45,18 @@ export default async function Dashboard() {
 					}
 				</h1>
 			</div>
-			{JSON.stringify(reviews)}
-			{JSON.stringify(books)}
+			<div>
+				{
+					books.map((book) => (
+					<Link 
+						href={{ pathname: `/books/${book.Id}` }}
+						style={{textDecoration: "inherit", color: "inherit"}}
+					>
+						<BookTile book={book} />
+					</Link>
+					))
+				}
+			</div>
 		</div>
 	)
 };
