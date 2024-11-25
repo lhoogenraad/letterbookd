@@ -9,8 +9,8 @@
 }
 
 .navbar-title {
-	font-size: 1.4rem;
-	/* font-weight: bold; */
+	font-size: 1.5rem;
+	font-weight: bold;
 
 	color: var(--mantine-color-text-0);
 	text-decoration: none;
@@ -32,8 +32,8 @@
 
 .icon:active {
 	transition: 0.08s ease-in-out;
-	background-color: var(--mantine-color-elevate-6);
-	border-radius: 0;
+	background-color: var(--mantine-color-secondary-7);
+	border-radius: 0.5rem;
 }
 
 .navbar-btns {
