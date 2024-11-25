@@ -2,10 +2,16 @@ package tools
 
 import (
 	"database/sql"
+	"time"
 	"github.com/go-sql-driver/mysql"
 
 	log "github.com/sirupsen/logrus"
 )
+
+var MAX_IDLE_CONNS int = 10
+var MAX_OPEN_CONNS int = 40
+var MAX_IDLE_MINUTES int = 3
+var MAX_IDLE_DURATION time.Duration = time.Duration(MAX_IDLE_MINUTES) * time.Minute
 
 var DB *sql.DB
 
@@ -33,6 +39,9 @@ func NewDatabase() (*sql.DB, error) {
     }
     log.Info("Connected to database!")
 
+	newDB.SetMaxIdleConns(MAX_IDLE_CONNS)
+	newDB.SetMaxOpenConns(MAX_OPEN_CONNS)
+	newDB.SetConnMaxIdleTime(MAX_IDLE_DURATION)
 
 	return newDB, nil
 }
