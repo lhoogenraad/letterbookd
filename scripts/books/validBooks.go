@@ -96,7 +96,7 @@ func GetValidBooks () ([]structs.Book, error) {
 }
 
 
-func GetAllBooks (limit int) ([]structs.Book, error) {
+func GetAllBooks (limit int, offset int) ([]structs.Book, error) {
 	filepath := `/home/leon/Downloads/ol_dump_editions_2024-09-30.txt`
 	fmt.Println(`Retrieving all books from`, filepath, `up until`, limit)
 	scanner, err := util.GetScanner(filepath)
@@ -108,7 +108,10 @@ func GetAllBooks (limit int) ([]structs.Book, error) {
 
 	i := 0
 	var books []structs.Book
-	for scanner.Scan() && i < limit{
+	for scanner.Scan() && i < offset {
+		i++
+	}
+	for scanner.Scan() && i < limit + offset{
 		book := getLineAsJSON(scanner.Text())
 		books = append(books, book)
 		if i % 10000 == 0{

@@ -122,7 +122,7 @@ func GetBookReviews(bookId int, userId int) ( []resources.ReviewData, error ) {
 	CONCAT( users.first_name, ' ', users.last_name) as user_name,
 	reviews.description,
 	reviews.rating,
-	COUNT(review_comments.id) as num_comments,
+	COUNT(DISTINCT(review_comments.id)) as num_comments,
 	COUNT(DISTINCT(review_likes.id)) as num_likes,
     MAX(CASE WHEN review_likes.user_id = ? THEN 1 ELSE 0 END) AS has_user_liked
 	FROM reviews

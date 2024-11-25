@@ -3,6 +3,7 @@
 import "./navbar.css"
 import { useRouter } from 'next/navigation'
 import { Button } from '@mantine/core';
+import cookies from 'util/auth/token';
 
 export default function LogoutButton() {
 	const router = useRouter();
@@ -12,6 +13,7 @@ export default function LogoutButton() {
 	 */
 	const logout = () => {
 		localStorage.removeItem("authToken");
+		cookies.deleteCookie("authToken");
 		router.push('/login');
 	}
 
