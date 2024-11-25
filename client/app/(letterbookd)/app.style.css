@@ -9,3 +9,10 @@
 * {
 	color: var(--mantine-color-text-0);
 }
+
+.app-container{
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}

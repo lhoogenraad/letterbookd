@@ -1,0 +1,17 @@
+.footer-container {
+	background-color: var(--mantine-color-elevate-4);
+	padding: 0.75rem 0;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+
+.primary-content {
+	font-size: 0.9rem;
+	color: var(--mantine-color-text-0);
+}
+
+.secondary-content {
+	font-size: 0.8rem;
+	color: var(--mantine-color-elevate-0);
+}
