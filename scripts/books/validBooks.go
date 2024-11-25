@@ -17,7 +17,7 @@ func getLineAsJSON (text string) structs.Book {
 	cleaned := strings.Join(textSplit, "{")
 	cleaned = "{" + cleaned
 	json.Unmarshal([]byte(cleaned), &book)
-	fmt.Println("Unmarshalled book:", book)
+
 	return book
 }
 
@@ -106,9 +106,12 @@ func GetAllBooks (limit int, offset int) ([]structs.Book, error) {
 		return nil, err
 	}
 
-	i := offset
+	i := 0
 	var books []structs.Book
-	for scanner.Scan() && i < limit{
+	for scanner.Scan() && i < offset {
+		i++
+	}
+	for scanner.Scan() && i < limit + offset{
 		book := getLineAsJSON(scanner.Text())
 		books = append(books, book)
 		if i % 10000 == 0{

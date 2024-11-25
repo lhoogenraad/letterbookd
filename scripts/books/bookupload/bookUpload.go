@@ -35,15 +35,19 @@ func ReadAndUpload() error {
 	if err != nil {
 		return err
 	}
+	million := 1000*1000
+	offset := million * 3 + 500000
+	amount := million * 5
 
 	// Ten milly
-	books, err := books.GetAllBooks(1000*1000*10, 1000*1000*1)
+	books, err := books.GetAllBooks(amount, offset)
 
 	if err != nil {
 		return err
 	}
-
-	for i, book := range books {
+	fmt.Println("len books:", len(books))
+	for i := 0; i < len(books); i++{
+		book := books[i]
 		total++
 		authorId, ok := getAuthorId(book, authorMap)
 		if ok {
@@ -71,7 +75,7 @@ func UpdateBooksSynopses() error{
 	}
 
 	// Ten milly
-	books, err := books.GetAllBooks(1000*1000*1)
+	books, err := books.GetAllBooks(1000*1000*1, 0)
 
 	if err != nil {
 		return err
