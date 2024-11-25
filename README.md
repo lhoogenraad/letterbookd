@@ -1,6 +1,6 @@
 <br />
 <div align="center">
-  <a href="https://github.com/lhoogenraad/letterbookd">
+  <a href="https://github.com/lhoogenraad/shelfd">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 <a id="readme-top"></a>

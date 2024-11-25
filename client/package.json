@@ -1,7 +1,7 @@
 {
   "name": "client",
-  "version": "1.0.0",
-  "description": "Letterbookd frontend - built in Next.js",
+  "version": "1.0.1",
+  "description": "Shelfd frontend - built in Next.js",
   "main": "index.js",
   "scripts": {
     "dev": "next dev",

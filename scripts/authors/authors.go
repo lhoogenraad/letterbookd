@@ -110,7 +110,7 @@ func ReadAndUpload () error {
 
 /**
 Retrieves all author IDs and puts them into a map[string]int
-The string key is the ol ID, and the int value is letterbookd's author ID
+The string key is the ol ID, and the int value is Shelfd's author ID
 */
 func GetAllAuthorIds () (map[string]int, error) {
 	var authors = make(map[string]int)

@@ -232,7 +232,7 @@ func saveCoverImage(stream io.Reader, filepath string) error {
 
 func UploadBookFromOpenLibrary (olId string) (resources.BookDataOL, error) {
 	var book resources.BookDataOL
-	if olIdExists(olId) {return book, errors.New("It appears we already have this book in letterbookd") }
+	if olIdExists(olId) {return book, errors.New("It appears we already have this book in Shelfd") }
 	book, err := searchOpenLibraryForOLID(olId)
 	if err != nil {return book, err}
 
