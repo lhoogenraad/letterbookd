@@ -7,6 +7,23 @@ import BookTile from '../books/(bookComponents)/bookTile/bookTile';
 import BookReview from '../books/(bookComponents)/bookReviewList/bookReview';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
+type book = {
+	Id: number,
+	Title: string,
+	Author: string,
+	Published: string,
+	NumPages: string,
+	CoverURL: string,
+	Synopsis: string,
+	OnUserReadList: string,
+}
+
+type review = {
+	BookId: number,
+}
+
 function getFirstName() {
 	const cookieStore = cookies();
 	const token = cookieStore.get("authToken")?.value;
@@ -16,15 +33,15 @@ function getFirstName() {
 	return claims.firstName;
 }
 
-async function getBooks() {
-	let books: object[];
+async function getBooks(): Promise<book[]> {
+	let books: book[];
 	await api.dashboard.getFeaturedBooks()
 		.then((res) => books = res.data)
 	return books;
 };
 
-async function getPopularReviews() {
-	let reviews: object[];
+async function getPopularReviews(): Promise<review[]> {
+	let reviews: review[];
 	await api.dashboard.getPopularReviews()
 		.then((res) => reviews = res.data)
 	return reviews;
