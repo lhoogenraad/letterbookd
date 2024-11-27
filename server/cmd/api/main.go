@@ -31,7 +31,10 @@ func main(){
 	handlers.ApiHandler(r)
 	log.Info("Starting the bombaclaat server")
 
-	err = http.ListenAndServe("localhost:8080", r)
+	port := os.Getenv("PORT")
+	addr := "[::]:" + port
+	log.Info("Attempting to listen on ", addr)
+	err = http.ListenAndServe(addr, r)
 
 	if err != nil{
 		log.Error(err)

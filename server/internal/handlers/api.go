@@ -13,7 +13,7 @@ func ApiHandler(r *chi.Mux) {
 
 	// CORS setup
 	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:3000"},
+		AllowedOrigins:   []string{"http://localhost:3000", "http://shelfd.app.alwaysdata.net"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{
 			"Accept",
@@ -31,6 +31,10 @@ func ApiHandler(r *chi.Mux) {
 	r.Route("/api/users", func(router chi.Router) {
 		router.Post("/signup", Signup)
 		router.Post("/login", Signin)
+	})
+
+	r.Route("/api", func (router chi.Router) {
+		router.Get("/healthcheck", HelloJamie)
 	})
 
 	r.Route("/api", func(router chi.Router) {

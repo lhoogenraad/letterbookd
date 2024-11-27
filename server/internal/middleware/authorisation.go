@@ -1,15 +1,17 @@
 package middleware
 
 import (
-	"errors"
 	"context"
-	"strings"
+	"errors"
+	"fmt"
 	"net/http"
+	"strings"
 
 	"server/api"
 	"server/internal/utils"
+
 	"github.com/dgrijalva/jwt-go"
-	
+
 	log "github.com/sirupsen/logrus"
 )
 

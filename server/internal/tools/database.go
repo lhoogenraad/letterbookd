@@ -2,7 +2,9 @@ package tools
 
 import (
 	"database/sql"
+	"os"
 	"time"
+
 	"github.com/go-sql-driver/mysql"
 
 	log "github.com/sirupsen/logrus"
@@ -18,11 +20,12 @@ var DB *sql.DB
 func NewDatabase() (*sql.DB, error) {
 	// DB connection config, if you couldn't guess
     cfg := mysql.Config{
-        User:   "root",
+        User:   os.Getenv("DBUSER"),
         Net:    "tcp",
-        Addr:   "127.0.0.1:3306",
-        DBName: "letterbookd",
-		Passwd: "password",
+        Addr:   os.Getenv("DBADDR"),
+        DBName: os.Getenv("DBNAME"),
+		Passwd: os.Getenv("DBPASS"),
+		AllowNativePasswords: true,
     }
 	// Get a database handle.
     var err error
