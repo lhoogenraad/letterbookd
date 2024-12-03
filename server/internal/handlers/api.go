@@ -13,7 +13,7 @@ func ApiHandler(r *chi.Mux) {
 
 	// CORS setup
 	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:3000", "http://shelfd.app.alwaysdata.net"},
+		AllowedOrigins:   []string{"http://localhost:3000", "https://deluxe-malabi-dfe5af.netlify.app"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{
 			"Accept",
