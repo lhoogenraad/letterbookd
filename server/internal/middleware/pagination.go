@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 	"strconv"
-	"server/internal/resources"
+	"github.com/lhoogenraad/letterbookd/internal/resources"
 )
 
 var DEFAULT_PAGE int = 1

@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"strings"
 
-	"server/api"
-	"server/internal/utils"
+	"github.com/lhoogenraad/letterbookd/api"
+	"github.com/lhoogenraad/letterbookd/internal/utils"
 
 	"github.com/dgrijalva/jwt-go"
 

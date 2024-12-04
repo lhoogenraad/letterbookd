@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"strconv"
 
-	"server/api"
-	"server/internal/resources"
-	"server/internal/utils"
-	"server/internal/models"
+	"github.com/lhoogenraad/letterbookd/api"
+	"github.com/lhoogenraad/letterbookd/internal/resources"
+	"github.com/lhoogenraad/letterbookd/internal/utils"
+	"github.com/lhoogenraad/letterbookd/internal/models"
 	
 	log "github.com/sirupsen/logrus"
 )

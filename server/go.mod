@@ -1,4 +1,4 @@
-module server
+module github.com/lhoogenraad/letterbookd
 
 go 1.23
 

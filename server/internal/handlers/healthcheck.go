@@ -3,7 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
-	"server/api"
+	"github.com/lhoogenraad/letterbookd/api"
 	log "github.com/sirupsen/logrus"
 )
 

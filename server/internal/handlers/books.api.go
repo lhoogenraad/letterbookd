@@ -4,13 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"server/api"
+	"github.com/lhoogenraad/letterbookd/api"
 
 	// "time"
-	"server/internal/models"
-	"server/internal/resources"
-	"server/internal/utils"
-	"server/internal/utils/openlibrary"
+	"github.com/lhoogenraad/letterbookd/internal/models"
+	"github.com/lhoogenraad/letterbookd/internal/resources"
+	"github.com/lhoogenraad/letterbookd/internal/utils"
+	"github.com/lhoogenraad/letterbookd/internal/utils/openlibrary"
 	"strconv"
 
 	log "github.com/sirupsen/logrus"

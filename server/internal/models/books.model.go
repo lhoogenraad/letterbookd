@@ -4,9 +4,9 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"server/internal/resources"
-	"server/internal/tools"
-	"server/internal/utils"
+	"github.com/lhoogenraad/letterbookd/internal/resources"
+	"github.com/lhoogenraad/letterbookd/internal/tools"
+	"github.com/lhoogenraad/letterbookd/internal/utils"
 	"time"
 )
 

@@ -5,8 +5,8 @@ import (
 	"os"
 
 	"github.com/go-chi/chi"
-	"server/internal/handlers"
-	"server/internal/tools"
+	"github.com/lhoogenraad/letterbookd/internal/handlers"
+	"github.com/lhoogenraad/letterbookd/internal/tools"
 	log "github.com/sirupsen/logrus"
 )
 

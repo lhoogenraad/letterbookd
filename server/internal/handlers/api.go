@@ -6,7 +6,7 @@ import (
     cors "github.com/go-chi/cors"
     "net/http"
     log "github.com/sirupsen/logrus"
-    "server/internal/middleware"
+    "github.com/lhoogenraad/letterbookd/internal/middleware"
 )
 
 func ApiHandler(r *chi.Mux) {

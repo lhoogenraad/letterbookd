@@ -3,12 +3,12 @@ package handlers
 import (
 	"net/http"
 	"encoding/json"
-	"server/api"
+	"github.com/lhoogenraad/letterbookd/api"
 
 	"fmt"
-	"server/internal/resources"
-	"server/internal/utils"
-	"server/internal/models"
+	"github.com/lhoogenraad/letterbookd/internal/resources"
+	"github.com/lhoogenraad/letterbookd/internal/utils"
+	"github.com/lhoogenraad/letterbookd/internal/models"
 
 	log "github.com/sirupsen/logrus"
 )
