@@ -2,6 +2,7 @@ package tools
 
 import (
 	"database/sql"
+	"fmt"
 	"os"
 	"time"
 
@@ -18,6 +19,8 @@ var MAX_IDLE_DURATION time.Duration = time.Duration(MAX_IDLE_MINUTES) * time.Min
 var DB *sql.DB
 
 func NewDatabase() (*sql.DB, error) {
+	fmt.Println("DBUSER:", os.Getenv("DBUSER"))
+	fmt.Println("DBName:", os.Getenv("DBNAME"))
 	// DB connection config, if you couldn't guess
     cfg := mysql.Config{
         User:   os.Getenv("DBUSER"),
