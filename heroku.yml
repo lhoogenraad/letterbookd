@@ -1,0 +1,13 @@
+build:
+  languages:
+    - go
+
+  buildpacks:
+    - heroku/go
+
+  config:
+    GO_SERVER_ROOT: server # Specify the /server directory as the root
+
+run:
+  web: ./main
+
