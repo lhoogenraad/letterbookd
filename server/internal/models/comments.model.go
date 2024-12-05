@@ -1,8 +1,8 @@
 package models
 
 import (
-	"server/internal/tools"
-	"server/internal/resources"
+	"github.com/lhoogenraad/letterbookd/internal/tools"
+	"github.com/lhoogenraad/letterbookd/internal/resources"
 	"errors"
 	"time"
 	"fmt"

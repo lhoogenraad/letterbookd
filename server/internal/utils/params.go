@@ -2,7 +2,7 @@ package utils
 
 import (
 	"net/http"
-	"server/internal/resources"
+	"github.com/lhoogenraad/letterbookd/internal/resources"
 
 
 	"github.com/go-chi/chi"

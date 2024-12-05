@@ -6,9 +6,16 @@ import { useState, useEffect } from 'react';
 import api from 'util/api/api';
 import notify from 'util/notify/notify';
 
+type reviewStats = {
+	avgRating: number,
+	numReviews: number,
+	numCompletedReads: number,
+	numReadlistOccurences: number,
+}
+
 export default function BookReviewAverage({ bookId }) {
 	const [loading, setLoading] = useState(false);
-	const [stats, setStats] = useState({});
+	const [stats, setStats] = useState<reviewStats>({avgRating: 0, numReviews: 0, numCompletedReads: 0, numReadlistOccurences: 0});
 
 	const loadBookReviewSummary = (bookId: number) => {
 		setLoading(true);

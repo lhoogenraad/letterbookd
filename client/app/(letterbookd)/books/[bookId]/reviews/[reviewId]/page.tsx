@@ -10,7 +10,7 @@ import '../../../(bookComponents)/bookReviewList/review.css';
 import { Rating } from '@mantine/core';
 import './singleReview.css';
 
-export default function Review({ params }: { bookId: number, reviewId: number }) {
+export default function Review({ params }) {
 	const [book, setBook] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [review, setReview] = useState(null);

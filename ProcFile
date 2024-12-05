@@ -1,0 +1,3 @@
+web: echo "application log"
+web: ls
+web: go run main.go

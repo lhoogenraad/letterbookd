@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"server/internal/resources"
-	"server/internal/utils"
-	"server/internal/tools"
+	"github.com/lhoogenraad/letterbookd/internal/resources"
+	"github.com/lhoogenraad/letterbookd/internal/utils"
+	"github.com/lhoogenraad/letterbookd/internal/tools"
 	"strings"
 )
 

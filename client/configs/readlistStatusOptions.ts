@@ -1,1 +1,1 @@
-module.exports = ['Unread', 'Reading', 'Read'];
+export default  ['Unread', 'Reading', 'Read'];

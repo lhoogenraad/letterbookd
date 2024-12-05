@@ -19,7 +19,7 @@ export default function Navbar() {
 		<div className="navbar-container">
 			<Link style={{textDecoration: "inherit", color: "inherit"}}  href="/dashboard">
 				<div className="icon">
-				<IconBooks/>
+				<IconBooks size={38} />
 					<div className="navbar-title">
 							Shelfd
 					</div>
