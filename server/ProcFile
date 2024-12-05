@@ -1,4 +1,2 @@
-web: echo "application log"
-web: ls
-release: cd server && go build -o ../app main.go
-web: ./app
+web: echo "application log 1"
+web: server/main

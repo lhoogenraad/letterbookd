@@ -1,2 +1,0 @@
-web: echo "application log 1"
-web: server/main
