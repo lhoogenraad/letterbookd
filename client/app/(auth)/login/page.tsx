@@ -36,6 +36,7 @@ function LoginPage() {
 	});
 
 	const login = async (email: string, password: string) => {
+		console.log("OK we are logging in")
 		setLoading(true);
 		await api.users.signIn({email, password})
 		.then((res) => {
