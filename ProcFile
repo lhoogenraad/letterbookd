@@ -1,3 +1,2 @@
 web: echo "application log 1"
-web: ls
-web: go run main.go
+web: ./server/main
