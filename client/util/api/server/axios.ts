@@ -1,7 +1,7 @@
 import axios, { InternalAxiosRequestConfig } from "axios"; 
 
 const instance = axios.create({
-	baseURL : 'https://shelfd.alwaysdata.net/api/',
+	baseURL : 'https://shelfd-server-a8ec075348eb.herokuapp.com/api/',
 	headers: {
 		"Content-Type": "application/json",
 		timeout : 1000,
