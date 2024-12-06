@@ -2,6 +2,7 @@ import axios, { InternalAxiosRequestConfig } from "axios";
 
 const instance = axios.create({
 	baseURL : 'https://shelfd-server-a8ec075348eb.herokuapp.com/api/',
+	// baseURL : 'http://localhost:8000/api/',
 	headers: {
 		"Content-Type": "application/json",
 		timeout : 1000,

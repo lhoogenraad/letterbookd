@@ -1,11 +1,13 @@
+"use client";
+
 import '@mantine/core/styles.css';
 import api from 'util/api/server/api';
 import './dashboard.style.css';
-import { cookies } from 'next/headers';
-import { decodeJwt } from 'jose';
+import jwt from "jsonwebtoken";
 import BookTile from '../books/(bookComponents)/bookTile/bookTile';
 import BookReview from '../books/(bookComponents)/bookReviewList/bookReview';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export const dynamic = 'force-dynamic';
 
@@ -24,19 +26,14 @@ type review = {
 	BookId: number,
 }
 
-function getFirstName() {
-	const cookieStore = cookies();
-	const token = cookieStore.get("authToken")?.value;
-	const claims = decodeJwt(token);
-	if (!claims) return;
-
-	return claims.firstName;
-}
 
 async function getBooks(): Promise<book[]> {
 	let books: book[];
 	await api.dashboard.getFeaturedBooks()
-		.then((res) => books = res.data)
+		.then((res) => {
+			console.log(res)
+			books = res.data
+		})
 	return books;
 };
 
@@ -47,10 +44,34 @@ async function getPopularReviews(): Promise<review[]> {
 	return reviews;
 };
 
-export default async function Dashboard() {
-	const books = await getBooks();
-	const reviews = await getPopularReviews();
-	const firstName = getFirstName();
+export default function Dashboard() {
+	function getFirstName() {
+		// Get username
+		const claims = jwt.decode(localStorage.getItem("authToken"))
+		setFirstName(claims.firstName)
+	}
+
+	const [books, setBooks] = useState([]);
+	const [reviews, setReviews] = useState([]);
+	const [firstName, setFirstName] = useState(undefined);
+
+	const init = async () => {
+		try {
+			getFirstName();
+			const booksData = await getBooks();
+			const reviewsData = await getPopularReviews();
+			console.log(booksData, reviewsData)
+			setBooks(booksData);
+			setReviews(reviewsData);
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
+	useEffect(() => {
+		console.log(localStorage.getItem("authToken"))
+		init()
+	}, []);
 
 	return (
 		<div className='dashboard-container'>
