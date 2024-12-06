@@ -1,4 +1,4 @@
-import api from './axios';
+import api from '../../api/axios';
 
 const getFeaturedBooks = async () => {
 	return await api.get(`/books/featured`).then((res) => res);
