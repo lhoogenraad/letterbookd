@@ -32,7 +32,7 @@ async function getBooks(): Promise<book[]> {
 	await api.dashboard.getFeaturedBooks()
 		.then((res) => {
 			console.log(res)
-			books = res.data
+			books = res.data ?? [];
 		})
 	return books;
 };
@@ -40,7 +40,7 @@ async function getBooks(): Promise<book[]> {
 async function getPopularReviews(): Promise<review[]> {
 	let reviews: review[];
 	await api.dashboard.getPopularReviews()
-		.then((res) => reviews = res.data)
+		.then((res) => reviews = res.data ?? [])
 	return reviews;
 };
 
