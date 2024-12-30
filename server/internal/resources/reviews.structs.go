@@ -1,5 +1,9 @@
 package resources
 
+import (
+	"time"
+)
+
 /* 
 This is the struct of review data that is returned by the API. It
 It includes joined user info.
@@ -12,6 +16,7 @@ type ReviewData struct {
 	UserId int
 	OwnedBy bool
 	NumComments int
+	Timestamp time.Time
 	NumLikes int
 	LikedBy bool
 	BookId int

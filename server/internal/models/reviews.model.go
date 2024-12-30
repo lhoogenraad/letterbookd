@@ -126,7 +126,8 @@ func GetBookReviews(bookId int, userId int) ( []resources.ReviewData, error ) {
 	COUNT(DISTINCT(review_likes.id)) as num_likes,
     MAX(CASE WHEN review_likes.user_id = ? THEN 1 ELSE 0 END) AS has_user_liked,
 	reviews.book_id,
-	books.name
+	books.name,
+	reviews.timestamp
 	FROM reviews
 	JOIN users
 		ON users.id = reviews.user_id
@@ -144,7 +145,8 @@ func GetBookReviews(bookId int, userId int) ( []resources.ReviewData, error ) {
 		users.id,
 		user_name,
 		reviews.description,
-		reviews.rating;
+		reviews.rating,
+		reviews.timestamp
 	`
 
 	rows, err := tools.DB.Query(selectQueryString, userId, bookId)
@@ -179,7 +181,8 @@ func GetPopularReviews (userId int) ( []resources.ReviewData, error ){
 	IFNULL(COUNT(DISTINCT(review_likes.id)), 0) as num_likes,
     MAX(CASE WHEN review_likes.user_id = ? THEN 1 ELSE 0 END) AS has_user_liked,
 	reviews.book_id,
-	books.name
+	books.name,
+	reviews.timestamp
 	FROM reviews
 	JOIN users
 		ON users.id = reviews.user_id
@@ -191,14 +194,15 @@ func GetPopularReviews (userId int) ( []resources.ReviewData, error ){
 	LEFT JOIN books
 		ON reviews.book_id = books.id
 
-	WHERE review_likes.timestamp BETWEEN (NOW() - INTERVAL 2 WEEK) AND NOW()
+	WHERE reviews.timestamp BETWEEN (NOW() - INTERVAL 2 WEEK) AND NOW()
 
 	GROUP BY 
 		reviews.id,
 		users.id,
 		user_name,
 		reviews.description,
-		reviews.rating
+		reviews.rating,
+		reviews.timestamp
 	
 	ORDER BY num_likes DESC
 	LIMIT 10;`
@@ -257,6 +261,7 @@ func readReviewRows (rows *sql.Rows) ([]resources.ReviewData, error) {
 			&review.LikedBy,
 			&review.BookId,
 			&review.BookTitle,
+			&review.Timestamp,
 		)
 
 		if err != nil {

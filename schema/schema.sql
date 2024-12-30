@@ -64,6 +64,8 @@ CREATE TABLE reviews (
 	description text NOT NULL,
 	rating int NOT NULL,
 
+	timestamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
 	book_id int NOT NULL,
 	user_id int NOT NULL,
 
