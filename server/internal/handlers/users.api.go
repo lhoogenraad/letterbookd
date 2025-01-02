@@ -34,7 +34,7 @@ func Signup (w http.ResponseWriter, r *http.Request) {
 		api.InternalErrorHandler(w)
 	}
 
-	err, code := models.AddUser(
+	userId, err, code := models.AddUser(
 		request.Email,
 		hash,
 		request.FirstName,
@@ -46,9 +46,20 @@ func Signup (w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Token generation
+	token, err := utils.GenerateToken(
+		uint(userId),
+		request.FirstName,
+		request.Email,
+	)
+
+	if err != nil {
+		api.CustomErrorHandler(w, 500, `Sorry, we couldn't generate an auth token for some reason. Please contact us if this issue persits`)
+	}
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusAccepted) // For demo purposes
-	json.NewEncoder(w).Encode(`Created new user account for ` + request.Email)
+	json.NewEncoder(w).Encode(token)
 }
 
 
