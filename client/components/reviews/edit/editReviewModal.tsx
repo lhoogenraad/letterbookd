@@ -37,7 +37,7 @@ export default function EditReviewModal({review, book, closeModal, updateReview}
 			<form 
 				className="review-form"
 				onSubmit={form.onSubmit(async (values) => 
-					await submitReviewEdit(book.Id, parseFloat(values.rating)*2, values.description))}
+					await submitReviewEdit(book.Id, values.rating*2, values.description))}
 			>
 
 			<Rating 
