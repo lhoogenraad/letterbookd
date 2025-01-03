@@ -13,6 +13,7 @@ import api from 'util/api/api';
 import React from 'react';
 import Link from 'next/link';
 import auth from 'util/auth/token';
+import loginUtil from 'util/auth/login';
 
 
 function LoginPage() {
@@ -40,10 +41,8 @@ function LoginPage() {
 		setLoading(true);
 		await api.users.signIn({email, password})
 		.then((res) => {
-			localStorage.setItem("authToken", res.data);
-			auth.saveToken(res.data);
-			console.log("saving token to cookies")
-			router.push("/dashboard");
+			loginUtil.saveToken(res.data)
+	router.push("/dashboard");
 		})
 		.catch((err) => {
 			notify.error({

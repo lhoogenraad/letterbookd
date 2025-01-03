@@ -28,14 +28,14 @@ func AddUser(
 	passwordHash string,
 	firstName string,
 	lastName string,
-) (error, int) {
+) (int, error, int) {
 	var insertQuery string = `
 	INSERT into users
 	(email, password_hash, first_name, last_name)
 	VALUES
 	(?, ?, ?, ?)`
 
-	_, err := tools.DB.Exec(
+	res, err := tools.DB.Exec(
 		insertQuery,
 		email,
 		passwordHash,
@@ -45,10 +45,17 @@ func AddUser(
 
 	if err != nil {
 		err, code := handleInsertUserError(err)
-		return err, code
+		return -1, err, code
 	}
 
-	return nil, 0
+	userId, err := res.LastInsertId()
+
+	if err != nil {
+		err, code := handleInsertUserError(err)
+		return -1, err, code
+	}
+
+	return int(userId), nil, 0
 }
 
 

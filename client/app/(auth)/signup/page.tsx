@@ -13,6 +13,8 @@ import api from 'util/api/api';
 import React from 'react';
 import Link from 'next/link';
 
+import loginUtil from 'util/auth/login';
+
 
 function Signup() {
 	// State
@@ -42,8 +44,8 @@ function Signup() {
 		setLoading(true);
 		await api.users.signUp({ email, password, firstName, lastName })
 			.then((res) => {
-				localStorage.setItem("authToken", res.data);
-				router.push("/login");
+				loginUtil.saveToken(res.data);
+				router.push("/dashboard");
 			})
 			.catch((err) => {
 				notify.error({
