@@ -132,3 +132,12 @@ Leon Hoogenraad - le.o.n@outlook.com
 [Golang-url]: https://go.dev
 [MySQL.com]: https://shields.io/badge/MySQL-lightgrey?logo=mysql&style=plastic&logoColor=white&labelColor=blue
 [MySQL-url]: https://www.mysql.com/
+
+
+
+# Extras
+
+## Server deployment commands
+
+- ssh shelfd@ssh-shelfd.alwaysdata.net
+- scp -s ./main shelfd@ssh-shelfd.alwaysdata.net:/home/shelfd/www/main

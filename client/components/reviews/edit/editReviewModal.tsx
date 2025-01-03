@@ -22,7 +22,7 @@ export default function EditReviewModal({review, book, closeModal, updateReview}
 	const form = useForm({
 		mode: 'uncontrolled',
 		initialValues: {
-			rating: review.Rating,
+			rating: review.Rating/2,
 			description: review.Description,
 		},
 
@@ -59,9 +59,9 @@ export default function EditReviewModal({review, book, closeModal, updateReview}
 				className="add-review-button"
 				loading={submitting} 
 				loaderProps={{ type: 'bars' }} 
-				type="Update"
+				type="submit"
 			>
-			Submit
+			Update
 			</Button>
 			</form>
 		</div>
