@@ -1,9 +1,15 @@
-.review-container{
-	padding: 0.5rem;
+.review-c{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	padding: 1rem;
 	border: 1px solid var(--mantine-color-secondary-0);
 	background-color: var(--mantine-color-primary-9);
 	border-bottom-right-radius: 15px;
+}
 
+.review-container{
 	display: flex;
 	flex-direction: column;
 }

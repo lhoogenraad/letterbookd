@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"errors"
 	log "github.com/sirupsen/logrus"
+	"time"
 )
 
 
@@ -250,6 +251,7 @@ func readReviewRows (rows *sql.Rows) ([]resources.ReviewData, error) {
 	var reviews []resources.ReviewData
 	for rows.Next() {
 		var review resources.ReviewData
+		var date string
 		err := rows.Scan(
 			&review.Id,
 			&review.UserId,
@@ -261,11 +263,15 @@ func readReviewRows (rows *sql.Rows) ([]resources.ReviewData, error) {
 			&review.LikedBy,
 			&review.BookId,
 			&review.BookTitle,
-			&review.Timestamp,
+			&date,
 		)
-
 		if err != nil {
 			return nil, err
+		}
+		review.Timestamp, err = time.Parse("2006-01-02 15:04:05", date)
+		if err != nil {
+			fmt.Println("Error parsing review date:", review, date, err)
+			return reviews, err
 		}
 		reviews = append(reviews, review)
 	}
