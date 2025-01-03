@@ -67,6 +67,10 @@ export default function Review({ params }) {
 		}
 	}
 
+	const updateReview = async () => {
+		await loadReview();
+	}
+
 	useEffect(() => {
 		init();
 	}, []);
@@ -111,7 +115,7 @@ export default function Review({ params }) {
 						<AddComment reload={loadComments} reviewId={review.Id} />
 					</div>
 				</div>
-				<EditReviewButton book={book} review={review} />
+				<EditReviewButton book={book} review={review} updateReview={updateReview} />
 			</div>
 		</div>
 	)
