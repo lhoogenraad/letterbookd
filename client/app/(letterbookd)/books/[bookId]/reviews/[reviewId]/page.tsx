@@ -9,6 +9,7 @@ import ReviewHeart from 'components/reviews/likes/reviewHeart';
 import '../../../(bookComponents)/bookReviewList/review.css';
 import { Rating } from '@mantine/core';
 import './singleReview.css';
+import EditReviewButton from 'components/reviews/edit/editReviewButton';
 
 export default function Review({ params }) {
 	const [book, setBook] = useState(null);
@@ -110,6 +111,7 @@ export default function Review({ params }) {
 						<AddComment reload={loadComments} reviewId={review.Id} />
 					</div>
 				</div>
+				<EditReviewButton book={book} review={review} />
 			</div>
 		</div>
 	)
