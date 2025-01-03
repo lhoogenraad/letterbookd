@@ -34,7 +34,7 @@ export default function Review({ params }) {
 
 	const loadComments = async () => {
 		await api.reviews.getReviewComments(params.reviewId)
-			.then((res) => { 
+			.then((res) => {
 				const sortedComments = sortComments(res.data ?? []);
 				setReviewComments(sortedComments);
 			})
@@ -81,22 +81,25 @@ export default function Review({ params }) {
 
 	return (
 		<div className="container">
-			<div className="review-container">
-				<div className="review-book-title">
-					{book.Title}
+			<div className="review-c">
+				<div className="review-container">
+					<div className="review-book-title">
+						{book.Title}
+					</div>
+					<div className="review-metadata-container">
+						<div className="review-user">{review.Username}</div>
+						<div className="vertical-seperator">|</div>
+						<Rating readOnly fractions={2} value={review.Rating / 2} className="review-value" />
+						<div className="vertical-seperator">|</div>
+						<ReviewHeart
+							reviewId={review.Id}
+							liked={review.LikedBy}
+							numLikes={review.NumLikes}
+						/>
+					</div>
+					<div className="review-description">{review.Description}</div>
 				</div>
-				<div className="review-metadata-container">
-					<div className="review-user">{review.Username}</div>
-					<div className="vertical-seperator">|</div>
-					<Rating readOnly fractions={2} value={review.Rating / 2} className="review-value" />
-					<div className="vertical-seperator">|</div>
-					<ReviewHeart 
-						reviewId={review.Id} 
-						liked={review.LikedBy} 
-						numLikes={review.NumLikes}
-					/>
-				</div>
-				<div className="review-description">{review.Description}</div>
+				<div>{review.OwnedBy && (<EditReviewButton book={book} review={review} updateReview={updateReview} />)}</div>
 			</div>
 
 			<div className="comments-container">
@@ -115,7 +118,6 @@ export default function Review({ params }) {
 						<AddComment reload={loadComments} reviewId={review.Id} />
 					</div>
 				</div>
-				<EditReviewButton book={book} review={review} updateReview={updateReview} />
 			</div>
 		</div>
 	)

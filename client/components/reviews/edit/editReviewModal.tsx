@@ -12,8 +12,7 @@ export default function EditReviewModal({review, book, closeModal, updateReview}
 		setSubmitting(true);
 		api.reviews.editReview({reviewId: review.Id, rating, description})
 		.then(() => {
-			console.log("THEN CALLED")
-			updateReview();
+			updateReview(rating, description);
 			closeModal();
 		})
 		.catch((err) => notify.error({message: err.response?.data?.Message ?? err.message}))
