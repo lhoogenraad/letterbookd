@@ -1,0 +1,22 @@
+.not-found-container {
+	width: 100vw;
+	height: 100vh;
+	
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 5vh;
+}
+
+.not-found-text{
+	display: flex;
+	flex-direction: row;
+	gap: 0.75rem;
+}
+
+.divider {
+	width: 1px;
+	border: 2px solid white;
+	border-radius: 30px;
+}
