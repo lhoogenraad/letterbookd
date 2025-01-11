@@ -15,6 +15,12 @@ const safeRoute = (pathname: string) : Boolean => {
 	return safeRoutes.some((route:string) => pathname.startsWith(route));
 };
 
+const redirectToNextPage = (request: NextRequest): NextResponse => {
+	if (request.nextUrl.pathname == '/') {
+		return NextResponse.redirect(new URL('/dashboard', request.url));
+	}
+	return NextResponse.next();
+};
 
 export async function middleware (request: NextRequest): Promise<NextResponse> {
 	const pathname = request.nextUrl.pathname;
@@ -25,7 +31,8 @@ export async function middleware (request: NextRequest): Promise<NextResponse> {
 
 	try {
 		await jwtVerify(token, SECRET);
-		return NextResponse.next();
+		console.log("Go to URL", request.nextUrl)
+		return redirectToNextPage(request);
 	} catch (error) {
 		console.error(`Failed to verify token when navigating to ${pathname}`);
 		console.error(error.message, '\n\n');
@@ -36,5 +43,5 @@ export async function middleware (request: NextRequest): Promise<NextResponse> {
 
 // Config: Apply the middleware only to specific routes
 export const config = {
-  matcher: ['/book/:path*', '/read-list/:path*', '/dashboard/:path*'],
+  matcher: ['/', '/book/:path*', '/read-list/:path*', '/dashboard/:path*'],
 };
